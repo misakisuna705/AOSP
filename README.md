@@ -12,11 +12,11 @@
     - [python3](#python3)
     - [others](#others)
 * [asop](#asop)
-    - [同步原始碼](#同步原始碼)
-    - [導入裝置驅動](#導入裝置驅動)
+    - [代碼同步](#代碼同步)
+    - [驅動導入](#驅動導入)
         + [Google](#google)
         + [Qualcomm](#qualcomm)
-    - [建構](#建構)
+    - [專案建構](#專案建構)
 
 <!-- vim-markdown-toc -->
 
@@ -77,14 +77,14 @@ mkdir aosp
 cd aosp
 ```
 
-### 同步原始碼
+### 代碼同步
 
 ```zsh
 repo init --depth=1 -u https://android.googlesource.com/platform/manifest -b android-12.1.0_r11
 repo sync -c --no-tags --no-clone-bundle -j$(nproc --all)
 ```
 
-### 導入裝置驅動
+### 驅動導入
 
 #### Google
 
@@ -102,7 +102,7 @@ tar xvfz qcom-flame-sq3a.220705.003.a1-f11cbfb0.tgz
 ./extract-qcom-flame.sh
 ```
 
-### 建構
+### 專案建構
 
 ```zsh
 . build/envsetup.sh
