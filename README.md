@@ -37,7 +37,7 @@
 
 ### 目標
 
--   Pixel 4
+-   Pixel 4a
 -   Android 12
 
 ## 環境
@@ -79,6 +79,8 @@ cd aosp
 
 ### 代碼同步
 
+-   [version](https://source.android.com/docs/setup/about/build-numbers#source-code-tags-and-builds)
+
 ```zsh
 repo init --depth=1 -u https://android.googlesource.com/platform/manifest -b android-12.1.0_r11
 repo sync -c --no-tags --no-clone-bundle -j$(nproc --all)
@@ -86,26 +88,28 @@ repo sync -c --no-tags --no-clone-bundle -j$(nproc --all)
 
 ### 驅動導入
 
+-   [version](https://developers.google.com/android/drivers#sunfishsq3a.220705.003.a1)
+
 #### Google
 
 ```zsh
-wget https://dl.google.com/dl/android/aosp/google_devices-flame-sq3a.220705.003.a1-f7055a83.tgz
-tar xvfz google_devices-flame-sq3a.220705.003.a1-f7055a83.tgz
-./extract-google_devices-flame.sh
+wget https://dl.google.com/dl/android/aosp/google_devices-sunfish-sq3a.220705.003.a1-8cbdb344.tgz
+tar xvfz google_devices-sunfish-sq3a.220705.003.a1-8cbdb344.tgz
+./extract-google_devices-sunfish.sh
 ```
 
 #### Qualcomm
 
 ```zsh
-wget https://dl.google.com/dl/android/aosp/qcom-flame-sq3a.220705.003.a1-f11cbfb0.tgz
-tar xvfz qcom-flame-sq3a.220705.003.a1-f11cbfb0.tgz
-./extract-qcom-flame.sh
+wget https://dl.google.com/dl/android/aosp/qcom-sunfish-sq3a.220705.003.a1-34e47090.tgz
+tar xvfz qcom-sunfish-sq3a.220705.003.a1-34e47090.tgz
+./extract-qcom-sunfish.sh
 ```
 
 ### 專案建構
 
 ```zsh
 . build/envsetup.sh
-lunch aosp_flame-userdebug
+lunch aosp_sunfish-userdebug
 m -j$(nproc --all)
 ```
