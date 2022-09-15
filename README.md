@@ -96,6 +96,8 @@ repo sync -c --no-tags --no-clone-bundle -j$(nproc --all)
 wget https://dl.google.com/dl/android/aosp/google_devices-sunfish-sq3a.220705.003.a1-8cbdb344.tgz
 tar xvfz google_devices-sunfish-sq3a.220705.003.a1-8cbdb344.tgz
 ./extract-google_devices-sunfish.sh
+`CTRL`+`C`
+I ACCEPT
 ```
 
 #### Qualcomm
@@ -104,6 +106,8 @@ tar xvfz google_devices-sunfish-sq3a.220705.003.a1-8cbdb344.tgz
 wget https://dl.google.com/dl/android/aosp/qcom-sunfish-sq3a.220705.003.a1-34e47090.tgz
 tar xvfz qcom-sunfish-sq3a.220705.003.a1-34e47090.tgz
 ./extract-qcom-sunfish.sh
+`CTRL`+`C`
+I ACCEPT
 ```
 
 ### 專案建構
