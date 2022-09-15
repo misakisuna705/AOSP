@@ -102,15 +102,13 @@ tar xvfz google_devices-sunfish-sq3a.220705.003.a1-8cbdb344.tgz
 
 #### Qualcomm
 
--   Click `CTRL`+`C` and then type "I ACCEPT" for the long license of shellscript
-
 ```zsh
 wget https://dl.google.com/dl/android/aosp/qcom-sunfish-sq3a.220705.003.a1-34e47090.tgz
 tar xvfz qcom-sunfish-sq3a.220705.003.a1-34e47090.tgz
 ./extract-qcom-sunfish.sh
-`CTRL`+`C`
-I ACCEPT
 ```
+
+-   Click `CTRL`+`C` and then type "I ACCEPT" for the long license of shellscript
 
 ### 專案建構
 
