@@ -92,15 +92,17 @@ repo sync -c --no-tags --no-clone-bundle -j$(nproc --all)
 
 #### Google
 
-- for the license, click `CTRL`+`C`, then type "I ACCEPT"
-
 ```zsh
 wget https://dl.google.com/dl/android/aosp/google_devices-sunfish-sq3a.220705.003.a1-8cbdb344.tgz
 tar xvfz google_devices-sunfish-sq3a.220705.003.a1-8cbdb344.tgz
 ./extract-google_devices-sunfish.sh
 ```
 
+-   Click `CTRL`+`C` and then type "I ACCEPT" for the long license of shellscript
+
 #### Qualcomm
+
+-   Click `CTRL`+`C` and then type "I ACCEPT" for the long license of shellscript
 
 ```zsh
 wget https://dl.google.com/dl/android/aosp/qcom-sunfish-sq3a.220705.003.a1-34e47090.tgz
