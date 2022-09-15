@@ -53,7 +53,6 @@ git config --global user.email [使用者名稱]@gmail.com
 
 ```zsh
 mkdir -p ~/.bin
-PATH="${HOME}/.bin:${PATH}"
 curl https://storage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
 chmod a+rx ~/.bin/repo
 ```
@@ -82,6 +81,7 @@ cd aosp
 -   [version](https://source.android.com/docs/setup/about/build-numbers#source-code-tags-and-builds)
 
 ```zsh
+PATH="${HOME}/.bin:${PATH}"
 repo init --depth=1 -u https://android.googlesource.com/platform/manifest -b android-12.1.0_r11
 repo sync -c --no-tags --no-clone-bundle -j$(nproc --all)
 ```
