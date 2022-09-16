@@ -15,11 +15,18 @@
     - [驅動導入](#驅動導入)
         + [Google](#google)
         + [Qualcomm](#qualcomm)
-    - [專案建構](#專案建構)
+    - [專案構建](#專案構建)
     - [映像刷機（Android Debug Bridge）](#映像刷機android-debug-bridge)
+        + [安裝](#安裝)
+        + [刷入](#刷入)
+        + [提權](#提權)
 * [Benchmark](#benchmark)
     - [LMbench](#lmbench)
+        + [構建](#構建)
+        + [刷入](#刷入-1)
     - [MiBench](#mibench)
+        + [構建](#構建-1)
+        + [刷入](#刷入-2)
 * [Analysis](#analysis)
     - [Simpleperf](#simpleperf)
 
@@ -110,7 +117,7 @@ tar xvfz qcom-sunfish-sq3a.220705.003.a1-34e47090.tgz
 
 -   Click `CTRL`+`C` and then type "I ACCEPT" for the long license of shellscript
 
-### 專案建構
+### 專案構建
 
 ```zsh
 . build/envsetup.sh
@@ -121,13 +128,13 @@ m -j$(nproc --all)
 
 ### 映像刷機（Android Debug Bridge）
 
--   安裝
+#### 安裝
 
 ```zsh
 brew install -- cask android-platform-tools # for macOS
 ```
 
--   刷入
+#### 刷入
 
 ```zsh
 export ANDROID_PRODUCT_OUT=./out/target/product/sunfish
@@ -137,7 +144,7 @@ fastboot flashing unlock
 fastboot flashall -w
 ```
 
--   提權
+#### 提權
 
 ```zsh
 adb root
@@ -147,11 +154,23 @@ adb root
 
 ### LMbench
 
+#### 構建
+
+-   [教學](https://github.com/misakisuna705/LMbench)
+
+#### 刷入
+
 ```zsh
 adb push [LMbench 執行檔] /data/test
 ```
 
 ### MiBench
+
+#### 構建
+
+-   [教學](https://github.com/misakisuna705/MiBench)
+
+#### 刷入
 
 ```zsh
 adb push [MiBench 執行檔] /data/test
