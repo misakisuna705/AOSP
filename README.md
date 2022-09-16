@@ -148,15 +148,19 @@ adb root
 ### LMbench
 
 ```zsh
-adb push [執行檔] /data/test
+adb push [LMbench 執行檔] /data/test
 ```
 
 ### MiBench
 
 ```zsh
-adb push [執行檔] /data/test
+adb push [MiBench 執行檔] /data/test
 ```
 
 ## Analysis
 
 ### Simpleperf
+
+```zsh
+adb shell simpleperf stat --use-devfreq-counters --per-core ./[benchmark 執行檔] [benchmark 參數]
+```
