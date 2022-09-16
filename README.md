@@ -10,13 +10,18 @@
     - [repo](#repo)
     - [python3](#python3)
     - [others](#others)
-* [asop](#asop)
+* [AOSP](#aosp)
     - [代碼同步](#代碼同步)
     - [驅動導入](#驅動導入)
         + [Google](#google)
         + [Qualcomm](#qualcomm)
     - [專案建構](#專案建構)
-    - [映像刷機](#映像刷機)
+    - [映像刷機（Android Debug Bridge）](#映像刷機android-debug-bridge)
+* [Benchmark](#benchmark)
+    - [LMbench](#lmbench)
+    - [MiBench](#mibench)
+* [Analysis](#analysis)
+    - [Simpleperf](#simpleperf)
 
 <!-- vim-markdown-toc -->
 
@@ -63,7 +68,7 @@ sudo ln -sf /usr/bin/python3 /usr/bin/python
 sudo apt install -y git-core gnupg flex bison build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 libncurses5 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig
 ```
 
-## asop
+## AOSP
 
 ```zsh
 mkdir aosp
@@ -114,7 +119,15 @@ lunch aosp_sunfish-userdebug
 m -j$(nproc --all)
 ```
 
-### 映像刷機
+### 映像刷機（Android Debug Bridge）
+
+-   安裝
+
+```zsh
+brew install -- cask android-platform-tools # for macOS
+```
+
+-   刷入
 
 ```zsh
 export ANDROID_PRODUCT_OUT=./out/target/product/sunfish
@@ -123,3 +136,27 @@ adb reboot bootloader
 fastboot flashing unlock
 fastboot flashall -w
 ```
+
+-   提權
+
+```zsh
+adb root
+```
+
+## Benchmark
+
+### LMbench
+
+```zsh
+adb push [執行檔] /data/test
+```
+
+### MiBench
+
+```zsh
+adb push [執行檔] /data/test
+```
+
+## Analysis
+
+### Simpleperf
