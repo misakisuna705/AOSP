@@ -3,7 +3,6 @@
 <!-- vim-markdown-toc GFM -->
 
 * [參數](#參數)
-    - [硬體](#硬體)
     - [系統](#系統)
     - [目標](#目標)
 * [環境](#環境)
@@ -25,15 +24,8 @@
 
 ## 參數
 
-### 硬體
-
--   AMD Ryzen 5 3500X
--   Micron Crucial Ballistix Sport LT DDR4 3200（48G）
--   ADATA XPG SX8200Pro（512G）
-
 ### 系統
 
--   Windows 11
 -   Ubuntu 18.04（WSL）
 
 ### 目標
