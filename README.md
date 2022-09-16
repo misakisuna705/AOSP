@@ -17,6 +17,7 @@
         + [Google](#google)
         + [Qualcomm](#qualcomm)
     - [專案建構](#專案建構)
+    - [映像刷機](#映像刷機)
 
 <!-- vim-markdown-toc -->
 
@@ -53,6 +54,7 @@ git config --global user.email [使用者名稱]@gmail.com
 
 ```zsh
 mkdir -p ~/.bin
+
 curl https://storage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
 chmod a+rx ~/.bin/repo
 ```
@@ -82,6 +84,7 @@ cd aosp
 
 ```zsh
 PATH="${HOME}/.bin:${PATH}"
+
 repo init --depth=1 -u https://android.googlesource.com/platform/manifest -b android-12.1.0_r11
 repo sync -c --no-tags --no-clone-bundle -j$(nproc --all)
 ```
@@ -115,5 +118,16 @@ tar xvfz qcom-sunfish-sq3a.220705.003.a1-34e47090.tgz
 ```zsh
 . build/envsetup.sh
 lunch aosp_sunfish-userdebug
+
 m -j$(nproc --all)
+```
+
+### 映像刷機
+
+```zsh
+export ANDROID_PRODUCT_OUT=./out/target/product/sunfish
+
+adb reboot bootloader
+fastboot flashing unlock
+fastboot flashall -w
 ```
