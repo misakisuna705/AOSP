@@ -24,9 +24,11 @@
     - [LMbench](#lmbench)
         + [構建](#構建)
         + [刷入](#刷入-1)
+        + [執行](#執行)
     - [MiBench](#mibench)
         + [構建](#構建-1)
         + [刷入](#刷入-2)
+        + [執行](#執行-1)
 * [Analysis](#analysis)
     - [Simpleperf](#simpleperf)
 
@@ -147,7 +149,7 @@ fastboot flashall -w
 #### 提權
 
 ```zsh
-adb root
+adb root // don't need root under the path "/data/local/tmp/"
 ```
 
 ## Benchmark
@@ -161,7 +163,13 @@ adb root
 #### 刷入
 
 ```zsh
-adb push [LMbench 執行檔] /data/test
+adb push lmbench-3.0-a9/bin/aarch64 /data/local/tmp/LMbench
+```
+
+#### 執行
+
+```zsh
+adb shell /data/local/tmp/LMbench/bw_mem 512m [執行檔]
 ```
 
 ### MiBench
@@ -173,7 +181,13 @@ adb push [LMbench 執行檔] /data/test
 #### 刷入
 
 ```zsh
-adb push [MiBench 執行檔] /data/test
+adb push mibench/automotive/bitcount/bitcnts /data/local/tmp/Mibench/bitcnts
+```
+
+#### 執行
+
+```zsh
+adb shell /data/local/tmp/Mibench/bitcnts [圈數]
 ```
 
 ## Analysis
