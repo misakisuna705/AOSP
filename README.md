@@ -229,14 +229,26 @@ List of pmu events:
   armv8_pmuv3/br_mis_pred_retired/
   armv8_pmuv3/br_pred/
   armv8_pmuv3/br_retired/
+
+
   armv8_pmuv3/bus_access/ # Accurate and Stable Run-Time Power Modeling for Mobile and Embedded CPUs - STAGE 1 - 0X11 - BUS_ACCESS
+
+
   armv8_pmuv3/bus_cycles/
   armv8_pmuv3/cid_write_retired/
+
+
   armv8_pmuv3/cpu_cycles/ # Accurate and Stable Run-Time Power Modeling for Mobile and Embedded CPUs - STAGE 1 - 0X11 - CYCLE_COUNT
+
+
   armv8_pmuv3/exc_return/
   armv8_pmuv3/exc_taken/
   armv8_pmuv3/inst_retired/
+
+
   armv8_pmuv3/inst_spec/ # Accurate and Stable Run-Time Power Modeling for Mobile and Embedded CPUs - STAGE 1 - 0X1B - INST_SPEC
+
+
   armv8_pmuv3/l1d_cache/
   armv8_pmuv3/l1d_cache_refill/
   armv8_pmuv3/l1d_cache_wb/
@@ -292,7 +304,11 @@ List of raw events provided by cpu pmu:
   raw-cpu-cycles		# Cycle
   raw-crypto-spec		# Operation speculatively executed, Cryptographic instruction
   raw-dmb-spec		# Barrier speculatively executed, DMB
+
+
   raw-dp-spec		# Operation speculatively executed, integer data processing # Accurate and Stable Run-Time Power Modeling for Mobile and Embedded CPUs - STAGE 1 - DP_SPEC
+
+
   raw-dsb-spec (may not supported)		# Barrier speculatively executed, DSB
   raw-dtlb-walk		# Attributable data or unified TLB access with at least one translation table walk
   raw-exc-dabort (may not supported)		# Exception taken, Data Abort and SError
@@ -334,7 +350,11 @@ List of raw events provided by cpu pmu:
   raw-l1d-tlb-refill-rd		# Attributable Level 1 data TLB refill, read
   raw-l1d-tlb-refill-wr		# Attributable Level 1 data TLB refill, write
   raw-l1d-tlb-wr		# Attributable Level 1 data or unified TLB access, write
+
+
   raw-l1i-cache		# Attributable Level 1 instruction cache access # Accurate and Stable Run-Time Power Modeling for Mobile and Embedded CPUs - STAGE 1 - L1I_CACHE_ACCESS
+
+
   raw-l1i-cache-lmiss (may not supported)		# Level 1 instruction cache long-latency miss
   raw-l1i-cache-refill		# Level 1 instruction cache refill
   raw-l1i-tlb		# Attributable Level 1 instruction TLB access
@@ -343,7 +363,11 @@ List of raw events provided by cpu pmu:
   raw-l2d-cache-allocate		# Attributable Level 2 data cache allocation without refill
   raw-l2d-cache-inval (may not supported)		# Attributable Level 2 data cache invalidate
   raw-l2d-cache-lmiss-rd (may not supported)		# Level 2 data cache long-latency read miss
+
+
   raw-l2d-cache-rd		# Attributable Level 2 data cache access, read # Accurate and Stable Run-Time Power Modeling for Mobile and Embedded CPUs - STAGE 1 - L2D_CACHE_LD
+
+
   raw-l2d-cache-refill		# Level 2 data cache refill
   raw-l2d-cache-refill-rd		# Attributable Level 2 data cache refill, read
   raw-l2d-cache-refill-wr (may not supported)		# Attributable Level 2 data cache refill, write
@@ -416,7 +440,11 @@ List of raw events provided by cpu pmu:
   raw-ttbr-write-retired (may not supported)		# Instruction architecturally executed, Condition code check pass, write to TTBR
   raw-unaligned-ld-spec		# Unaligned access, read
   raw-unaligned-ldst-retired (may not supported)		# Instruction architecturally executed, Condition code check pass, unaligned load or store
+
+
   raw-unaligned-ldst-spec		# Unaligned access # Accurate and Stable Run-Time Power Modeling for Mobile and Embedded CPUs - STAGE 1 - UNALIGNED_LDST_SPEC
+
+
   raw-unaligned-st-spec		# Unaligned access, write
   raw-vfp-spec (may not supported)		# Operation speculatively executed, floating-point instruction
 ```
