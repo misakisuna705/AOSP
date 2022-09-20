@@ -5,6 +5,10 @@
 * [參數](#參數)
     - [系統](#系統)
     - [目標](#目標)
+        + [Pixel 4a](#pixel-4a)
+            * [CPU](#cpu)
+            * [GPU](#gpu)
+        + [Android 12](#android-12)
 * [環境](#環境)
     - [git](#git)
     - [repo](#repo)
@@ -31,6 +35,8 @@
         + [執行](#執行-1)
 * [Analysis](#analysis)
     - [Simpleperf](#simpleperf)
+        + [LMbench](#lmbench-1)
+        + [Mibench](#mibench-1)
 
 <!-- vim-markdown-toc -->
 
@@ -44,8 +50,21 @@
 
 ### 目標
 
--   Pixel 4a
--   Android 12
+#### Pixel 4a
+
+##### CPU
+
+-   Qualcomm® Snapdragon™ 730G（Octa-core）
+-   2x Kryo470 Gold 2.2GHz 256KB L2（Cortex-A76）
+-   6x Kryo470 Silver 1.8GHz 128KB L2（Cortex-A55）
+-   1MB L3
+-   ARMv8
+
+##### GPU
+
+-   Adreno 618
+
+#### Android 12
 
 ## 環境
 
@@ -195,5 +214,61 @@ adb shell /data/local/tmp/Mibench/bitcnts [圈數]
 ### Simpleperf
 
 ```zsh
-adb shell simpleperf stat --use-devfreq-counters --per-core ./[benchmark 執行檔] [benchmark 參數]
+simpleperf list
+
+List of pmu events:
+  arm_dsu_0/bus_access/
+  arm_dsu_0/bus_cycles/
+  arm_dsu_0/cycles/
+  arm_dsu_0/l3d_cache/
+  arm_dsu_0/l3d_cache_allocate/
+  arm_dsu_0/l3d_cache_refill/
+  arm_dsu_0/l3d_cache_wb/
+  arm_dsu_0/memory_error/
+  armv8_pmuv3/br_mis_pred/
+  armv8_pmuv3/br_mis_pred_retired/
+  armv8_pmuv3/br_pred/
+  armv8_pmuv3/br_retired/
+  armv8_pmuv3/bus_access/
+  armv8_pmuv3/bus_cycles/
+  armv8_pmuv3/cid_write_retired/
+  armv8_pmuv3/cpu_cycles/
+  armv8_pmuv3/exc_return/
+  armv8_pmuv3/exc_taken/
+  armv8_pmuv3/inst_retired/
+  armv8_pmuv3/inst_spec/ # Accurate and Stable Run-Time Power Modeling for Mobile and Embedded CPUs - STAGE 1 - 0X1B INST_SPEC
+  armv8_pmuv3/l1d_cache/
+  armv8_pmuv3/l1d_cache_refill/
+  armv8_pmuv3/l1d_cache_wb/
+  armv8_pmuv3/l1d_tlb/
+  armv8_pmuv3/l1d_tlb_refill/
+  armv8_pmuv3/l1i_cache/
+  armv8_pmuv3/l1i_cache_refill/
+  armv8_pmuv3/l1i_tlb/
+  armv8_pmuv3/l1i_tlb_refill/
+  armv8_pmuv3/l2d_cache/
+  armv8_pmuv3/l2d_cache_allocate/
+  armv8_pmuv3/l2d_cache_refill/
+  armv8_pmuv3/l2d_cache_wb/
+  armv8_pmuv3/l2d_tlb/
+  armv8_pmuv3/l2d_tlb_refill/
+  armv8_pmuv3/l3d_cache/
+  armv8_pmuv3/l3d_cache_allocate/
+  armv8_pmuv3/l3d_cache_refill/
+  armv8_pmuv3/l3d_cache_wb/
+  armv8_pmuv3/mem_access/
+  armv8_pmuv3/memory_error/
+  armv8_pmuv3/stall_backend/
+  armv8_pmuv3/stall_frontend/
+  armv8_pmuv3/sw_incr/
+  armv8_pmuv3/ttbr_write_retired/
+```
+
+#### LMbench
+
+#### Mibench
+
+```zsh
+adb shell simpleperf stat --use-devfreq-counters --per-core /data/local/tmp/Mibench/bitcnts [圈數]
+adb shell simpleperf stat --use-devfreq-counters --per-core --interval 100 /data/local/tmp/Mibench/bitcnts [圈數]
 ```
