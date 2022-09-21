@@ -37,6 +37,10 @@
     - [Simpleperf](#simpleperf)
         + [LMbench](#lmbench-1)
         + [Mibench](#mibench-1)
+* [info](#info)
+    - [sys](#sys)
+    - [doc](#doc)
+    - [stackoverflow](#stackoverflow)
 
 <!-- vim-markdown-toc -->
 
@@ -457,3 +461,38 @@ List of raw events provided by cpu pmu:
 adb shell simpleperf stat --use-devfreq-counters --per-core /data/local/tmp/Mibench/bitcnts [圈數]
 adb shell simpleperf stat --use-devfreq-counters --per-core --interval 100 /data/local/tmp/Mibench/bitcnts [圈數]
 ```
+
+## info
+
+### sys
+
+```zsh
+# get frequency
+adb shell cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_cur_freq
+
+# get voltage
+adb shell cat /sys/class/power_supply/battery/voltage_now
+
+# get available DVFS Governor
+adb shell cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors
+
+# set DVFS governor manual mode
+adb shell echo "userspace" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+
+# set frequency
+adb shell su -c "echo "[頻率（KHz）]" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed"
+
+# set core disable
+adb shell su -c "stop mpdecision"
+adb reboot
+adb shell su -c "echo "0" > /sys/devices/system/cpu/cpu3/online"
+```
+
+### doc
+
+-   [使用 Batterystats 和 Battery Historian 剖析電池用量](https://developer.android.com/topic/performance/power/setup-battery-historian)
+-   [使用能源分析器檢查能源用量](https://developer.android.com/studio/profile/energy-profiler)
+
+### stackoverflow
+
+-   [How to change clock frequency in Android?](https://stackoverflow.com/questions/4238959/how-to-change-clock-frequency-in-android)
