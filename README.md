@@ -491,6 +491,7 @@ adb shell su -c "echo "0" > /sys/devices/system/cpu/cpu3/online"
 ### doc
 
 -   [使用 Batterystats 和 Battery Historian 剖析電池用量](https://developer.android.com/topic/performance/power/setup-battery-historian)
+-   [Android 分析器](https://developer.android.com/studio/profile/android-profiler?hl=zh-tw)
 -   [使用能源分析器檢查能源用量](https://developer.android.com/studio/profile/energy-profiler)
 
 ### stackoverflow
