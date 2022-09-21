@@ -38,9 +38,10 @@
         + [LMbench](#lmbench-1)
         + [Mibench](#mibench-1)
 * [info](#info)
-    - [sys](#sys)
+    - [paper](#paper)
     - [doc](#doc)
     - [stackoverflow](#stackoverflow)
+    - [sys](#sys)
 
 <!-- vim-markdown-toc -->
 
@@ -464,6 +465,20 @@ adb shell simpleperf stat --use-devfreq-counters --per-core --interval 100 /data
 
 ## info
 
+### paper
+
+-   [Run-Time CPU Power Modelling](http://www.powmon.ecs.soton.ac.uk/powermodeling/index.html)
+
+### doc
+
+-   [使用 Batterystats 和 Battery Historian 剖析電池用量](https://developer.android.com/topic/performance/power/setup-battery-historian)
+-   [Android 分析器](https://developer.android.com/studio/profile/android-profiler?hl=zh-tw)
+-   [使用能源分析器檢查能源用量](https://developer.android.com/studio/profile/energy-profiler)
+
+### stackoverflow
+
+-   [How to change clock frequency in Android?](https://stackoverflow.com/questions/4238959/how-to-change-clock-frequency-in-android)
+
 ### sys
 
 ```zsh
@@ -487,13 +502,3 @@ adb shell su -c "stop mpdecision"
 adb reboot
 adb shell su -c "echo "0" > /sys/devices/system/cpu/cpu3/online"
 ```
-
-### doc
-
--   [使用 Batterystats 和 Battery Historian 剖析電池用量](https://developer.android.com/topic/performance/power/setup-battery-historian)
--   [Android 分析器](https://developer.android.com/studio/profile/android-profiler?hl=zh-tw)
--   [使用能源分析器檢查能源用量](https://developer.android.com/studio/profile/energy-profiler)
-
-### stackoverflow
-
--   [How to change clock frequency in Android?](https://stackoverflow.com/questions/4238959/how-to-change-clock-frequency-in-android)
