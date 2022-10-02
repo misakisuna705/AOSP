@@ -35,6 +35,8 @@
         + [執行](#執行-1)
 * [Analysis](#analysis)
     - [core](#core)
+    - [frequency](#frequency)
+* [???](#)
 * [info](#info)
     - [paper](#paper)
     - [doc](#doc)
@@ -190,7 +192,7 @@ adb push lmbench-3.0-a9/bin/aarch64 /data/local/tmp/LMbench
 #### 執行
 
 ```zsh
-adb shell /data/local/tmp/LMbench/bw_mem 512m [執行檔]
+adb shell "/data/local/tmp/LMbench/bw_mem 512m [執行檔]"
 ```
 
 ### MiBench
@@ -208,7 +210,7 @@ adb push mibench/automotive/bitcount/bitcnts /data/local/tmp/Mibench/bitcnts
 #### 執行
 
 ```zsh
-adb shell /data/local/tmp/Mibench/bitcnts [圈數]
+adb shell "/data/local/tmp/Mibench/bitcnts [圈數]"
 ```
 
 ## Analysis
@@ -216,12 +218,15 @@ adb shell /data/local/tmp/Mibench/bitcnts [圈數]
 ### core
 
 ```zsh
-adb shell cat /sys/devices/system/cpu/cpu[編號]/cpufreq/scaling_available_frequencies # 查看所有核心頻率配置
+adb shell "time taskset [16 進位 one hot] [benchmark]" # 定核
 ```
+
+### frequency
 
 | Cortex-A55  | Cortex-A76  |
 | ----------- | ----------- |
 | cpu0 - cpu5 | cpu6 - cpu7 |
+| policy0     | policy6     |
 | `300000`    | `300000`    |
 | 576000      | 652800      |
 | 768000      | 806400      |
@@ -237,8 +242,33 @@ adb shell cat /sys/devices/system/cpu/cpu[編號]/cpufreq/scaling_available_freq
 |             | 2208000     |
 
 ```zsh
-adb shell cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq # 查看當前核心頻率設定
+adb shell "ls /sys/devices/system/cpu/cpufreq" # 查看所有可用定頻策略
+adb shell "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_available_frequencies" # 查看所有核心頻率配置
 ```
+
+```zsh
+adb shell "cat /sys/devices/system/cpu/cpufreq/policy*/scaling_cur_freq" # 查看策略當前頻率設定
+adb shell "cat /sys/devices/system/cpu/cpufreq/policy*/scaling_max_freq" # 查看策略最大頻率設定
+adb shell "cat /sys/devices/system/cpu/cpufreq/policy*/scaling_min_freq" # 查看策略最小頻率設定
+```
+
+```zsh
+adb shell "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq" # 查看核心當前頻率設定
+adb shell "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_max_freq" # 查看核心最大頻率設定
+adb shell "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_min_freq" # 查看核心最小頻率設定
+```
+
+```zsh
+adb shell "chmod 660 /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq"
+adb shell "chmod 660 /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq"
+
+adb shell "echo 0 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq"
+adb shell "echo 99999999 > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq"
+adb shell "echo sugov_ext > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor"
+adb shell "echo performance > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor"
+```
+
+## ???
 
 ```zsh
 # get voltage
@@ -251,7 +281,7 @@ adb shell cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors
 adb shell echo "userspace" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
 
 # set frequency
-adb shell su -c "echo "[頻率（KHz）]" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed"
+adb shell -c "echo "[頻率（KHz）]" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed"
 
 # set core disable
 adb shell su -c "stop mpdecision"
