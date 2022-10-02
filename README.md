@@ -36,7 +36,8 @@
 * [Analysis](#analysis)
     - [core](#core)
     - [frequency](#frequency)
-* [???](#)
+    - [governor](#governor)
+* [voltage](#voltage)
 * [info](#info)
     - [paper](#paper)
     - [doc](#doc)
@@ -223,23 +224,23 @@ adb shell "time taskset [16 進位 one hot] [benchmark]" # 定核
 
 ### frequency
 
-| Cortex-A55  | Cortex-A76  |
-| ----------- | ----------- |
-| cpu0 - cpu5 | cpu6 - cpu7 |
-| policy0     | policy6     |
-| `300000`    | `300000`    |
-| 576000      | 652800      |
-| 768000      | 806400      |
-| 1017600     | 979200      |
-| 1248000     | 1094400     |
-| `1324800`   | 1209600     |
-| 1497600     | `1324800`   |
-| 1612800     | 1555200     |
-| `1708800`   | `1708800`   |
-| 1804800     | 1843200     |
-|             | 1939200     |
-|             | 2169600     |
-|             | 2208000     |
+| Cortex-A55  | Cortex-A76  |     |
+| ----------- | ----------- | --- |
+| cpu0 - cpu5 | cpu6 - cpu7 |     |
+| policy0     | policy6     |     |
+| `300000`    | `300000`    |     |
+| 576000      | 652800      |     |
+| 768000      | 806400      |     |
+| 1017600     | 979200      |     |
+| 1248000     | 1094400     |     |
+| `1324800`   | 1209600     |     |
+| 1497600     | `1324800`   |     |
+| 1612800     | 1555200     |     |
+| `1708800`   | `1708800`   |     |
+| 1804800     | 1843200     |     |
+|             | 1939200     |     |
+|             | 2169600     |     |
+|             | 2208000     |     |
 
 ```zsh
 adb shell "ls /sys/devices/system/cpu/cpufreq" # 查看所有可用定頻策略
@@ -261,14 +262,26 @@ adb shell "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_min_freq" # 查看�
 ```zsh
 adb shell "chmod 660 /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq"
 adb shell "chmod 660 /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq"
-
 adb shell "echo 0 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq"
 adb shell "echo 99999999 > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq"
-adb shell "echo sugov_ext > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor"
-adb shell "echo performance > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor"
 ```
 
-## ???
+### governor
+
+```zsh
+adb shell "cat /sys/devices/system/cpu/cpufreq/policy*/scaling_governor" # 查看策略當前 governor
+```
+
+```zsh
+adb shell "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_available_governors" # 查看核心可用 governor
+```
+
+```zsh
+adb shell "echo [可用的governor 策略] > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor"
+adb shell "echo [可用的governor 策略] > /sys/devices/system/cpu/cpufreq/policy6/scaling_governor"
+```
+
+## voltage
 
 ```zsh
 # get voltage
