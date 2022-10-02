@@ -222,6 +222,7 @@ adb shell "/data/local/tmp/Mibench/bitcnts [圈數]"
 
 ```zsh
 adb shell "time taskset [16 進位 one hot] [benchmark]"
+timeout /t -1
 ```
 
 ### frequency
