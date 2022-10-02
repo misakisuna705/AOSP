@@ -37,7 +37,7 @@
     - [core](#core)
     - [frequency](#frequency)
     - [governor](#governor)
-* [voltage](#voltage)
+* [voltage（不要看）](#voltage不要看)
 * [info](#info)
     - [paper](#paper)
     - [doc](#doc)
@@ -287,7 +287,7 @@ adb shell "echo [可用的governor 策略] > /sys/devices/system/cpu/cpufreq/pol
 adb shell "echo [可用的governor 策略] > /sys/devices/system/cpu/cpufreq/policy6/scaling_governor"
 ```
 
-## voltage
+## voltage（不要看）
 
 ```zsh
 # get voltage
