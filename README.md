@@ -218,8 +218,10 @@ adb shell "/data/local/tmp/Mibench/bitcnts [圈數]"
 
 ### core
 
+-   定核
+
 ```zsh
-adb shell "time taskset [16 進位 one hot] [benchmark]" # 定核
+adb shell "time taskset [16 進位 one hot] [benchmark]"
 ```
 
 ### frequency
@@ -259,11 +261,15 @@ adb shell "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_max_freq" # 查看�
 adb shell "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_min_freq" # 查看核心最小頻率設定
 ```
 
+-   定頻
+
 ```zsh
-adb shell "chmod 660 /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq"
-adb shell "chmod 660 /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq"
 adb shell "echo 0 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq"
 adb shell "echo 99999999 > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq"
+adb shell "echo schedutil > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor"
+adb shell "echo performance > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor"
+adb shell "echo [頻率] > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq"
+adb shell "echo [頻率] > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq"
 ```
 
 ### governor
