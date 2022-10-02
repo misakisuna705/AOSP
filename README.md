@@ -37,7 +37,7 @@
     - [core](#core)
     - [frequency](#frequency)
     - [governor](#governor)
-* [voltage（不要看）](#voltage不要看)
+    - [voltage（不要看）](#voltage不要看)
 * [info](#info)
     - [paper](#paper)
     - [doc](#doc)
@@ -221,8 +221,7 @@ adb shell "/data/local/tmp/Mibench/bitcnts [圈數]"
 -   定核
 
 ```zsh
-adb shell "time taskset [16 進位 one hot] [benchmark]"
-timeout /t -1
+adb shell "taskset [16 進位 one hot] [benchmark]"
 ```
 
 ### frequency
@@ -288,7 +287,7 @@ adb shell "echo [可用的governor 策略] > /sys/devices/system/cpu/cpufreq/pol
 adb shell "echo [可用的governor 策略] > /sys/devices/system/cpu/cpufreq/policy6/scaling_governor"
 ```
 
-## voltage（不要看）
+### voltage（不要看）
 
 ```zsh
 # get voltage
