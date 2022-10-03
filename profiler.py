@@ -99,12 +99,10 @@ class Profiler(object):
                 if datas[j][0] == "0":
                     sheet.append([datas[j][0], datas[j][-1].replace("(", "").replace(")", ""), datas[j][2], datas[j][1], datas[-1][3]])
 
+            # log
             for j in range(len(sheet)):
                 print('\t'.join(sheet[j]))
-
-            print("")
-            print(len(sheet) - 1)
-            print("")
+            print("\n")
 
         # ouput csv of all counters
         with open("infos.csv", "w") as f:
