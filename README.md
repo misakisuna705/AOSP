@@ -6,7 +6,6 @@
     - [系統](#系統)
     - [目標](#目標)
         + [Pixel 4a](#pixel-4a)
-            * [CPU](#cpu)
             * [GPU](#gpu)
         + [Android 12](#android-12)
 * [環境](#環境)
@@ -58,19 +57,22 @@
 
 ### 目標
 
-#### Pixel 4a
+#### [Pixel 4a](https://zh.wikipedia.org/zh-tw/Google_Pixel)
 
-##### CPU
+| CPU                                     |                                 | GPU        |
+| --------------------------------------- | ------------------------------- | ---------- |
+| Qualcomm® Snapdragon™ 730G（Octa-core） |                                 | Adreno 618 |
+| LITTLE cluster                          | big cluster                     |            |
+| 6x Kryo470 Silver 1.8GHz 128KB L2       | 2x Kryo470 Gold 2.2GHz 256KB L2 |            |
+| Cortex-A55                              | Cortex-A76                      |            |
+| 6 PMU counters                          | 6 PMU counters                  |            |
 
--   Qualcomm® Snapdragon™ 730G（Octa-core）
--   2x Kryo470 Gold 2.2GHz 256KB L2（Cortex-A76 with 6 PMU counters）
--   6x Kryo470 Silver 1.8GHz 128KB L2（Cortex-A55 with 6 PMU counters）
 -   1MB L3
 -   ARMv8
 
 ##### GPU
 
--   Adreno 618
+-
 
 #### Android 12
 
@@ -211,23 +213,23 @@ adb push mibench/automotive/bitcount/bitcnts /data/local/tmp/Mibench/bitcnts
 
 #### 頻率
 
-| Cortex-A55  | Cortex-A76  |     |
-| ----------- | ----------- | --- |
-| cpu0 - cpu5 | cpu6 - cpu7 |     |
-| policy0     | policy6     |     |
-| `300000`    | `300000`    |     |
-| 576000      | 652800      |     |
-| 768000      | 806400      |     |
-| 1017600     | 979200      |     |
-| 1248000     | 1094400     |     |
-| `1324800`   | 1209600     |     |
-| 1497600     | `1324800`   |     |
-| 1612800     | 1555200     |     |
-| `1708800`   | `1708800`   |     |
-| 1804800     | 1843200     |     |
-|             | 1939200     |     |
-|             | 2169600     |     |
-|             | 2208000     |     |
+| Cortex-A55  | Cortex-A76  |
+| ----------- | ----------- |
+| cpu0 - cpu5 | cpu6 - cpu7 |
+| policy0     | policy6     |
+| `300000`    | `300000`    |
+| 576000      | 652800      |
+| 768000      | 806400      |
+| 1017600     | 979200      |
+| 1248000     | 1094400     |
+| `1324800`   | 1209600     |
+| 1497600     | `1324800`   |
+| 1612800     | 1555200     |
+| `1708800`   | `1708800`   |
+| 1804800     | 1843200     |
+|             | 1939200     |
+|             | 2169600     |
+|             | 2208000     |
 
 ```zsh
 adb shell "ls /sys/devices/system/cpu/cpufreq" # 查看所有可用定頻策略
@@ -247,6 +249,13 @@ adb shell "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_min_freq" # 查看�
 ```
 
 #### 策略
+
+| governor    |
+| ----------- |
+| userspace   |
+| powersave   |
+| performance |
+| schedutil   |
 
 ```zsh
 adb shell "cat /sys/devices/system/cpu/cpufreq/policy*/scaling_governor" # 查看策略當前 governor
