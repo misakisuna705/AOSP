@@ -28,15 +28,17 @@
     - [LMbench](#lmbench)
         + [構建](#構建)
         + [刷入](#刷入-1)
-        + [執行](#執行)
     - [MiBench](#mibench)
         + [構建](#構建-1)
         + [刷入](#刷入-2)
-        + [執行](#執行-1)
 * [Analysis](#analysis)
-    - [core](#core)
-    - [frequency](#frequency)
-    - [governor](#governor)
+    - [查詢](#查詢)
+        + [頻率](#頻率)
+        + [調頻策略](#調頻策略)
+    - [設定](#設定)
+        + [定核](#定核)
+        + [定頻](#定頻)
+        + [定策略](#定策略)
     - [voltage（不要看）](#voltage不要看)
 * [info](#info)
     - [paper](#paper)
@@ -190,12 +192,6 @@ adb root // don't need root under the path "/data/local/tmp/"
 adb push lmbench-3.0-a9/bin/aarch64 /data/local/tmp/LMbench
 ```
 
-#### 執行
-
-```zsh
-adb shell "/data/local/tmp/LMbench/bw_mem 512m [執行檔]"
-```
-
 ### MiBench
 
 #### 構建
@@ -208,23 +204,11 @@ adb shell "/data/local/tmp/LMbench/bw_mem 512m [執行檔]"
 adb push mibench/automotive/bitcount/bitcnts /data/local/tmp/Mibench/bitcnts
 ```
 
-#### 執行
-
-```zsh
-adb shell "/data/local/tmp/Mibench/bitcnts [圈數]"
-```
-
 ## Analysis
 
-### core
+### 查詢
 
--   定核
-
-```zsh
-adb shell "taskset [16 進位 one hot] [benchmark]"
-```
-
-### frequency
+#### 頻率
 
 | Cortex-A55  | Cortex-A76  |     |
 | ----------- | ----------- | --- |
@@ -261,7 +245,25 @@ adb shell "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_max_freq" # 查看�
 adb shell "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_min_freq" # 查看核心最小頻率設定
 ```
 
--   定頻
+#### 調頻策略
+
+```zsh
+adb shell "cat /sys/devices/system/cpu/cpufreq/policy*/scaling_governor" # 查看策略當前 governor
+```
+
+```zsh
+adb shell "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_available_governors" # 查看核心可用 governor
+```
+
+### 設定
+
+#### 定核
+
+```zsh
+adb shell "taskset [16 進位 one hot] [benchmark]"
+```
+
+#### 定頻
 
 ```zsh
 adb shell "echo 0 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq"
@@ -272,15 +274,7 @@ adb shell "echo [頻率] > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_f
 adb shell "echo [頻率] > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq"
 ```
 
-### governor
-
-```zsh
-adb shell "cat /sys/devices/system/cpu/cpufreq/policy*/scaling_governor" # 查看策略當前 governor
-```
-
-```zsh
-adb shell "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_available_governors" # 查看核心可用 governor
-```
+#### 定策略
 
 ```zsh
 adb shell "echo [可用的governor 策略] > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor"
