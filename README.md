@@ -34,10 +34,12 @@
         + [頻率](#頻率)
         + [策略](#策略)
     - [設定](#設定)
-        + [定核](#定核)
         + [定頻](#定頻)
         + [定策略](#定策略)
     - [執行](#執行)
+        + [simpleperf](#simpleperf)
+        + [taskset](#taskset)
+    - [自動化](#自動化)
     - [voltage（不要看）](#voltage不要看)
 * [info](#info)
     - [paper](#paper)
@@ -262,21 +264,23 @@ adb shell "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_available_governors"
 
 ### 設定
 
-#### 定核
-
-```zsh
-adb shell "taskset [16 進位 one hot] [benchmark]"
-```
-
 #### 定頻
 
 ```zsh
 adb shell "echo 0 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq"
 adb shell "echo 99999999 > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq"
-adb shell "echo schedutil > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor"
 adb shell "echo performance > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor"
 adb shell "echo [頻率] > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq"
 adb shell "echo [頻率] > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq"
+```
+
+```zsh
+adb shell "echo 0 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq"
+adb shell "echo 99999999 > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq"
+adb shell "echo performance > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor"
+adb shell "echo 1804800 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq"
+adb shell "echo 1804800 > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq"
+adb shell "taskset 01 simpleperf stat --use-devfreq-counters --per-core /data/local/tmp/Mibench/bitcnts 102400000"
 ```
 
 #### 定策略
@@ -287,6 +291,18 @@ adb shell "echo [可用的governor 策略] > /sys/devices/system/cpu/cpufreq/pol
 ```
 
 ### 執行
+
+#### simpleperf
+
+-   [教學](https://github.com/misakisuna705/Simpleperf)
+
+#### taskset
+
+```zsh
+adb shell "taskset [16 進位 one hot] [simpleperf]"
+```
+
+### 自動化
 
 -   [Profiler](https://github.com/misakisuna705/AOSP/blob/main/profiler.py)
 
