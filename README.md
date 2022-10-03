@@ -288,6 +288,7 @@ adb shell "echo 99999999 > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_f
 adb shell "echo performance > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor"
 adb shell "echo 1804800 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq"
 adb shell "echo 1804800 > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq"
+
 adb shell "taskset 01 simpleperf stat --use-devfreq-counters --per-core /data/local/tmp/Mibench/bitcnts 102400000"
 ```
 
