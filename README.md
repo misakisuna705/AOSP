@@ -6,7 +6,6 @@
     - [系統](#系統)
     - [目標](#目標)
         + [Pixel 4a](#pixel-4a)
-            * [GPU](#gpu)
         + [Android 12](#android-12)
 * [環境](#環境)
     - [git](#git)
@@ -69,10 +68,6 @@
 
 -   1MB L3
 -   ARMv8
-
-##### GPU
-
--
 
 #### Android 12
 
