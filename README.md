@@ -38,6 +38,7 @@
     - [設定](#設定)
         + [定核](#定核)
         + [定頻](#定頻)
+    - [執行](#執行)
         + [定策略](#定策略)
     - [voltage（不要看）](#voltage不要看)
 * [info](#info)
@@ -273,6 +274,10 @@ adb shell "echo performance > /sys/devices/system/cpu/cpufreq/policy0/scaling_go
 adb shell "echo [頻率] > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq"
 adb shell "echo [頻率] > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq"
 ```
+
+### 執行
+
+-   [Profiler](https://github.com/misakisuna705/AOSP/blob/main/profiler.py)
 
 #### 定策略
 
