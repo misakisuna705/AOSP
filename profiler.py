@@ -1,6 +1,7 @@
 # !/usr/bin/env python3
 
 import subprocess
+import csv
 
 
 class Profiler(object):
@@ -80,21 +81,41 @@ class Profiler(object):
         simpleperf = "simpleperf stat --use-devfreq-counters --per-core"
 
         # ouput all counters of raw pmus
+        zzz = 0
 
-        j = 0
+        sheet = [["core", "coverage", "event", "count", "time"]]
 
         for i in range(0, len(raws), 6):
             pmus = ",".join(raws[i:i + 6])
 
-            info = subprocess.run(["adb", "shell", "taskset " + core, simpleperf, "--group", pmus, benchmark["MiBench"]], stdout=subprocess.PIPE).stdout.decode('utf-8')
+            datas = [
+                j for j in [
+                    k.split() for k in filter(
+                        None,
+                        subprocess.run(["adb", "shell", "taskset " +
+                                        core, simpleperf, "-e", pmus, benchmark["MiBench"]], stdout=subprocess.PIPE).stdout.decode('utf-8').splitlines())
+                ] if (j[0] == "0" or j[0] == 'Total')
+            ]
 
-            print(info)
+            for j in range(0, len(datas)):
+                if datas[j][0] == "0":
+                    sheet.append([datas[j][0], datas[j][-1].replace("(", "").replace(")", ""), datas[j][2], datas[j][1], datas[-1][3]])
 
-            j += 1
+            for j in range(len(sheet)):
+                print('\t'.join(sheet[j]))
 
             print("")
-            print(j)
+            print(len(sheet) - 1)
             print("")
+            zzz += 1
+            print(zzz)
+            print("")
+
+        # ouput csv of all counters
+        with open("infos.csv", "w") as f:
+            w = csv.writer(f, dialect='excel')
+
+            w.writerows(sheet)
 
 
 def main():
