@@ -38,8 +38,8 @@
     - [設定](#設定)
         + [定核](#定核)
         + [定頻](#定頻)
-    - [執行](#執行)
         + [定策略](#定策略)
+    - [執行](#執行)
     - [voltage（不要看）](#voltage不要看)
 * [info](#info)
     - [paper](#paper)
@@ -275,15 +275,19 @@ adb shell "echo [頻率] > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_f
 adb shell "echo [頻率] > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq"
 ```
 
-### 執行
-
--   [Profiler](https://github.com/misakisuna705/AOSP/blob/main/profiler.py)
-
 #### 定策略
 
 ```zsh
 adb shell "echo [可用的governor 策略] > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor"
 adb shell "echo [可用的governor 策略] > /sys/devices/system/cpu/cpufreq/policy6/scaling_governor"
+```
+
+### 執行
+
+-   [Profiler](https://github.com/misakisuna705/AOSP/blob/main/profiler.py)
+
+```zsh
+python3 profiler.py
 ```
 
 ### voltage（不要看）
