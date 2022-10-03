@@ -24,11 +24,11 @@
         + [提權](#提權)
 * [Benchmark](#benchmark)
     - [LMbench](#lmbench)
-        + [構建](#構建)
         + [刷入](#刷入-1)
+        + [執行](#執行)
     - [MiBench](#mibench)
-        + [構建](#構建-1)
         + [刷入](#刷入-2)
+        + [執行](#執行-1)
 * [Analysis](#analysis)
     - [查詢](#查詢)
         + [頻率](#頻率)
@@ -36,7 +36,7 @@
     - [設定](#設定)
         + [定頻](#定頻)
         + [定策略](#定策略)
-    - [執行](#執行)
+    - [執行](#執行-2)
         + [simpleperf](#simpleperf)
         + [taskset](#taskset)
     - [自動化](#自動化)
@@ -182,26 +182,34 @@ adb root // don't need root under the path "/data/local/tmp/"
 
 ### LMbench
 
-#### 構建
-
--   [教學](https://github.com/misakisuna705/LMbench)
-
 #### 刷入
 
 ```zsh
 adb push lmbench-3.0-a9/bin/aarch64 /data/local/tmp/LMbench
 ```
 
+#### 執行
+
+-   [教學](https://github.com/misakisuna705/LMbench)
+
+```zsh
+adb shell "[LMbecnch 指令]"
+```
+
 ### MiBench
-
-#### 構建
-
--   [教學](https://github.com/misakisuna705/MiBench)
 
 #### 刷入
 
 ```zsh
 adb push mibench/automotive/bitcount/bitcnts /data/local/tmp/Mibench/bitcnts
+```
+
+#### 執行
+
+-   [教學](https://github.com/misakisuna705/MiBench)
+
+```zsh
+adb shell "[MiBench 指令]"
 ```
 
 ## Analysis
@@ -294,12 +302,16 @@ adb shell "echo [可用的governor 策略] > /sys/devices/system/cpu/cpufreq/pol
 
 #### simpleperf
 
+```
+adb shell "[Simpleperf 指令]"
+```
+
 -   [教學](https://github.com/misakisuna705/Simpleperf)
 
 #### taskset
 
 ```zsh
-adb shell "taskset [16 進位 one hot] [simpleperf]"
+adb shell "taskset [16 進位 one hot] [Simpleperf 指令]"
 ```
 
 ### 自動化
