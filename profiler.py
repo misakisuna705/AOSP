@@ -81,8 +81,6 @@ class Profiler(object):
         simpleperf = "simpleperf stat --use-devfreq-counters --per-core"
 
         # ouput all counters of raw pmus
-        zzz = 0
-
         sheet = [["core", "coverage", "event", "count", "time"]]
 
         for i in range(0, len(raws), 6):
@@ -106,9 +104,6 @@ class Profiler(object):
 
             print("")
             print(len(sheet) - 1)
-            print("")
-            zzz += 1
-            print(zzz)
             print("")
 
         # ouput csv of all counters
