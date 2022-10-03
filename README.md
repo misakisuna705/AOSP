@@ -34,7 +34,7 @@
 * [Analysis](#analysis)
     - [查詢](#查詢)
         + [頻率](#頻率)
-        + [調頻策略](#調頻策略)
+        + [策略](#策略)
     - [設定](#設定)
         + [定核](#定核)
         + [定頻](#定頻)
@@ -245,7 +245,7 @@ adb shell "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_max_freq" # 查看�
 adb shell "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_min_freq" # 查看核心最小頻率設定
 ```
 
-#### 調頻策略
+#### 策略
 
 ```zsh
 adb shell "cat /sys/devices/system/cpu/cpufreq/policy*/scaling_governor" # 查看策略當前 governor
