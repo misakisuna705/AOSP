@@ -34,8 +34,8 @@
         + [頻率](#頻率)
         + [策略](#策略)
     - [設定](#設定)
-        + [定頻](#定頻)
         + [定策略](#定策略)
+        + [定頻](#定頻)
     - [執行](#執行-2)
         + [simpleperf](#simpleperf)
         + [taskset](#taskset)
@@ -272,6 +272,13 @@ adb shell "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_available_governors"
 
 ### 設定
 
+#### 定策略
+
+```zsh
+adb shell "echo [可用的governor 策略] > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor"
+adb shell "echo [可用的governor 策略] > /sys/devices/system/cpu/cpufreq/policy6/scaling_governor"
+```
+
 #### 定頻
 
 ```zsh
@@ -283,20 +290,8 @@ adb shell "echo [頻率] > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_f
 ```
 
 ```zsh
-adb shell "echo 0 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq"
-adb shell "echo 99999999 > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq"
-adb shell "echo performance > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor"
-adb shell "echo 1804800 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq"
-adb shell "echo 1804800 > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq"
 
 adb shell "taskset 01 simpleperf stat --use-devfreq-counters --per-core /data/local/tmp/Mibench/bitcnts 102400000"
-```
-
-#### 定策略
-
-```zsh
-adb shell "echo [可用的governor 策略] > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor"
-adb shell "echo [可用的governor 策略] > /sys/devices/system/cpu/cpufreq/policy6/scaling_governor"
 ```
 
 ### 執行
