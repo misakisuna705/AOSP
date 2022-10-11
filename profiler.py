@@ -2,8 +2,17 @@
 
 import argparse
 import csv
+import logging
 import re
 import subprocess
+
+from pathlib import Path
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="[%(asctime)s line:%(lineno)-3d %(levelname)-8s ] %(message)s",
+    datefmt="%Y/%m/%d %H:%M:%S",
+)
 
 
 class Profiler(object):
@@ -12,20 +21,20 @@ class Profiler(object):
         pass
 
     def profile(self, benchmark, outputfile):
-        # get all types of scaling governor
         governors = (subprocess.run(["adb", "shell", "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_available_governors"],
                                     stdout=subprocess.PIPE).stdout.decode('utf-8').splitlines())[0].split()
 
-        # log
-        print("\n", governors, "\n")
+        logging.info("available governors: ")
+        logging.info("\t" + " ".join(governors))
+        logging.info("")
 
-        # get all types of policies corresponding to their cluster
         policies = subprocess.run(["adb", "shell", "ls /sys/devices/system/cpu/cpufreq"], stdout=subprocess.PIPE).stdout.decode('utf-8').splitlines()
 
-        # log
-        print("\n", policies, "\n")
+        logging.info("available clusters corresponding to policies: ")
+        for i in range(len(policies)):
+            logging.info("\tcluster" + str(i) + ", " + policies[i])
+        logging.info("")
 
-        # get the set of frequncies corresponding to their cluster
         frequencies = [
             i.split() for i in list(
                 sorted(
@@ -35,81 +44,101 @@ class Profiler(object):
                     ])))
         ]
 
-        # log
-        print("\n", frequencies, "\n")
+        for i in range(len(frequencies)):
+            logging.info("available frequencies corresponding to " + policies[i] + ": ")
+            logging.info("\t" + " ".join(frequencies[i]))
+            logging.info("")
 
-        # get all types of raw pmus
         raws = subprocess.run(["adb", "shell", "simpleperf", "list", "raw", "|", "grep", "raw-", "|", "awk", "'{print $1}'"],
                               stdout=subprocess.PIPE).stdout.decode('utf-8').splitlines()
 
-        # log
-        print("\n", raws, "\n")
+        logging.info("available device pmu counters: ")
+        for i in range(0, len(raws), 6):
+            logging.info("\t" + ", ".join(raws[i:i + 6]))
+        logging.info("")
 
-        # self-defined parameters
-        governor = governors[2]
-
-        # set simpleperf parameters
         simpleperf = "simpleperf stat --use-devfreq-counters --per-core"
 
-        # log
-        print("\n set simpleperf: ")
-        print(simpleperf)
-        print("\nset benchmark: ")
-        print(benchmark)
-        print("\nset outputfile: ")
-        print(outputfile)
-        print("\n")
+        logging.info("set simpleperf: ")
+        logging.info("\t" + simpleperf)
+        logging.info("")
+        logging.info("set benchmark: ")
+        logging.info("\t" + benchmark)
+        logging.info("")
+        logging.info("set outputfile: ")
+        logging.info("\t" + outputfile)
+        logging.info("")
 
         sheet = [["setup core", "runtime core", "frequency", "coverage", "event", "count", "time"]]
 
-        for idx, policy in enumerate(policies):
-            core = re.findall(r'\d+', policy)[0]
-            mask = format(1 << int(core), "02x")
+        logging.info("set sheet titles: ")
+        logging.info("\t" + " ".join(sheet[0]))
+        logging.info("")
 
-            # log
-            print("\nset cluster")
-            print(idx)
-            print("\nset core: ")
-            print(core)
-            print("\nset mask: ")
-            print(mask)
-            print("\n")
+        governor = governors[2]
+
+        logging.info("set governor policy: ")
+        logging.info("\t" + governor)
+        logging.info("")
+
+        for idx in range(len(policies)):
+            core = re.findall(r'\d+', policies[idx])[0]
+            mask = format(1 << int(core), "02x")
+            taskset = "taskset " + mask
+
+            logging.info("set cluster corresponding to policy: ")
+            logging.info("\tcluster" + str(idx) + ", " + policies[idx])
+            logging.info("")
+            logging.info("set core: ")
+            logging.info("\tcore" + core)
+            logging.info("")
+            logging.info("set mask: ")
+            logging.info("\t" + mask)
+            logging.info("")
+            logging.info("set taskset: ")
+            logging.info("\t" + taskset)
+            logging.info("")
 
             for frequency in [frequencies[idx][0], frequencies[idx][int((len(frequencies[idx]) - 1) / 2)], frequencies[idx][-1]]:
-                # log
-                print("\nprepared frequency: ")
-                print(frequency)
-                print("\n")
+                subprocess.run(["adb", "shell", "echo 0 > /sys/devices/system/cpu/cpufreq/" + policies[idx] + "/scaling_min_freq"])
+                subprocess.run(["adb", "shell", "echo 99999999 > /sys/devices/system/cpu/cpufreq/" + policies[idx] + "/scaling_max_freq"])
+                subprocess.run(["adb", "shell", "echo " + governor + " > /sys/devices/system/cpu/cpufreq/" + policies[idx] + "/scaling_governor"])
 
-                # set policy parameters
-                subprocess.run(["adb", "shell", "echo 0 > /sys/devices/system/cpu/cpufreq/" + policy + "/scaling_min_freq"])
-                subprocess.run(["adb", "shell", "echo 99999999 > /sys/devices/system/cpu/cpufreq/" + policy + "/scaling_max_freq"])
-                subprocess.run(["adb", "shell", "echo " + governor + " > /sys/devices/system/cpu/cpufreq/" + policy + "/scaling_governor"])
+                logging.info("set frequency: ")
+                logging.info("\t" + frequency)
+                logging.info("")
 
-                # log
-                print("\nset governor: ")
-                subprocess.run(["adb", "shell", "cat /sys/devices/system/cpu/cpufreq/policy*/scaling_governor"])
-                print("\n")
+                subprocess.run(["adb", "shell", "echo " + frequency + " > /sys/devices/system/cpu/cpufreq/" + policies[idx] + "/scaling_min_freq"])
 
-                # set frequency parameters
-                subprocess.run(["adb", "shell", "echo " + frequency + " > /sys/devices/system/cpu/cpufreq/" + policy + "/scaling_min_freq"])
-                subprocess.run(["adb", "shell", "echo " + frequency + " > /sys/devices/system/cpu/cpufreq/" + policy + "/scaling_max_freq"])
+                logging.info("set min frequencies corresponding to cores: ")
+                for i, minFreqency in enumerate(
+                        subprocess.run(["adb", "shell", "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_min_freq"],
+                                       stdout=subprocess.PIPE).stdout.decode('utf-8').splitlines()):
+                    logging.info("\t" + minFreqency.ljust(10, " ") + ", core" + str(i))
+                logging.info("")
 
-                # log
-                print("\nset min frequency: ")
-                subprocess.run(["adb", "shell", "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_min_freq"])
-                print("\nset max frequency: ")
-                subprocess.run(["adb", "shell", "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_max_freq"])
-                print("\nset cur frequency: ")
-                subprocess.run(["adb", "shell", "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq"])
-                print("\n")
+                subprocess.run(["adb", "shell", "echo " + frequency + " > /sys/devices/system/cpu/cpufreq/" + policies[idx] + "/scaling_max_freq"])
 
-                # set taskset
-                taskset = "taskset " + mask
+                logging.info("set max frequencies corresponding to cores: ")
+                for i, maxFreqency in enumerate(
+                        subprocess.run(["adb", "shell", "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_max_freq"],
+                                       stdout=subprocess.PIPE).stdout.decode('utf-8').splitlines()):
+                    logging.info("\t" + maxFreqency.ljust(10, " ") + ", core" + str(i))
+                logging.info("")
 
-                # output all counters of raw pmus
+                logging.info("set cur frequencies corresponding to cores: ")
+                for i, curFreqency in enumerate(
+                        subprocess.run(["adb", "shell", "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq"],
+                                       stdout=subprocess.PIPE).stdout.decode('utf-8').splitlines()):
+                    logging.info("\t" + curFreqency.ljust(10, " ") + ", core" + str(i))
+                logging.info("")
+
                 for i in range(0, len(raws), 6):
                     pmus = ",".join(raws[i:i + 6])
+
+                    logging.info("run command: ")
+                    logging.info("\t adb shell " + taskset + " " + simpleperf + " -e " + pmus + benchmark)
+                    print("")
 
                     datas = [
                         j for j in [
@@ -119,22 +148,19 @@ class Profiler(object):
                         ] if (j[0] == core or j[0] == 'Total')
                     ]
 
-                    # log
-                    print("\ncommand: ")
-                    print("adb", "shell", taskset, simpleperf, "-e", pmus, benchmark)
-                    print("\n")
-
-                    # out sheet of all counters
                     for j in range(0, len(datas)):
                         if datas[j][0] == core:
                             sheet.append([core, datas[j][0], frequency, datas[j][-1].replace("(", "").replace(")", ""), datas[j][2], datas[j][1], datas[-1][3]])
 
-                    # log
-                    for j in range(len(sheet)):
-                        print('\t'.join(sheet[j]))
-                    print("\n")
+                    print("")
+                    for line in sheet:
+                        for item in line:
+                            print(item.ljust(27, " "), end="")
+                        print("")
+                    print("")
 
-        # output csv of sheet
+        Path(outputfile).parent.mkdir(parents=True, exist_ok=True)
+
         with open(outputfile, "w") as f:
             w = csv.writer(f, dialect='excel')
 
@@ -144,8 +170,6 @@ class Profiler(object):
 def main(argv):
     profiler = Profiler()
 
-    # set benchmark parameters
-    # set outputfile parameters
     profiler.profile(argv.benchmark[0], argv.outputfile[0])
 
 
