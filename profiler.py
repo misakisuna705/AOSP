@@ -161,11 +161,17 @@ class Profiler(object):
 
         Path(outputfile).parent.mkdir(parents=True, exist_ok=True)
 
+        logging.info("set output directory: ")
+        logging.info(Path(outputfile).parent)
+        logging.info("")
+
         with open(outputfile, "w") as f:
             w = csv.writer(f, dialect='excel')
 
             w.writerows(sheet)
 
+        logging.info("set output file: ")
+        logging.info(outputfile)
 
 def main(argv):
     profiler = Profiler()
