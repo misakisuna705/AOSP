@@ -5,7 +5,7 @@
 * [參數](#參數)
     - [系統](#系統)
     - [目標](#目標)
-        + [Pixel 4a](#pixel-4a)
+        + [Pixel](#pixel)
         + [Android 12](#android-12)
 * [環境](#環境)
     - [git](#git)
@@ -58,18 +58,37 @@
 
 ### 目標
 
-#### [Pixel 4a](https://zh.wikipedia.org/zh-tw/Google_Pixel)
+#### [Pixel](https://zh.wikipedia.org/zh-tw/Google_Pixel)
 
-| CPU                                     |                                 | GPU        |
-| --------------------------------------- | ------------------------------- | ---------- |
-| Qualcomm® Snapdragon™ 730G（Octa-core） |                                 | Adreno 618 |
-| LITTLE cluster                          | big cluster                     |            |
-| 6x Kryo470 Silver 1.8GHz 128KB L2       | 2x Kryo470 Gold 2.2GHz 256KB L2 |            |
-| Cortex-A55                              | Cortex-A76                      |            |
-| 6 PMU counters                          | 6 PMU counters                  |            |
+-   Pixel 3 / Pixel 3XL
 
--   1MB L3
--   ARMv8
+| CPU                       |                         | GPU        |
+| ------------------------- | ----------------------- | ---------- |
+| Qualcomm® Snapdragon™ 845 |                         | Adreno 630 |
+| LITTLE cluster            | big cluster             |            |
+| 4x Kryo 385 Silver 1.8GHz | 4x Kryo 385 Gold 2.8GHz |            |
+| Cortex-A55                | Cortex-A75              |            |
+| 6 PMU counters            | 6 PMU counters          |            |
+
+-   Pixel 4 / Pixel 4XL
+
+| CPU                       |                          |                           | GPU        |
+| ------------------------- | ------------------------ | ------------------------- | ---------- |
+| Qualcomm® Snapdragon™ 855 |                          |                           | Adreno 640 |
+| LITTLE cluster            | big cluster              | Prime cluster             |            |
+| 4x Kryo 485 Silver 1.8GHz | 3x Kryo 485 Gold 2.42GHz | 1x Kryo 485 Prime 2.84GHz |            |
+| Cortex-A55                | Cortex-A76               | Cortex-A76                |            |
+| 6 PMU counters            | 6 PMU counters           | 6 PMU counters            |            |
+
+-   Pixel 4a
+
+| CPU                        |                        | GPU        |
+| -------------------------- | ---------------------- | ---------- |
+| Qualcomm® Snapdragon™ 730G |                        | Adreno 618 |
+| LITTLE cluster             | big cluster            |            |
+| 6x Kryo 470 Silver 1.8GHz  | 2x Kryo470 Gold 2.2GHz |            |
+| Cortex-A55                 | Cortex-A76             |            |
+| 6 PMU counters             | 6 PMU counters         |            |
 
 #### Android 12
 
@@ -290,8 +309,7 @@ adb shell "echo [頻率] > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_f
 ```
 
 ```zsh
-
-adb shell "taskset 01 simpleperf stat --use-devfreq-counters --per-core /data/local/tmp/Mibench/bitcnts 102400000"
+adb shell "taskset 01 simpleperf stat --use-devfreq-counters --per-core /data/local/tmp/Mibench/bitcnts [圈數]"
 ```
 
 ### 執行
@@ -318,7 +336,7 @@ adb shell "taskset [16 進位 one hot] [Simpleperf 指令]"
 python3 profiler.py [-h] [-b BENCHMARK] [-o OUTPUTFILE]
 
 # examples
-python3 profiler.py -b "/data/local/tmp/Mibench/bitcnts 102400000" -o "output/Mibench/bitcnts/102400000.csv"
+python3 profiler.py -b "/data/local/tmp/Mibench/bitcnts 84600000" -o "output/Mibench/bitcnts/84600000.csv"
 
 python3 profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m rd" -o "output/LMbench/bw_mem/512m/rd.csv"
 python3 profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m frd" -o "output/LMbench/bw_mem/512m/frd.csv"
