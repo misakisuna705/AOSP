@@ -1,5 +1,6 @@
-# !/usr/bin/env python3
+#! /usr/bin/env python3
 
+import argparse
 import csv
 import re
 import subprocess
@@ -10,7 +11,7 @@ class Profiler(object):
     def __init__(self) -> None:
         pass
 
-    def profile(self, benchmark):
+    def profile(self, benchmark, outputfile):
         # get all types of scaling governor
         governors = (subprocess.run(["adb", "shell", "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_available_governors"],
                                     stdout=subprocess.PIPE).stdout.decode('utf-8').splitlines())[0].split()
@@ -49,6 +50,15 @@ class Profiler(object):
 
         # set simpleperf parameters
         simpleperf = "simpleperf stat --use-devfreq-counters --per-core"
+
+        # log
+        print("\n set simpleperf: ")
+        print(simpleperf)
+        print("\nset benchmark: ")
+        print(benchmark)
+        print("\nset outputfile: ")
+        print(outputfile)
+        print("\n")
 
         sheet = [["setup core", "runtime core", "frequency", "coverage", "event", "count", "time"]]
 
@@ -97,7 +107,7 @@ class Profiler(object):
                 # set taskset
                 taskset = "taskset " + mask
 
-                # ouput all counters of raw pmus
+                # output all counters of raw pmus
                 for i in range(0, len(raws), 6):
                     pmus = ",".join(raws[i:i + 6])
 
@@ -124,19 +134,33 @@ class Profiler(object):
                         print('\t'.join(sheet[j]))
                     print("\n")
 
-        # ouput csv of sheet
-        with open("infos.csv", "w") as f:
+        # output csv of sheet
+        with open(outputfile, "w") as f:
             w = csv.writer(f, dialect='excel')
 
             w.writerows(sheet)
 
 
-def main():
+def main(argv):
     profiler = Profiler()
 
     # set benchmark parameters
-    profiler.profile("/data/local/tmp/Mibench/bitcnts 102400000")
+    # set outputfile parameters
+    profiler.profile(argv.benchmark[0], argv.outputfile[0])
 
 
 if __name__ == "__main__":
-    main()
+
+    parser = argparse.ArgumentParser()
+
+    group = parser.add_argument_group()
+
+    group.add_argument("-b", "--benchmark", nargs=1, type=str, help="string of benchmark command")
+    group.add_argument("-o", "--outputfile", nargs=1, type=str, help="string of path to csv file")
+
+    argv = parser.parse_args()
+
+    if not argv.benchmark or not argv.outputfile:
+        parser.error("Should have both benchmark and outputfile")
+
+    main(argv)

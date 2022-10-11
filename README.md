@@ -315,7 +315,11 @@ adb shell "taskset [16 進位 one hot] [Simpleperf 指令]"
 -   [Profiler](https://github.com/misakisuna705/AOSP/blob/main/profiler.py)
 
 ```zsh
-python3 profiler.py
+python3 profiler.py [-h] [-b BENCHMARK] [-o OUTPUTFILE]
+
+# examples
+python3 profiler.py -b "/data/local/tmp/Mibench/bitcnts 102400000" -o "output/Mibench/bitcnts/102400000.csv"
+python3 profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m rd" -o "output/LMbench/bw_mem/512m/rd.csv"
 ```
 
 ### voltage（不要看）
