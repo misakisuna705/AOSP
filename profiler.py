@@ -10,7 +10,7 @@ class Profiler(object):
     def __init__(self) -> None:
         pass
 
-    def profile(self):
+    def profile(self, benchmark):
         # get all types of scaling governor
         governors = (subprocess.run(["adb", "shell", "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_available_governors"],
                                     stdout=subprocess.PIPE).stdout.decode('utf-8').splitlines())[0].split()
@@ -46,6 +46,9 @@ class Profiler(object):
 
         # self-defined parameters
         governor = governors[2]
+
+        # set simpleperf parameters
+        simpleperf = "simpleperf stat --use-devfreq-counters --per-core"
 
         sheet = [["setup core", "runtime core", "frequency", "coverage", "event", "count", "time"]]
 
@@ -91,12 +94,6 @@ class Profiler(object):
                 subprocess.run(["adb", "shell", "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq"])
                 print("\n")
 
-                # set benchmark parameters
-                benchmark = {"MiBench": "/data/local/tmp/Mibench/bitcnts 102400000"}
-
-                # set simpleperf parameters
-                simpleperf = "simpleperf stat --use-devfreq-counters --per-core"
-
                 # set taskset
                 taskset = "taskset " + mask
 
@@ -108,14 +105,13 @@ class Profiler(object):
                         j for j in [
                             k.split() for k in filter(
                                 None,
-                                subprocess.run(["adb", "shell", taskset, simpleperf, "-e", pmus, benchmark["MiBench"]], stdout=subprocess.PIPE).stdout.decode(
-                                    'utf-8').splitlines())
+                                subprocess.run(["adb", "shell", taskset, simpleperf, "-e", pmus, benchmark], stdout=subprocess.PIPE).stdout.decode('utf-8').splitlines())
                         ] if (j[0] == core or j[0] == 'Total')
                     ]
 
                     # log
                     print("\ncommand: ")
-                    print("adb", "shell", taskset, simpleperf, "-e", pmus, benchmark["MiBench"])
+                    print("adb", "shell", taskset, simpleperf, "-e", pmus, benchmark)
                     print("\n")
 
                     # out sheet of all counters
@@ -137,7 +133,9 @@ class Profiler(object):
 
 def main():
     profiler = Profiler()
-    profiler.profile()
+
+    # set benchmark parameters
+    profiler.profile("/data/local/tmp/Mibench/bitcnts 102400000")
 
 
 if __name__ == "__main__":
