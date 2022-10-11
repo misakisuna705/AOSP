@@ -323,6 +323,10 @@ python3 profiler.py -b "/data/local/tmp/Mibench/bitcnts 102400000" -o "output/Mi
 python3 profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m rd" -o "output/LMbench/bw_mem/512m/rd.csv"
 python3 profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m frd" -o "output/LMbench/bw_mem/512m/frd.csv"
 python3 profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m cp" -o "output/LMbench/bw_mem/512m/cp.csv"
+python3 profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m fcp" -o "output/LMbench/bw_mem/512m/fcp.csv"
+
+
+python3 profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m bzero" -o "output/LMbench/bw_mem/512m/bzero.csv"
 ```
 
 ### voltage（不要看）
