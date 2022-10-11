@@ -319,7 +319,10 @@ python3 profiler.py [-h] [-b BENCHMARK] [-o OUTPUTFILE]
 
 # examples
 python3 profiler.py -b "/data/local/tmp/Mibench/bitcnts 102400000" -o "output/Mibench/bitcnts/102400000.csv"
+
 python3 profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m rd" -o "output/LMbench/bw_mem/512m/rd.csv"
+python3 profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m frd" -o "output/LMbench/bw_mem/512m/frd.csv"
+python3 profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m cp" -o "output/LMbench/bw_mem/512m/cp.csv"
 ```
 
 ### voltage（不要看）

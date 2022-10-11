@@ -137,7 +137,7 @@ class Profiler(object):
                     pmus = ",".join(raws[i:i + 6])
 
                     logging.info("run command: ")
-                    logging.info("\t adb shell " + taskset + " " + simpleperf + " -e " + pmus + benchmark)
+                    logging.info("\tadb shell " + taskset + " " + simpleperf + " -e " + pmus + benchmark)
                     print("")
 
                     datas = [
