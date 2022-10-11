@@ -324,9 +324,8 @@ python3 profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m rd" -o "output/LMben
 python3 profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m frd" -o "output/LMbench/bw_mem/512m/frd.csv"
 python3 profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m cp" -o "output/LMbench/bw_mem/512m/cp.csv"
 python3 profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m fcp" -o "output/LMbench/bw_mem/512m/fcp.csv"
-
-
 python3 profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m bzero" -o "output/LMbench/bw_mem/512m/bzero.csv"
+python3 profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m bcopy" -o "output/LMbench/bw_mem/512m/bcopy.csv"
 ```
 
 ### voltage（不要看）
