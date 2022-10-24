@@ -268,12 +268,12 @@ adb shell "[Dhrystone 指令]"
 ```zsh
 adb push aarch64-linux-gnu /data/local/tmp/Geekbench
 
-adb push Geekbench/Geekbench-5.4.0-LinuxARMPreview/geekbench_aarch64 /data/local/tmp/Geekbench
-adb push Geekbench/Geekbench-5.4.0-LinuxARMPreview/geekbench5 /data/local/tmp/Geekbench
-adb push Geekbench/Geekbench-5.4.0-LinuxARMPreview/geekbench_armv7 /data/local/tmp/Geekbench
-adb push Geekbench/Geekbench-5.4.0-LinuxARMPreview/geekbench.plar /data/local/tmp/Geekbench
+adb push geekbench/Geekbench-5.4.0-LinuxARMPreview/geekbench_aarch64 /data/local/tmp/Geekbench
+adb push geekbench/Geekbench-5.4.0-LinuxARMPreview/geekbench5 /data/local/tmp/Geekbench
+adb push geekbench/Geekbench-5.4.0-LinuxARMPreview/geekbench_armv7 /data/local/tmp/Geekbench
+adb push geekbench/Geekbench-5.4.0-LinuxARMPreview/geekbench.plar /data/local/tmp/Geekbench
 
-adb push Geekbench/Geekbench-5.4.0-LinuxARMPreview /data/local/tmp/Geekbench
+adb push geekbench/Geekbench-5.4.0-LinuxARMPreview /data/local/tmp/Geekbench
 ```
 
 ##### 執行
@@ -294,13 +294,13 @@ pip install wlauto # 安裝[workload-automation](https://github.com/ARM-software
 ##### 刷入
 
 ```zsh
-adb install-multiple Geekbench/Geekbench\ 4_4.4.2_Apkpure/*
+adb install-multiple geekbench/Geekbench\ 4_4.4.2_Apkpure/*
 ```
 
 ##### 執行
 
 ```zsh
-wa run -f -c Geekbench/Geekbench\ 4_4.4.2_Apkpure/geekbench.yaml geekbench
+wa run -f -c geekbench/Geekbench\ 4_4.4.2_Apkpure/geekbench.yaml geekbench
 ```
 
 ## Analysis
