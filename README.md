@@ -47,14 +47,7 @@
     - [查詢](#查詢)
         + [頻率](#頻率)
         + [策略](#策略)
-    - [設定](#設定)
-        + [定策略](#定策略)
-        + [定頻](#定頻)
     - [執行](#執行-4)
-        + [simpleperf](#simpleperf)
-        + [taskset](#taskset)
-    - [自動化](#自動化)
-    - [voltage（Deprecated）](#voltagedeprecated)
 * [info](#info)
     - [paper](#paper)
     - [doc](#doc)
@@ -325,6 +318,8 @@ wa run -f -c geekbench/Geekbench\ 4_4.4.2_Apkpure/geekbench.yaml geekbench
 
 ### 查詢
 
+-   [教學](doc/cpufreq.md)
+
 #### 頻率
 
 | Cortex-A55  | Cortex-A76  |
@@ -345,23 +340,6 @@ wa run -f -c geekbench/Geekbench\ 4_4.4.2_Apkpure/geekbench.yaml geekbench
 |             | 2169600     |
 |             | 2208000     |
 
-```zsh
-adb shell "ls /sys/devices/system/cpu/cpufreq" # 查看所有可用定頻策略
-adb shell "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_available_frequencies" # 查看所有核心頻率配置
-```
-
-```zsh
-adb shell "cat /sys/devices/system/cpu/cpufreq/policy*/scaling_cur_freq" # 查看策略當前頻率設定
-adb shell "cat /sys/devices/system/cpu/cpufreq/policy*/scaling_max_freq" # 查看策略最大頻率設定
-adb shell "cat /sys/devices/system/cpu/cpufreq/policy*/scaling_min_freq" # 查看策略最小頻率設定
-```
-
-```zsh
-adb shell "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq" # 查看核心當前頻率設定
-adb shell "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_max_freq" # 查看核心最大頻率設定
-adb shell "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_min_freq" # 查看核心最小頻率設定
-```
-
 #### 策略
 
 | governor    |
@@ -371,56 +349,9 @@ adb shell "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_min_freq" # 查看�
 | performance |
 | schedutil   |
 
-```zsh
-adb shell "cat /sys/devices/system/cpu/cpufreq/policy*/scaling_governor" # 查看策略當前 governor
-```
-
-```zsh
-adb shell "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_available_governors" # 查看核心可用 governor
-```
-
-### 設定
-
-#### 定策略
-
-```zsh
-adb shell "echo [可用的governor 策略] > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor"
-adb shell "echo [可用的governor 策略] > /sys/devices/system/cpu/cpufreq/policy6/scaling_governor"
-```
-
-#### 定頻
-
-```zsh
-adb shell "echo 0 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq"
-adb shell "echo 99999999 > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq"
-adb shell "echo performance > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor"
-adb shell "echo [頻率] > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq"
-adb shell "echo [頻率] > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq"
-```
-
-```zsh
-adb shell "taskset 01 simpleperf stat --use-devfreq-counters --per-core /data/local/tmp/Mibench/bitcnts [圈數]"
-```
-
 ### 執行
 
-#### simpleperf
-
-```
-adb shell "[Simpleperf 指令]"
-```
-
 -   [教學](https://github.com/misakisuna705/Simpleperf)
-
-#### taskset
-
-```zsh
-adb shell "taskset [16 進位 one hot] [Simpleperf 指令]"
-```
-
-### 自動化
-
--   [Profiler](https://github.com/misakisuna705/AOSP/blob/main/profiler.py)
 
 ```zsh
 python3 profiler.py [-h] [-b BENCHMARK] [-o OUTPUTFILE]
@@ -436,27 +367,6 @@ python3 profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m bzero" -o "output/LM
 python3 profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m bcopy" -o "output/LMbench/bw_mem/512m/bcopy.csv"
 
 python3 profiler.py -b "/data/local/tmp/Dhrystone/dry" -o "output/Dhrystone/dry.csv"
-```
-
-### voltage（Deprecated）
-
-```zsh
-# get voltage
-adb shell cat /sys/class/power_supply/battery/voltage_now
-
-# get available DVFS Governor
-adb shell cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors
-
-# set DVFS governor manual mode
-adb shell echo "userspace" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-
-# set frequency
-adb shell -c "echo "[頻率（KHz）]" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed"
-
-# set core disable
-adb shell su -c "stop mpdecision"
-adb reboot
-adb shell su -c "echo "0" > /sys/devices/system/cpu/cpu3/online"
 ```
 
 ## info
