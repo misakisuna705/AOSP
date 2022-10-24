@@ -25,27 +25,24 @@
 * [Benchmark](#benchmark)
     - [LMbench](#lmbench)
         + [刷入](#刷入-1)
-        + [執行](#執行)
     - [MiBench](#mibench)
         + [刷入](#刷入-2)
-        + [執行](#執行-1)
     - [Dhrystone](#dhrystone)
         + [刷入](#刷入-3)
-        + [執行](#執行-2)
-    - [MediaBench](#mediabench)
+    - [MediaBench（Deprecated）](#mediabenchdeprecated)
         + [H.264](#h264)
             * [刷入](#刷入-4)
-            * [執行](#執行-3)
+            * [執行](#執行)
         + [JPEG-2000](#jpeg-2000)
             * [刷入](#刷入-5)
-            * [執行](#執行-4)
+            * [執行](#執行-1)
     - [Geekbench（Deprecated）](#geekbenchdeprecated)
         + [binary](#binary)
             * [刷入](#刷入-6)
-            * [執行](#執行-5)
+            * [執行](#執行-2)
         + [apk](#apk)
             * [刷入](#刷入-7)
-            * [執行](#執行-6)
+            * [執行](#執行-3)
 * [Analysis](#analysis)
     - [查詢](#查詢)
         + [頻率](#頻率)
@@ -53,11 +50,11 @@
     - [設定](#設定)
         + [定策略](#定策略)
         + [定頻](#定頻)
-    - [執行](#執行-7)
+    - [執行](#執行-4)
         + [simpleperf](#simpleperf)
         + [taskset](#taskset)
     - [自動化](#自動化)
-    - [voltage（不要看）](#voltage不要看)
+    - [voltage（Deprecated）](#voltagedeprecated)
 * [info](#info)
     - [paper](#paper)
     - [doc](#doc)
@@ -226,12 +223,6 @@ adb root // don't need root under the path "/data/local/tmp/"
 adb push lmbench-3.0-a9/bin/aarch64 /data/local/tmp/LMbench
 ```
 
-#### 執行
-
-```zsh
-adb shell "[LMbecnch 指令]"
-```
-
 ### MiBench
 
 -   [教學](https://github.com/misakisuna705/MiBench)
@@ -240,12 +231,6 @@ adb shell "[LMbecnch 指令]"
 
 ```zsh
 adb push mibench/automotive/bitcount/bitcnts /data/local/tmp/Mibench/bitcnts
-```
-
-#### 執行
-
-```zsh
-adb shell "[MiBench 指令]"
 ```
 
 ### Dhrystone
@@ -258,13 +243,7 @@ adb shell "[MiBench 指令]"
 adb push dhrystone/v2.2/dry /data/local/tmp/Dhrystone/dry
 ```
 
-#### 執行
-
-```zsh
-adb shell "[Dhrystone 指令]"
-```
-
-### MediaBench
+### MediaBench（Deprecated）
 
 -   [教學](https://github.com/misakisuna705/MediaBench)
 
@@ -459,7 +438,7 @@ python3 profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m bcopy" -o "output/LM
 python3 profiler.py -b "/data/local/tmp/Dhrystone/dry" -o "output/Dhrystone/dry.csv"
 ```
 
-### voltage（不要看）
+### voltage（Deprecated）
 
 ```zsh
 # get voltage
