@@ -29,6 +29,16 @@
     - [MiBench](#mibench)
         + [刷入](#刷入-2)
         + [執行](#執行-1)
+    - [Dhrystone](#dhrystone)
+        + [刷入](#刷入-3)
+        + [執行](#執行-2)
+    - [Geekbench（Deprecated）](#geekbenchdeprecated)
+        + [binary](#binary)
+            * [刷入](#刷入-4)
+            * [執行](#執行-3)
+        + [apk](#apk)
+            * [刷入](#刷入-5)
+            * [執行](#執行-4)
 * [Analysis](#analysis)
     - [查詢](#查詢)
         + [頻率](#頻率)
@@ -36,7 +46,7 @@
     - [設定](#設定)
         + [定策略](#定策略)
         + [定頻](#定頻)
-    - [執行](#執行-2)
+    - [執行](#執行-5)
         + [simpleperf](#simpleperf)
         + [taskset](#taskset)
     - [自動化](#自動化)
@@ -201,6 +211,8 @@ adb root // don't need root under the path "/data/local/tmp/"
 
 ### LMbench
 
+-   [教學](https://github.com/misakisuna705/LMbench)
+
 #### 刷入
 
 ```zsh
@@ -209,13 +221,13 @@ adb push lmbench-3.0-a9/bin/aarch64 /data/local/tmp/LMbench
 
 #### 執行
 
--   [教學](https://github.com/misakisuna705/LMbench)
-
 ```zsh
 adb shell "[LMbecnch 指令]"
 ```
 
 ### MiBench
+
+-   [教學](https://github.com/misakisuna705/MiBench)
 
 #### 刷入
 
@@ -225,10 +237,70 @@ adb push mibench/automotive/bitcount/bitcnts /data/local/tmp/Mibench/bitcnts
 
 #### 執行
 
--   [教學](https://github.com/misakisuna705/MiBench)
-
 ```zsh
 adb shell "[MiBench 指令]"
+```
+
+### Dhrystone
+
+-   [教學](https://github.com/misakisuna705/Dhrystone)
+
+#### 刷入
+
+```zsh
+adb push dhrystone/v2.2/dry /data/local/tmp/Dhrystone/dry
+```
+
+#### 執行
+
+```zsh
+adb shell "[Dhrystone 指令]"
+```
+
+### Geekbench（Deprecated）
+
+-   [教學](https://github.com/misakisuna705/Geekbench)
+
+#### binary
+
+##### 刷入
+
+```zsh
+adb push aarch64-linux-gnu /data/local/tmp/Geekbench
+
+adb push Geekbench/Geekbench-5.4.0-LinuxARMPreview/geekbench_aarch64 /data/local/tmp/Geekbench
+adb push Geekbench/Geekbench-5.4.0-LinuxARMPreview/geekbench5 /data/local/tmp/Geekbench
+adb push Geekbench/Geekbench-5.4.0-LinuxARMPreview/geekbench_armv7 /data/local/tmp/Geekbench
+adb push Geekbench/Geekbench-5.4.0-LinuxARMPreview/geekbench.plar /data/local/tmp/Geekbench
+
+adb push Geekbench/Geekbench-5.4.0-LinuxARMPreview /data/local/tmp/Geekbench
+```
+
+##### 執行
+
+```zsh
+adb shell LD_LIBRARY_PATH=/data/local/tmp/Geekbench/aarch64-linux-gnu /data/local/tmp/Geekbench/aarch64-linux-gnu/ld-linux-aarch64.so.1 /data/local/tmp/Geekbench/Geekbench-5.4.0-LinuxARMPreview/geekbench_aarch64
+```
+
+#### apk
+
+-   安裝 Java 並在 shell profile 配置 openjdk 路徑
+-   安裝 Android Studio 並在 shell profile 配置 Android sdk 的 build-tools 路徑
+
+```zsh
+pip install wlauto # 安裝[workload-automation](https://github.com/ARM-software/workload-automation)
+```
+
+##### 刷入
+
+```zsh
+adb install-multiple Geekbench/Geekbench\ 4_4.4.2_Apkpure/*
+```
+
+##### 執行
+
+```zsh
+wa run -f -c geekbench.yaml geekbench
 ```
 
 ## Analysis
@@ -344,6 +416,8 @@ python3 profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m cp" -o "output/LMben
 python3 profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m fcp" -o "output/LMbench/bw_mem/512m/fcp.csv"
 python3 profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m bzero" -o "output/LMbench/bw_mem/512m/bzero.csv"
 python3 profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m bcopy" -o "output/LMbench/bw_mem/512m/bcopy.csv"
+
+python3 profiler.py -b "/data/local/tmp/Dhrystone/dry" -o "output/Dhrystone/dry.csv"
 ```
 
 ### voltage（不要看）
