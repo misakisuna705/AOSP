@@ -351,7 +351,7 @@ wa run -f -c geekbench/Geekbench\ 4_4.4.2_Apkpure/geekbench.yaml geekbench
 
 ### 執行
 
--   [教學](https://github.com/misakisuna705/Simpleperf)
+-   [Simpleperf](https://github.com/misakisuna705/Simpleperf)
 
 ```zsh
 python3 profiler.py [-h] [-b BENCHMARK] [-o OUTPUTFILE]
