@@ -43,7 +43,7 @@
         + [apk](#apk)
             * [刷入](#刷入-7)
             * [執行](#執行-3)
-* [Analysis](#analysis)
+* [Profiler](#profiler)
     - [查詢](#查詢)
         + [頻率](#頻率)
         + [策略](#策略)
@@ -314,7 +314,7 @@ adb install-multiple geekbench/Geekbench\ 4_4.4.2_Apkpure/*
 wa run -f -c geekbench/Geekbench\ 4_4.4.2_Apkpure/geekbench.yaml geekbench
 ```
 
-## Analysis
+## Profiler
 
 ### 查詢
 
