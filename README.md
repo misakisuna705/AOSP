@@ -32,13 +32,20 @@
     - [Dhrystone](#dhrystone)
         + [刷入](#刷入-3)
         + [執行](#執行-2)
-    - [Geekbench（Deprecated）](#geekbenchdeprecated)
-        + [binary](#binary)
+    - [MediaBench](#mediabench)
+        + [H.264](#h264)
             * [刷入](#刷入-4)
             * [執行](#執行-3)
-        + [apk](#apk)
+        + [JPEG-2000](#jpeg-2000)
             * [刷入](#刷入-5)
             * [執行](#執行-4)
+    - [Geekbench（Deprecated）](#geekbenchdeprecated)
+        + [binary](#binary)
+            * [刷入](#刷入-6)
+            * [執行](#執行-5)
+        + [apk](#apk)
+            * [刷入](#刷入-7)
+            * [執行](#執行-6)
 * [Analysis](#analysis)
     - [查詢](#查詢)
         + [頻率](#頻率)
@@ -46,7 +53,7 @@
     - [設定](#設定)
         + [定策略](#定策略)
         + [定頻](#定頻)
-    - [執行](#執行-5)
+    - [執行](#執行-7)
         + [simpleperf](#simpleperf)
         + [taskset](#taskset)
     - [自動化](#自動化)
@@ -255,6 +262,38 @@ adb push dhrystone/v2.2/dry /data/local/tmp/Dhrystone/dry
 
 ```zsh
 adb shell "[Dhrystone 指令]"
+```
+
+### MediaBench
+
+-   [教學](https://github.com/misakisuna705/MediaBench)
+
+#### H.264
+
+##### 刷入
+
+```zsh
+adb push mediaBench/mb2_vid_h264 /data/local/tmp/MediaBench/mb2_vid_h264
+```
+
+##### 執行
+
+```zsh
+
+```
+
+#### JPEG-2000
+
+##### 刷入
+
+```zsh
+adb push mediaBench/mb2_vid_jpg2000 /data/local/tmp/MediaBench/mb2_vid_jpg2000
+```
+
+##### 執行
+
+```zsh
+
 ```
 
 ### Geekbench（Deprecated）
