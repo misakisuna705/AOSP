@@ -300,7 +300,7 @@ adb install-multiple Geekbench/Geekbench\ 4_4.4.2_Apkpure/*
 ##### 執行
 
 ```zsh
-wa run -f -c geekbench.yaml geekbench
+wa run -f -c Geekbench/Geekbench\ 4_4.4.2_Apkpure/geekbench.yaml geekbench
 ```
 
 ## Analysis
