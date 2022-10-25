@@ -6,6 +6,9 @@
     - [系統](#系統)
     - [目標](#目標)
         + [Pixel](#pixel)
+            * [Pixel 3 / Pixel 3XL](#pixel-3--pixel-3xl)
+            * [Pixel 4 / Pixel 4XL](#pixel-4--pixel-4xl)
+            * [Pixel 4a](#pixel-4a)
         + [Android 12](#android-12)
 * [環境](#環境)
     - [git](#git)
@@ -43,11 +46,13 @@
         + [apk](#apk)
             * [刷入](#刷入-7)
             * [執行](#執行-3)
+    - [SPEC CPU® 2017](#spec-cpu-2017)
+        + [教學](#教學)
+            * [安裝](#安裝-1)
+            * [配置](#配置)
+            * [執行](#執行-4)
 * [Profiler](#profiler)
-    - [查詢](#查詢)
-        + [頻率](#頻率)
-        + [策略](#策略)
-    - [執行](#執行-4)
+    - [執行](#執行-5)
 * [info](#info)
     - [paper](#paper)
     - [doc](#doc)
@@ -67,7 +72,7 @@
 
 #### [Pixel](https://zh.wikipedia.org/zh-tw/Google_Pixel)
 
--   Pixel 3 / Pixel 3XL
+##### Pixel 3 / Pixel 3XL
 
 | CPU                       |                         | GPU        |
 | ------------------------- | ----------------------- | ---------- |
@@ -77,7 +82,7 @@
 | Cortex-A55                | Cortex-A75              |            |
 | 6 PMU counters            | 6 PMU counters          |            |
 
--   Pixel 4 / Pixel 4XL
+##### Pixel 4 / Pixel 4XL
 
 | CPU                       |                          |                           | GPU        |
 | ------------------------- | ------------------------ | ------------------------- | ---------- |
@@ -87,7 +92,9 @@
 | Cortex-A55                | Cortex-A76               | Cortex-A76                |            |
 | 6 PMU counters            | 6 PMU counters           | 6 PMU counters            |            |
 
--   Pixel 4a
+##### Pixel 4a
+
+-   CPU
 
 | CPU                        |                        | GPU        |
 | -------------------------- | ---------------------- | ---------- |
@@ -96,6 +103,35 @@
 | 6x Kryo 470 Silver 1.8GHz  | 2x Kryo470 Gold 2.2GHz |            |
 | Cortex-A55                 | Cortex-A76             |            |
 | 6 PMU counters             | 6 PMU counters         |            |
+
+-   cluster
+
+| Cortex-A55  | Cortex-A76  |
+| ----------- | ----------- |
+| cpu0 - cpu5 | cpu6 - cpu7 |
+| policy0     | policy6     |
+| `300000`    | `300000`    |
+| 576000      | 652800      |
+| 768000      | 806400      |
+| 1017600     | 979200      |
+| 1248000     | 1094400     |
+| `1324800`   | 1209600     |
+| 1497600     | `1324800`   |
+| 1612800     | 1555200     |
+| `1708800`   | `1708800`   |
+| 1804800     | 1843200     |
+|             | 1939200     |
+|             | 2169600     |
+|             | 2208000     |
+
+-   governor
+
+| governor    |
+| ----------- |
+| userspace   |
+| powersave   |
+| performance |
+| schedutil   |
 
 #### Android 12
 
@@ -314,40 +350,43 @@ adb install-multiple geekbench/Geekbench\ 4_4.4.2_Apkpure/*
 wa run -f -c geekbench/Geekbench\ 4_4.4.2_Apkpure/geekbench.yaml geekbench
 ```
 
+### SPEC CPU® 2017
+
+#### 教學
+
+##### 安裝
+
+```zsh
+sudo mount -t iso9660 cpu2017-1.0.5.iso /mnt
+cd /mnt
+./install.sh -d /home/pi/speccpu2017
+```
+
+##### 配置
+
+```zsh
+cd /home/pi/speccpu2017
+source shrc
+
+cp config/Example-gcc-linux-aarch64.cfg config/test.cfg
+
+which gcc g++ gfortrain
+/usr/bin/gcc
+/usr/bin/g++
+
+vi test.cfg
+define gcc_dir /usr
+```
+
+##### 執行
+
+```zsh
+runcpu --config test.cfg --size test --tune base --iterations=1 intspeed
+```
+
 ## Profiler
 
-### 查詢
-
 -   [教學](doc/cpufreq.md)
-
-#### 頻率
-
-| Cortex-A55  | Cortex-A76  |
-| ----------- | ----------- |
-| cpu0 - cpu5 | cpu6 - cpu7 |
-| policy0     | policy6     |
-| `300000`    | `300000`    |
-| 576000      | 652800      |
-| 768000      | 806400      |
-| 1017600     | 979200      |
-| 1248000     | 1094400     |
-| `1324800`   | 1209600     |
-| 1497600     | `1324800`   |
-| 1612800     | 1555200     |
-| `1708800`   | `1708800`   |
-| 1804800     | 1843200     |
-|             | 1939200     |
-|             | 2169600     |
-|             | 2208000     |
-
-#### 策略
-
-| governor    |
-| ----------- |
-| userspace   |
-| powersave   |
-| performance |
-| schedutil   |
 
 ### 執行
 
