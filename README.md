@@ -47,10 +47,8 @@
             * [刷入](#刷入-7)
             * [執行](#執行-3)
     - [SPEC CPU® 2017](#spec-cpu-2017)
-        + [教學](#教學)
-            * [安裝](#安裝-1)
-            * [配置](#配置)
-            * [執行](#執行-4)
+    - [刷入](#刷入-8)
+    - [執行](#執行-4)
 * [Profiler](#profiler)
     - [執行](#執行-5)
 * [info](#info)
@@ -341,7 +339,7 @@ pip install wlauto # 安裝[workload-automation](https://github.com/ARM-software
 ##### 刷入
 
 ```zsh
-adb install-multiple geekbench/Geekbench\ 4_4.4.2_Apkpure/*
+adb install-multiple geekbench/Geekbench\ 4_4.4.2_Apkpure/*.apk
 ```
 
 ##### 執行
@@ -352,37 +350,15 @@ wa run -f -c geekbench/Geekbench\ 4_4.4.2_Apkpure/geekbench.yaml geekbench
 
 ### SPEC CPU® 2017
 
-#### 教學
+-   [教學](https://github.com/misakisuna705/SPEC-CPU-2017)
 
-##### 安裝
-
-```zsh
-sudo mount -t iso9660 cpu2017-1.0.5.iso /mnt
-cd /mnt
-./install.sh -d /home/pi/speccpu2017
-```
-
-##### 配置
+### 刷入
 
 ```zsh
-cd /home/pi/speccpu2017
-source shrc
-
-cp config/Example-gcc-linux-aarch64.cfg config/test.cfg
-
-which gcc g++ gfortrain
-/usr/bin/gcc
-/usr/bin/g++
-
-vi test.cfg
-define gcc_dir /usr
+adb push speccpu2017/benchspec/CPU/600.perlbench_s/run/run_base_test_mytest-64.0000 /data/local/tmp/SpecCpu2017/600.perlbench_s
 ```
 
-##### 執行
-
-```zsh
-runcpu --config test.cfg --size test --tune base --iterations=1 intspeed
-```
+### 執行
 
 ## Profiler
 
