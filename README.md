@@ -47,10 +47,9 @@
             * [刷入](#刷入-7)
             * [執行](#執行-3)
     - [SPEC CPU® 2017](#spec-cpu-2017)
-    - [刷入](#刷入-8)
-    - [執行](#執行-4)
+        + [刷入](#刷入-8)
 * [Profiler](#profiler)
-    - [執行](#執行-5)
+    - [執行](#執行-4)
 * [info](#info)
     - [paper](#paper)
     - [doc](#doc)
@@ -352,13 +351,11 @@ wa run -f -c geekbench/Geekbench\ 4_4.4.2_Apkpure/geekbench.yaml geekbench
 
 -   [教學](https://github.com/misakisuna705/SPEC-CPU-2017)
 
-### 刷入
+#### 刷入
 
 ```zsh
 adb push speccpu2017/benchspec/CPU/600.perlbench_s/run/run_base_test_mytest-64.0000 /data/local/tmp/SpecCpu2017/600.perlbench_s
 ```
-
-### 執行
 
 ## Profiler
 
