@@ -48,8 +48,10 @@
             * [執行](#執行-3)
     - [SPEC CPU® 2017](#spec-cpu-2017)
         + [刷入](#刷入-8)
+        + [執行](#執行-4)
+            * [600.perlbench_s](#600perlbench_s)
 * [Profiler](#profiler)
-    - [執行](#執行-4)
+    - [執行](#執行-5)
 * [info](#info)
     - [paper](#paper)
     - [doc](#doc)
@@ -354,7 +356,15 @@ wa run -f -c geekbench/Geekbench\ 4_4.4.2_Apkpure/geekbench.yaml geekbench
 #### 刷入
 
 ```zsh
-adb push speccpu2017/benchspec/CPU/600.perlbench_s/run/run_base_test_mytest-64.0000 /data/local/tmp/SpecCpu2017/600.perlbench_s
+adb push SpecCpu2017 /data/local/tmp
+```
+
+#### 執行
+
+##### 600.perlbench_s
+
+```zsh
+adb shell "cd /data/local/tmp/SpecCpu2017/600.perlbench_s/run/run_base_test_mytest-64.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./run.sh"
 ```
 
 ## Profiler
