@@ -49,8 +49,11 @@
     - [SPEC CPU® 2017](#spec-cpu-2017)
         + [刷入](#刷入-8)
         + [執行](#執行-4)
+    - [SPEC CPU® 2006](#spec-cpu-2006)
+        + [刷入](#刷入-9)
+        + [執行](#執行-5)
 * [Profiler](#profiler)
-    - [執行](#執行-5)
+    - [執行](#執行-6)
 * [info](#info)
     - [paper](#paper)
     - [doc](#doc)
@@ -355,47 +358,118 @@ wa run -f -c geekbench/Geekbench\ 4_4.4.2_Apkpure/geekbench.yaml geekbench
 #### 刷入
 
 ```zsh
-adb push SpecCpu2017 /data/local/tmp
+adb push speccpu2017 /data/local/tmp
 ```
 
 #### 執行
 
 ```zsh
 # 600.perlbench_s
-adb shell "cd /data/local/tmp/SpecCpu2017/600.perlbench_s/run_base_test_mytest-64.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./600.perlbench_s.sh"
+adb shell "cd /data/local/tmp/speccpu2017/600.perlbench_s/run_base_test_mytest-64.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./600.perlbench_s.sh"
 
 # 602.gcc_s (Deprecated)
-adb shell "cd /data/local/tmp/SpecCpu2017/602.gcc_s/run_base_test_mytest-64.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./602.gcc_s.sh"
+adb shell "cd /data/local/tmp/speccpu2017/602.gcc_s/run_base_test_mytest-64.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./602.gcc_s.sh"
 
 # 605.mcf_s
-adb shell "cd /data/local/tmp/SpecCpu2017/605.mcf_s/run_base_test_mytest-64.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./605.mcf_s.sh"
+adb shell "cd /data/local/tmp/speccpu2017/605.mcf_s/run_base_test_mytest-64.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./605.mcf_s.sh"
 
 # 619.lbm_s
-adb shell "cd /data/local/tmp/SpecCpu2017/619.lbm_s/run_base_test_mytest-64.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./619.lbm_s.sh"
+adb shell "cd /data/local/tmp/speccpu2017/619.lbm_s/run_base_test_mytest-64.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./619.lbm_s.sh"
 
 # 620.omnetpp_s
-adb shell "cd /data/local/tmp/SpecCpu2017/620.omnetpp_s/run_base_test_mytest-64.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./620.omnetpp_s.sh"
+adb shell "cd /data/local/tmp/speccpu2017/620.omnetpp_s/run_base_test_mytest-64.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./620.omnetpp_s.sh"
 
 # 623.xalancbmk_s
-adb shell "cd /data/local/tmp/SpecCpu2017/623.xalancbmk_s/run_base_test_mytest-64.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./623.xalancbmk_s.sh"
+adb shell "cd /data/local/tmp/speccpu2017/623.xalancbmk_s/run_base_test_mytest-64.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./623.xalancbmk_s.sh"
 
 # 625.x264_s
-adb shell "cd /data/local/tmp/SpecCpu2017/625.x264_s/run_base_test_mytest-64.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./625.x264_s.sh"
+adb shell "cd /data/local/tmp/speccpu2017/625.x264_s/run_base_test_mytest-64.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./625.x264_s.sh"
 
 # 631.deepsjeng_s (Deprecated)
-adb shell "cd /data/local/tmp/SpecCpu2017/631.deepsjeng_s/run_base_test_mytest-64.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./631.deepsjeng_s.sh"
+adb shell "cd /data/local/tmp/speccpu2017/631.deepsjeng_s/run_base_test_mytest-64.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./631.deepsjeng_s.sh"
 
 # 638.imagick_s
-adb shell "cd /data/local/tmp/SpecCpu2017/638.imagick_s/run_base_test_mytest-64.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./638.imagick_s.sh"
+adb shell "cd /data/local/tmp/speccpu2017/638.imagick_s/run_base_test_mytest-64.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./638.imagick_s.sh"
 
 # 641.leela_s
-adb shell "cd /data/local/tmp/SpecCpu2017/641.leela_s/run_base_test_mytest-64.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./641.leela_s.sh"
+adb shell "cd /data/local/tmp/speccpu2017/641.leela_s/run_base_test_mytest-64.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./641.leela_s.sh"
 
 # 644.nab_s
-adb shell "cd /data/local/tmp/SpecCpu2017/644.nab_s/run_base_test_mytest-64.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./644.nab_s.sh"
+adb shell "cd /data/local/tmp/speccpu2017/644.nab_s/run_base_test_mytest-64.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./644.nab_s.sh"
 
 # 657.xz_s
-adb shell "cd /data/local/tmp/SpecCpu2017/657.xz_s/run_base_test_mytest-64.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./657.xz_s.sh"
+adb shell "cd /data/local/tmp/speccpu2017/657.xz_s/run_base_test_mytest-64.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./657.xz_s.sh"
+```
+
+### SPEC CPU® 2006
+
+-   [教學](https://github.com/misakisuna705/SPEC-CPU-2006)
+
+#### 刷入
+
+```zsh
+adb push speccpu2006 /data/local/tmp
+```
+
+#### 執行
+
+```zsh
+# 400.perlbench
+adb shell "cd /data/local/tmp speccpu2006/400.perlbench/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./400.perlbench.sh"
+
+# 401.bzip2
+adb shell "cd /data/local/tmp speccpu2006/401.bzip2/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./401.bzip2.sh"
+
+# 403.gcc
+adb shell "cd /data/local/tmp speccpu2006/403.gcc/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./403.gcc.sh"
+
+# 429.mcf
+adb shell "cd /data/local/tmp speccpu2006/429.mcf/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./429.mcf.sh"
+
+# 433.milc
+adb shell "cd /data/local/tmp speccpu2006/433.milc/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./433.milc.sh"
+
+# 444.namd
+adb shell "cd /data/local/tmp speccpu2006/444.namd/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./444.namd.sh"
+
+# 445.gobmk
+adb shell "cd /data/local/tmp speccpu2006/445.gobmk/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./445.gobmk.sh"
+
+# 447.dealII
+adb shell "cd /data/local/tmp speccpu2006/447.dealII/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./447.dealII.sh"
+
+# 450.soplex
+adb shell "cd /data/local/tmp speccpu2006/450.soplex/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./450.soplex.sh"
+
+# 453.povray
+adb shell "cd /data/local/tmp speccpu2006/453.povray/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./453.povray.sh"
+
+# 456.hmmer
+adb shell "cd /data/local/tmp speccpu2006/456.hmmer/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./456.hmmer.sh"
+
+# 458.sjeng
+adb shell "cd /data/local/tmp speccpu2006/458.sjeng/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./458.sjeng.sh"
+
+# 462.libquantum
+adb shell "cd /data/local/tmp speccpu2006/462.libquantum/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./462.libquantum.sh"
+
+# 464.h264ref
+adb shell "cd /data/local/tmp speccpu2006/464.h264ref/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./464.h264ref.sh"
+
+# 470.lbm
+adb shell "cd /data/local/tmp speccpu2006/470.lbm/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./470.lbm.sh"
+
+# 471.omnetpp
+adb shell "cd /data/local/tmp speccpu2006/471.omnetpp/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./471.omnetpp.sh"
+
+# 473.astar
+adb shell "cd /data/local/tmp speccpu2006/473.astar/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./473.astar.sh"
+
+# 482.sphinx3
+adb shell "cd /data/local/tmp speccpu2006/482.sphinx3/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./482.sphinx3.sh"
+
+# 483.xalancbmk
+adb shell "cd /data/local/tmp speccpu2006/483.xalancbmk/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./483.xalancbmk.sh"
 ```
 
 ## Profiler
