@@ -418,7 +418,7 @@ python3 src/profiler.py -b "/data/local/tmp/SpecCpu2017/623.xalancbmk_s/run_base
 python3 src/profiler.py -b "/data/local/tmp/SpecCpu2017/625.x264_s/run_base_test_mytest-64.0000/625.x264_s.sh" -o "bin/SpecCpu2017/625.x264_s.csv"
 
 ## 631.deepsjeng_s (Deprecated)
-python3 src/profiler.py -b "/data/local/tmp/SpecCpu2017/631.deepsjeng_s/run_base_test_mytest-64.0000/631.deepsjeng_s.sh" -o "bin/SpecCpu2017/631.deepsjeng_s.csv"
+## python3 src/profiler.py -b "/data/local/tmp/SpecCpu2017/631.deepsjeng_s/run_base_test_mytest-64.0000/631.deepsjeng_s.sh" -o "bin/SpecCpu2017/631.deepsjeng_s.csv"
 
 ## 638.imagick_s
 python3 src/profiler.py -b "/data/local/tmp/SpecCpu2017/638.imagick_s/run_base_test_mytest-64.0000/638.imagick_s.sh" -o "bin/SpecCpu2017/638.imagick_s.csv"
