@@ -50,9 +50,8 @@
         + [刷入](#刷入-8)
     - [SPEC CPU® 2006](#spec-cpu-2006)
         + [刷入](#刷入-9)
-        + [執行](#執行-4)
 * [Profiler](#profiler)
-    - [執行](#執行-5)
+    - [執行](#執行-4)
 * [info](#info)
     - [paper](#paper)
     - [doc](#doc)
@@ -370,67 +369,6 @@ adb push speccpu2017 /data/local/tmp
 adb push speccpu2006 /data/local/tmp
 ```
 
-#### 執行
-
-```zsh
-# 400.perlbench
-adb shell "cd /data/local/tmp speccpu2006/400.perlbench/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./400.perlbench.sh"
-
-# 401.bzip2
-adb shell "cd /data/local/tmp speccpu2006/401.bzip2/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./401.bzip2.sh"
-
-# 403.gcc
-adb shell "cd /data/local/tmp speccpu2006/403.gcc/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./403.gcc.sh"
-
-# 429.mcf
-adb shell "cd /data/local/tmp speccpu2006/429.mcf/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./429.mcf.sh"
-
-# 433.milc
-adb shell "cd /data/local/tmp speccpu2006/433.milc/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./433.milc.sh"
-
-# 444.namd
-adb shell "cd /data/local/tmp speccpu2006/444.namd/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./444.namd.sh"
-
-# 445.gobmk
-adb shell "cd /data/local/tmp speccpu2006/445.gobmk/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./445.gobmk.sh"
-
-# 447.dealII
-adb shell "cd /data/local/tmp speccpu2006/447.dealII/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./447.dealII.sh"
-
-# 450.soplex
-adb shell "cd /data/local/tmp speccpu2006/450.soplex/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./450.soplex.sh"
-
-# 453.povray
-adb shell "cd /data/local/tmp speccpu2006/453.povray/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./453.povray.sh"
-
-# 456.hmmer
-adb shell "cd /data/local/tmp speccpu2006/456.hmmer/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./456.hmmer.sh"
-
-# 458.sjeng
-adb shell "cd /data/local/tmp speccpu2006/458.sjeng/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./458.sjeng.sh"
-
-# 462.libquantum
-adb shell "cd /data/local/tmp speccpu2006/462.libquantum/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./462.libquantum.sh"
-
-# 464.h264ref
-adb shell "cd /data/local/tmp speccpu2006/464.h264ref/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./464.h264ref.sh"
-
-# 470.lbm
-adb shell "cd /data/local/tmp speccpu2006/470.lbm/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./470.lbm.sh"
-
-# 471.omnetpp
-adb shell "cd /data/local/tmp speccpu2006/471.omnetpp/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./471.omnetpp.sh"
-
-# 473.astar
-adb shell "cd /data/local/tmp speccpu2006/473.astar/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./473.astar.sh"
-
-# 482.sphinx3
-adb shell "cd /data/local/tmp speccpu2006/482.sphinx3/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./482.sphinx3.sh"
-
-# 483.xalancbmk
-adb shell "cd /data/local/tmp speccpu2006/483.xalancbmk/run_base_test_lnx64-gcc.0000 && taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-ase-spec,raw-br-immed-retired,raw-br-immed-spec,raw-br-indirect-spec,raw-br-mis-pred,raw-br-mis-pred-retired ./483.xalancbmk.sh"
-```
-
 ## Profiler
 
 -   [教學](doc/cpufreq.md)
@@ -495,6 +433,63 @@ python3 src/profiler.py -b "/data/local/tmp/SpecCpu2017/644.nab_s/run_base_test_
 python3 src/profiler.py -b "/data/local/tmp/SpecCpu2017/657.xz_s/run_base_test_mytest-64.0000/657.xz_s.sh" -o "bin/SpecCpu2017/657.xz_s.csv"
 
 # SPEC CPU® 2006
+
+## 400.perlbench
+python3 src/profiler.py -b "/data/local/tmp/SpecCpu2006/400.perlbench/run_base_test_lnx64-gcc.0000/400.perlbench.sh" -o "bin/SpecCpu2006/400.perlbench.csv"
+
+## 401.bzip2
+python3 src/profiler.py -b "/data/local/tmp/SpecCpu2006/401.bzip2/run_base_test_lnx64-gcc.0000/401.bzip2.sh" -o "bin/SpecCpu2006/401.bzip2.csv"
+
+## 403.gcc
+python3 src/profiler.py -b "/data/local/tmp/SpecCpu2006/403.gcc/run_base_test_lnx64-gcc.0000/403.gcc.sh" -o "bin/SpecCpu2006/403.gcc.csv"
+
+## 429.mcf
+python3 src/profiler.py -b "/data/local/tmp/SpecCpu2006/429.mcf/run_base_test_lnx64-gcc.0000/429.mcf.sh" -o "bin/SpecCpu2006/429.mcf.csv"
+
+## 433.milc
+python3 src/profiler.py -b "/data/local/tmp/SpecCpu2006/433.milc/run_base_test_lnx64-gcc.0000/433.milc.sh" -o "bin/SpecCpu2006/433.milc.csv"
+
+## 444.namd
+python3 src/profiler.py -b "/data/local/tmp/SpecCpu2006/444.namd/run_base_test_lnx64-gcc.0000/444.namd.sh" -o "bin/SpecCpu2006/444.namd.csv"
+
+## 445.gobmk
+python3 src/profiler.py -b "/data/local/tmp/SpecCpu2006/445.gobmk/run_base_test_lnx64-gcc.0000/445.gobmk.sh" -o "bin/SpecCpu2006/445.gobmk.csv"
+
+## 447.dealII
+python3 src/profiler.py -b "/data/local/tmp/SpecCpu2006/447.dealII/run_base_test_lnx64-gcc.0000/447.dealII.sh" -o "bin/SpecCpu2006/447.dealII.csv"
+
+## 450.soplex
+python3 src/profiler.py -b "/data/local/tmp/SpecCpu2006/450.soplex/run_base_test_lnx64-gcc.0000/450.soplex.sh" -o "bin/SpecCpu2006/450.soplex.csv"
+
+## 453.povray
+python3 src/profiler.py -b "/data/local/tmp/SpecCpu2006/453.povray/run_base_test_lnx64-gcc.0000/453.povray.sh" -o "bin/SpecCpu2006/453.povray.csv"
+
+## 456.hmmer
+python3 src/profiler.py -b "/data/local/tmp/SpecCpu2006/456.hmmer/run_base_test_lnx64-gcc.0000/456.hmmer.sh" -o "bin/SpecCpu2006/456.hmmer.csv"
+
+## 458.sjeng
+python3 src/profiler.py -b "/data/local/tmp/SpecCpu2006/458.sjeng/run_base_test_lnx64-gcc.0000/458.sjeng.sh" -o "bin/SpecCpu2006/458.sjeng.csv"
+
+## 462.libquantum
+python3 src/profiler.py -b "/data/local/tmp/SpecCpu2006/462.libquantum/run_base_test_lnx64-gcc.0000/462.libquantum.sh" -o "bin/SpecCpu2006/462.libquantum.csv"
+
+## 464.h264ref
+python3 src/profiler.py -b "/data/local/tmp/SpecCpu2006/464.h264ref/run_base_test_lnx64-gcc.0000/464.h264ref.sh" -o "bin/SpecCpu2006/464.h264ref.csv"
+
+## 470.lbm
+python3 src/profiler.py -b "/data/local/tmp/SpecCpu2006/470.lbm/run_base_test_lnx64-gcc.0000/470.lbm.sh" -o "bin/SpecCpu2006/470.lbm.csv"
+
+## 471.omnetpp
+python3 src/profiler.py -b "/data/local/tmp/SpecCpu2006/471.omnetpp/run_base_test_lnx64-gcc.0000/471.omnetpp.sh" -o "bin/SpecCpu2006/471.omnetpp.csv"
+
+## 473.astar
+python3 src/profiler.py -b "/data/local/tmp/SpecCpu2006/473.astar/run_base_test_lnx64-gcc.0000/473.astar.sh" -o "bin/SpecCpu2006/473.astar.csv"
+
+## 482.sphinx3
+python3 src/profiler.py -b "/data/local/tmp/SpecCpu2006/482.sphinx3/run_base_test_lnx64-gcc.0000/482.sphinx3.sh" -o "bin/SpecCpu2006/482.sphinx3.csv"
+
+## 483.xalancbmk
+python3 src/profiler.py -b "/data/local/tmp/SpecCpu2006/483.xalancbmk/run_base_test_lnx64-gcc.0000/483.xalancbmk.sh" -o "bin/SpecCpu2006/483.xalancbmk.csv"
 ```
 
 ## info
