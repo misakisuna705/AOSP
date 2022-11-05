@@ -1,5 +1,11 @@
 # Mibench
-python3 src/profiler.py -b "/data/local/tmp/Mibench/bitcnts 84600000" -o "bin/Mibench/bitcnts/84600000.csv"
+
+## automotive
+
+### bitcount
+### python3 src/profiler.py -b "/data/local/tmp/Mibench/automotive/bitcount/runme_small.sh" -o "bin/Mibench/bitcnts/runme_small.csv"
+### python3 src/profiler.py -b "/data/local/tmp/Mibench/automotive/bitcount/runme_large.sh" -o "bin/Mibench/bitcnts/runme_large.csv"
+python3 src/profiler.py -b "/data/local/tmp/Mibench/automotive/bitcount/bitcnts 84600000" -o "bin/Mibench/bitcnts/84600000.csv"
 
 # LMbench
 

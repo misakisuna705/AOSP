@@ -258,7 +258,7 @@ adb push lmbench-3.0-a9/bin/aarch64 /data/local/tmp/LMbench
 #### 刷入
 
 ```zsh
-adb push mibench/automotive/bitcount/bitcnts /data/local/tmp/Mibench/bitcnts
+adb push dat/Mibench /data/local/tmp
 ```
 
 ### Dhrystone
