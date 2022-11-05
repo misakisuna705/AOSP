@@ -376,7 +376,7 @@ adb push speccpu2006 /data/local/tmp
 
 ### 執行
 
--   [Profiler](src/profiler.py)
+-   [Examples](src/run.sh)
 
 ```zsh
 python3 profiler.py [-h] [-b BENCHMARK] [-o OUTPUTFILE]
