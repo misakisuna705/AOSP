@@ -27,31 +27,24 @@
         + [提權](#提權)
 * [Benchmark](#benchmark)
     - [LMbench](#lmbench)
-        + [刷入](#刷入-1)
     - [MiBench](#mibench)
-        + [刷入](#刷入-2)
     - [Dhrystone](#dhrystone)
-        + [刷入](#刷入-3)
     - [MediaBench（Deprecated）](#mediabenchdeprecated)
         + [H.264](#h264)
-            * [刷入](#刷入-4)
-            * [執行](#執行)
         + [JPEG-2000](#jpeg-2000)
-            * [刷入](#刷入-5)
-            * [執行](#執行-1)
     - [Geekbench（Deprecated）](#geekbenchdeprecated)
         + [binary](#binary)
-            * [刷入](#刷入-6)
-            * [執行](#執行-2)
+            * [刷入](#刷入-1)
+            * [執行](#執行)
         + [apk](#apk)
-            * [刷入](#刷入-7)
-            * [執行](#執行-3)
+            * [刷入](#刷入-2)
+            * [執行](#執行-1)
     - [SPEC CPU® 2017](#spec-cpu-2017)
-        + [刷入](#刷入-8)
+        + [刷入](#刷入-3)
     - [SPEC CPU® 2006](#spec-cpu-2006)
-        + [刷入](#刷入-9)
+        + [刷入](#刷入-4)
 * [Profiler](#profiler)
-    - [執行](#執行-4)
+    - [執行](#執行-2)
 * [info](#info)
     - [paper](#paper)
     - [doc](#doc)
@@ -243,69 +236,37 @@ adb root // don't need root under the path "/data/local/tmp/"
 
 ### [LMbench](https://github.com/misakisuna705/LMbench)
 
--   [教學](https://github.com/misakisuna705/LMbench)
-
-#### 刷入
-
 ```zsh
 adb push lmbench-3.0-a9/bin/aarch64 /data/local/tmp/LMbench
 ```
 
-### MiBench
-
--   [教學](https://github.com/misakisuna705/MiBench)
-
-#### 刷入
+### [MiBench](https://github.com/misakisuna705/MiBench)
 
 ```zsh
 adb push dat/Mibench /data/local/tmp
 ```
 
-### Dhrystone
-
--   [教學](https://github.com/misakisuna705/Dhrystone)
-
-#### 刷入
+### [Dhrystone](https://github.com/misakisuna705/Dhrystone)
 
 ```zsh
 adb push dhrystone/v2.2/dry /data/local/tmp/Dhrystone/dry
 ```
 
-### MediaBench（Deprecated）
-
--   [教學](https://github.com/misakisuna705/MediaBench)
+### [MediaBench（Deprecated）](https://github.com/misakisuna705/MediaBench)
 
 #### H.264
-
-##### 刷入
 
 ```zsh
 adb push mediaBench/mb2_vid_h264 /data/local/tmp/MediaBench/mb2_vid_h264
 ```
 
-##### 執行
-
-```zsh
-
-```
-
 #### JPEG-2000
-
-##### 刷入
 
 ```zsh
 adb push mediaBench/mb2_vid_jpg2000 /data/local/tmp/MediaBench/mb2_vid_jpg2000
 ```
 
-##### 執行
-
-```zsh
-
-```
-
-### Geekbench（Deprecated）
-
--   [教學](https://github.com/misakisuna705/Geekbench)
+### [Geekbench（Deprecated）](https://github.com/misakisuna705/Geekbench)
 
 #### binary
 
@@ -349,9 +310,7 @@ adb install-multiple geekbench/Geekbench\ 4_4.4.2_Apkpure/*.apk
 wa run -f -c geekbench/Geekbench\ 4_4.4.2_Apkpure/geekbench.yaml geekbench
 ```
 
-### SPEC CPU® 2017
-
--   [教學](https://github.com/misakisuna705/SPEC-CPU-2017)
+### [SPEC CPU® 2017](https://github.com/misakisuna705/SPEC-CPU-2017)
 
 #### 刷入
 
@@ -359,9 +318,7 @@ wa run -f -c geekbench/Geekbench\ 4_4.4.2_Apkpure/geekbench.yaml geekbench
 adb push speccpu2017 /data/local/tmp
 ```
 
-### SPEC CPU® 2006
-
--   [教學](https://github.com/misakisuna705/SPEC-CPU-2006)
+### [SPEC CPU® 2006](https://github.com/misakisuna705/SPEC-CPU-2006)
 
 #### 刷入
 
