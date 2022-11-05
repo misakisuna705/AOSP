@@ -397,7 +397,3 @@ python3 profiler.py [-h] [-b BENCHMARK] [-o OUTPUTFILE]
 ### stackoverflow
 
 -   [How to change clock frequency in Android?](https://stackoverflow.com/questions/4238959/how-to-change-clock-frequency-in-android)
-
-```
-
-```
