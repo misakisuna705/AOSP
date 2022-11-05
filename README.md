@@ -241,7 +241,7 @@ adb root // don't need root under the path "/data/local/tmp/"
 
 ## Benchmark
 
-### LMbench
+### [LMbench](https://github.com/misakisuna705/LMbench)
 
 -   [教學](https://github.com/misakisuna705/LMbench)
 
