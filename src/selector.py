@@ -29,7 +29,7 @@ class Selector(object):
             "bin/SpecCpu2017/644.nab_s.csv", "bin/SpecCpu2017/657.xz_s.csv"
         ]
 
-        print(len(sheets))
+        # print(len(sheets))
 
         workloads = []
 
@@ -84,14 +84,18 @@ class Selector(object):
                 for k in range(len(pmus)):
                     samples[i][j][k]["correlation"] = rSquare(samples[i][j][k]["count"], samples[i][j][k]["time"])
 
+        ranks = [[[] for j in range(len(frequencies[i]))] for i in range(len(cores))]
+
         for i in range(len(cores)):
             for j in range(len(frequencies[i])):
-                samples[i][j] = sorted(samples[i][j], key=lambda x: x["correlation"], reverse=True)
+                for k in range(len(pmus)):
+                    ranks[i][j].append((pmus[k], samples[i][j][k]["correlation"]))
+                ranks[i][j] = sorted(ranks[i][j], key=lambda item: item[1], reverse=True)
 
         for i, core in enumerate(samples):
             for j, frequency in enumerate(core):
                 for k in range(6):
-                    print("%3d" % (i * len(workloads[0]) // len(cores) + j * len(pmus) + k) + ". ", cores[i], frequencies[i][j], pmus[k], samples[i][j][k]["correlation"])
+                    print("%3d" % (i * len(workloads[0]) // len(cores) + j * len(pmus) + k) + ". ", cores[i], frequencies[i][j], ranks[i][j][k])
                 print("")
 
 
