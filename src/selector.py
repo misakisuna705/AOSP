@@ -15,7 +15,7 @@ class Selector(object):
     def __init__(self) -> None:
         pass
 
-    def select(self):
+    def select(self, num):
         sheets = [
             "bin/Dhrystone/dry.csv", "bin/LMbench/bw_mem/512m/bcopy.csv", "bin/LMbench/bw_mem/512m/bzero.csv", "bin/LMbench/bw_mem/512m/cp.csv",
             "bin/LMbench/bw_mem/512m/fcp.csv", "bin/LMbench/bw_mem/512m/frd.csv", "bin/LMbench/bw_mem/512m/rd.csv", "bin/Mibench/bitcnts/84600000.csv",
@@ -54,7 +54,12 @@ class Selector(object):
         # print(frequencies)
         # print(pmus)
 
-        samples = [[[{"count": [], "time": []} for k in range(len(pmus))] for j in range(len(frequencies[i]))] for i in range(len(cores))]
+        datas = [[[{"pmu": str(), "samples": [], "correlation": float()} for k in range(len(pmus))] for j in range(len(frequencies[i]))] for i in range(len(cores))]
+
+        # for i in range(len(cores)):
+        # for j in range(len(frequencies[i])):
+        # for k in range(len(pmus)):
+        # print(cores[i], frequencies[i][j], datas[i][j][k])
 
         for workload in workloads:
             for i in range(len(cores)):
@@ -62,13 +67,8 @@ class Selector(object):
                     for k in range(len(pmus)):
                         row = workload[i * len(workload) // len(cores) + j * len(pmus) + k]
 
-                        samples[i][j][k]["count"].append(int(row["count"].replace(',', '')))
-                        samples[i][j][k]["time"].append(float(row["time"].replace(',', '')))
-
-        # for i, core in enumerate(samples):
-        # for j, frequency in enumerate(core):
-        # for k, pmu in enumerate(frequency):
-        # print("%3d" % (i * len(workloads[0]) // len(cores) + j * len(pmus) + k) + ". ", cores[i], frequencies[i][j], pmus[k], samples[i][j][k])
+                        datas[i][j][k]["pmu"] = pmus[k]
+                        datas[i][j][k]["samples"].append((int(row["count"].replace(',', '')), float(row["time"].replace(',', ''))))
 
         def rSquare(listA, listB):
             aAvg = sum(listA) / len(listA)
@@ -82,27 +82,34 @@ class Selector(object):
         for i in range(len(cores)):
             for j in range(len(frequencies[i])):
                 for k in range(len(pmus)):
-                    samples[i][j][k]["correlation"] = rSquare(samples[i][j][k]["count"], samples[i][j][k]["time"])
+                    count = [sample[0] for sample in datas[i][j][k]["samples"]]
+                    time = [sample[1] for sample in datas[i][j][k]["samples"]]
 
-        ranks = [[[] for j in range(len(frequencies[i]))] for i in range(len(cores))]
+                    datas[i][j][k]["correlation"] = rSquare(count, time)
 
         for i in range(len(cores)):
             for j in range(len(frequencies[i])):
-                for k in range(len(pmus)):
-                    ranks[i][j].append((pmus[k], samples[i][j][k]["correlation"]))
-                ranks[i][j] = sorted(ranks[i][j], key=lambda item: item[1], reverse=True)
+                datas[i][j] = sorted(datas[i][j], key=lambda dict: dict["correlation"], reverse=True)
 
-        for i, core in enumerate(samples):
-            for j, frequency in enumerate(core):
-                for k in range(6):
-                    print("%3d" % (i * len(workloads[0]) // len(cores) + j * len(pmus) + k) + ". ", cores[i], frequencies[i][j], ranks[i][j][k])
-                print("")
+        # for i in range(len(cores)):
+        # for j in range(len(frequencies[i])):
+        # for k in range(len(pmus)):
+        # print(cores[i], frequencies[i][j], datas[i][j][k]["pmu"], datas[i][j][k]["correlation"])
+        # print("")
+
+        dataset = [[[] for j in range(len(frequencies[i]))] for i in range(len(cores))]
+
+        for i in range(len(cores)):
+            for j in range(len(frequencies[i])):
+                dataset[i][j] = [datas[i][j][k] for k in range(num)]
+
+        return dataset
 
 
 def main():
     selector = Selector()
 
-    selector.select()
+    selector.select(6)
 
 
 if __name__ == "__main__":
