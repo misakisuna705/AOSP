@@ -24,17 +24,24 @@ def main():
 
     # print(cores, frequencies)
 
-    dataset = selector.Selector().select(6)
+    datalist = selector.Selector().select(6)
 
     # for i in range(len(cores)):
     # for j in range(len(frequencies[i])):
-    # for pmu in dataset[i][j]:
+    # for pmu in datalist[i][j]:
     # print(pmu["pmu"])
     # print("")
 
+    flag = 1
+
     for i in range(len(cores)):
         for j in range(len(frequencies[i])):
-            model.Model().train(dataset[i][j])
+            if (flag):
+                dataset = [sample for data in datalist[i][j] for sample in data["samples"]]
+
+                model.Model().train(dataset)
+
+                flag = 0
 
 
 if __name__ == "__main__":

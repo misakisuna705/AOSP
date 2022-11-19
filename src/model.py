@@ -8,7 +8,6 @@ class Model(object):
 
     def train(self, dataset):
         print(dataset)
-        pass
 
 
 def main():

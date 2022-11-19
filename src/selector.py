@@ -97,13 +97,13 @@ class Selector(object):
         # print(cores[i], frequencies[i][j], datas[i][j][k]["pmu"], datas[i][j][k]["correlation"])
         # print("")
 
-        dataset = [[[] for j in range(len(frequencies[i]))] for i in range(len(cores))]
+        datalist = [[[] for j in range(len(frequencies[i]))] for i in range(len(cores))]
 
         for i in range(len(cores)):
             for j in range(len(frequencies[i])):
-                dataset[i][j] = [datas[i][j][k] for k in range(num)]
+                datalist[i][j] = [datas[i][j][k] for k in range(num)]
 
-        return dataset
+        return datalist
 
 
 def main():
