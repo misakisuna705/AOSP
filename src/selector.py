@@ -107,36 +107,38 @@ class Selector(object):
 
         for i in range(len(cores)):
             for j in range(len(frequencies[i])):
-                counts = []
-                meanTimes = []
                 qualifiers = []
 
-                for workload in workloads:
-                    anchor = i * len(workload) // len(cores) + j * len(pmus)
+                meanTimes = []
 
-                    meanTimes.append(mean([row["time"] for row in workload[anchor:anchor + len(pmus)]]))
+                for k in range(num):
+                    counts = []
 
-                    for k in range(num):
+                    for workload in workloads:
+                        anchor = i * len(workload) // len(cores) + j * len(pmus)
+
+                        meanTime = mean([row["time"] for row in workload[anchor:anchor + len(pmus)]])
+
+                        if (meanTime not in meanTimes):
+                            meanTimes.append(meanTime)
+
                         row = workload[anchor + datalist[i][j][k]["pmu"][0]]
-
                         counts.append(row["count"])
 
                         if (row["event"] not in qualifiers): 
                             qualifiers.append(row["event"])
 
-                rankset[i][j].append((counts, meanTimes, qualifiers))
+                    rankset[i][j].append({qualifiers[k]: counts})
+
+                rankset[i][j].append({"tims": meanTimes})
 
         for i in range(len(cores)):
             for j in range(len(frequencies[i])):
                 print("cores: ", cores[i], "frequencies: ", frequencies[i][j])
                 print("")
 
-                for thing in rankset[i][j]:
-                    print("counts: ", thing[0])
-                    print("")
-                    print("times: ", thing[1])
-                    print("")
-                    print("qualifiers: ", thing[2])
+                for item in rankset[i][j]:
+                    print(item)
                     print("")
                 print("")
 

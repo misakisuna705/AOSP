@@ -9,8 +9,6 @@ class Model(object):
         pass
 
     def train(self, dataset):
-        # print(dataset)
-        # print(x_data, y_data)
         pass
 
 
