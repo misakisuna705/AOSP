@@ -22,14 +22,24 @@ def main():
 
     # print(cores, frequencies)
 
-    rankset = selector.Selector().select(6)
+    dataset = selector.Selector().select(6)
+
+    # for i in range(len(cores)):
+    # for j in range(len(frequencies[i])):
+    # print("cores: ", cores[i], "frequencies: ", frequencies[i][j])
+    # print("")
+
+    # for item in dataset[i][j]:
+    # print(item)
+    # print("")
+    # print("")
 
     flag = 1
 
     for i in range(len(cores)):
         for j in range(len(frequencies[i])):
             if (flag):
-                # model.Model().train(dataset[i][j])
+                model.Model().train(dataset[i][j])
 
                 flag = 0
 

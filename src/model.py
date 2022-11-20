@@ -9,7 +9,10 @@ class Model(object):
         pass
 
     def train(self, dataset):
-        pass
+        for item in dataset:
+            print(item)
+            print("")
+        print("")
 
 
 def main():

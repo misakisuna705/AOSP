@@ -103,7 +103,7 @@ class Selector(object):
         # print(cores[i], frequencies[i][j], datalist[i][j][k]["pmu"], datalist[i][j][k]["correlation"])
         # print("")
 
-        rankset = [[[] for j in range(len(frequencies[i]))] for i in range(len(cores))]
+        dataset = [[[] for j in range(len(frequencies[i]))] for i in range(len(cores))]
 
         for i in range(len(cores)):
             for j in range(len(frequencies[i])):
@@ -125,24 +125,24 @@ class Selector(object):
                         row = workload[anchor + datalist[i][j][k]["pmu"][0]]
                         counts.append(row["count"])
 
-                        if (row["event"] not in qualifiers): 
+                        if (row["event"] not in qualifiers):
                             qualifiers.append(row["event"])
 
-                    rankset[i][j].append({qualifiers[k]: counts})
+                    dataset[i][j].append({qualifiers[k]: counts})
 
-                rankset[i][j].append({"tims": meanTimes})
+                dataset[i][j].append({"tims": meanTimes})
 
-        for i in range(len(cores)):
-            for j in range(len(frequencies[i])):
-                print("cores: ", cores[i], "frequencies: ", frequencies[i][j])
-                print("")
+        # for i in range(len(cores)):
+        # for j in range(len(frequencies[i])):
+        # print("cores: ", cores[i], "frequencies: ", frequencies[i][j])
+        # print("")
 
-                for item in rankset[i][j]:
-                    print(item)
-                    print("")
-                print("")
+        # for item in dataset[i][j]:
+        # print(item)
+        # print("")
+        # print("")
 
-        return rankset
+        return dataset
 
 
 def main():
