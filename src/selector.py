@@ -130,7 +130,7 @@ class Selector(object):
 
                     dataset[i][j].append({qualifiers[k]: counts})
 
-                dataset[i][j].append({"tims": meanTimes})
+                dataset[i][j].append({"times": meanTimes})
 
         # for i in range(len(cores)):
         # for j in range(len(frequencies[i])):

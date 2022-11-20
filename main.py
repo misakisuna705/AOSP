@@ -39,6 +39,9 @@ def main():
     for i in range(len(cores)):
         for j in range(len(frequencies[i])):
             if (flag):
+                print("cores: ", cores[i], "frequencies: ", frequencies[i][j])
+                print("")
+
                 model.Model().train(dataset[i][j])
 
                 flag = 0
