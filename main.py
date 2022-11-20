@@ -22,21 +22,25 @@ def main():
 
     # print(cores, frequencies)
 
-    worklists = selector.Selector().select(6)
+    rankset = selector.Selector().select(6)
 
-    for worklist in worklists:
-        for row in worklist:
-            print(row)
-        print("")
+    for i in range(len(cores)):
+        for j in range(len(frequencies[i])):
+            print(cores[i], frequencies[i][j])
+
+            for workload in rankset[i][j]:
+                print(workload[0])
+                print(workload[1])
+                print(workload[2])
+                print("")
+            print("")
 
     flag = 1
 
     for i in range(len(cores)):
         for j in range(len(frequencies[i])):
             if (flag):
-                # dataset = [sample for data in worklist[i][j] for sample in data["samples"]]
-
-                # model.Model().train(dataset)
+                # model.Model().train(dataset[i][j])
 
                 flag = 0
 

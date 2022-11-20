@@ -9,13 +9,15 @@ class Model(object):
         pass
 
     def train(self, dataset):
-        print(dataset)
+        # print(dataset)
+        # print(x_data, y_data)
+        pass
 
 
 def main():
     model = Model()
 
-    model.train(6)
+    model.train()
 
 
 if __name__ == "__main__":

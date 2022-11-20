@@ -2,6 +2,7 @@
 
 import csv
 import logging
+from statistics import mean
 
 logging.basicConfig(
     level=logging.INFO,
@@ -43,23 +44,31 @@ class Selector(object):
 
         cores = sorted(set([row["setup core"] for row in workloads[0]]))
 
+        # print(cores)
+
         frequencies = []
+
+        # print(frequencies)
 
         for core in cores:
             frequencies.append(sorted(set([int(row["frequency"]) for row in workloads[0] if row["setup core"] == core])))
 
         pmus = sorted(set([row["event"] for row in workloads[0]]))
 
-        # print(cores)
-        # print(frequencies)
         # print(pmus)
 
-        datalist = [[[{"pmu": (), "samples": [], "correlation": 0.0} for k in range(len(pmus))] for j in range(len(frequencies[i]))] for i in range(len(cores))]
+        for workload in workloads:
+            for i in range(len(cores)):
+                for j in range(len(frequencies[i])):
+                    for k in range(len(pmus)):
+                        row = workload[i * len(workload) // len(cores) + j * len(pmus) + k]
 
-        # for i in range(len(cores)):
-        # for j in range(len(frequencies[i])):
-        # for k in range(len(pmus)):
-        # print(cores[i], frequencies[i][j], datalist[i][j][k])
+                        row["count"] = int(row["count"].replace(',', ''))
+                        row["time"] = float(row["time"].replace(',', ''))
+
+        # print(workloads[0])
+
+        datalist = [[[{"pmu": (), "samples": [], "correlation": 0.0} for k in range(len(pmus))] for j in range(len(frequencies[i]))] for i in range(len(cores))]
 
         for workload in workloads:
             for i in range(len(cores)):
@@ -68,14 +77,11 @@ class Selector(object):
                         row = workload[i * len(workload) // len(cores) + j * len(pmus) + k]
 
                         datalist[i][j][k]["pmu"] = (k, pmus[k])
-                        datalist[i][j][k]["samples"].append((int(row["count"].replace(',', '')), float(row["time"].replace(',', ''))))
+                        datalist[i][j][k]["samples"].append((row["count"], row["time"]))
 
         def rSquare(listA, listB):
-            aAvg = sum(listA) / len(listA)
-            bAvg = sum(listB) / len(listB)
-
-            covariance = sum([(x - aAvg) * (y - bAvg) for x, y in zip(listA, listB)])
-            stdDeviationProduct = (sum([(x - aAvg)**2 for x in listA]) * sum([(y - bAvg)**2 for y in listB]))**0.5
+            covariance = sum([(x - mean(listA)) * (y - mean(listB)) for x, y in zip(listA, listB)])
+            stdDeviationProduct = (sum([(x - mean(listA))**2 for x in listA]) * sum([(y - mean(listB))**2 for y in listB]))**0.5
 
             return (covariance / stdDeviationProduct)**2 if stdDeviationProduct else 0
 
@@ -97,22 +103,39 @@ class Selector(object):
         # print(cores[i], frequencies[i][j], datalist[i][j][k]["pmu"], datalist[i][j][k]["correlation"])
         # print("")
 
-        worklists = [[] for i in range(len(workloads))]
+        rankset = [[[] for j in range(len(frequencies[i]))] for i in range(len(cores))]
 
-        for i in range(len(worklists)):
-            for j in range(len(cores)):
-                for k in range(len(frequencies[j])):
-                    for idx in range(num):
-                        row = workloads[i][j * len(workload) // len(cores) + k * len(pmus) + datalist[j][k][idx]["pmu"][0]]
+        for workload in workloads:
+            for i in range(len(cores)):
+                for j in range(len(frequencies[i])):
+                    anchor = i * len(workload) // len(cores) + j * len(pmus)
 
-                        worklists[i].append(row)
+                    meanTime = mean([row["time"] for row in workload[anchor:anchor + len(pmus)]])
 
-        # for worklist in worklists:
-        # for row in worklist:
-        # print(row)
+                    counts = []
+                    qualifiers = []
+
+                    for k in range(num):
+                        row = workload[anchor + datalist[i][j][k]["pmu"][0]]
+
+                        counts.append(row["count"])
+                        qualifiers.append(row["event"])
+
+                    rankset[i][j].append((counts, meanTime, qualifiers))
+
+        # for i in range(len(cores)):
+        # for j in range(len(frequencies[i])):
+        # print(cores[i], frequencies[i][j])
+
+        # for workload in rankset[i][j]:
+        # print(workload[0])
+        # print(workload[1])
+        # print(workload[2])
         # print("")
 
-        return worklists
+        # print("")
+
+        return rankset
 
 
 def main():
