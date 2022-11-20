@@ -24,17 +24,6 @@ def main():
 
     rankset = selector.Selector().select(6)
 
-    for i in range(len(cores)):
-        for j in range(len(frequencies[i])):
-            print(cores[i], frequencies[i][j])
-
-            for workload in rankset[i][j]:
-                print(workload[0])
-                print(workload[1])
-                print(workload[2])
-                print("")
-            print("")
-
     flag = 1
 
     for i in range(len(cores)):

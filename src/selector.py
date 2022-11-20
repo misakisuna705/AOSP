@@ -128,14 +128,15 @@ class Selector(object):
 
         for i in range(len(cores)):
             for j in range(len(frequencies[i])):
-                print(cores[i], frequencies[i][j])
+                print("cores: ", cores[i], "frequencies: ", frequencies[i][j])
+                print("")
 
-                for workload in rankset[i][j]:
-                    print(len(workload[0]))
-                    print(workload[0])
-                    print(len(workload[1]))
-                    print(workload[1])
-                    print(workload[2])
+                for thing in rankset[i][j]:
+                    print("counts: ", thing[0])
+                    print("")
+                    print("times: ", thing[1])
+                    print("")
+                    print("qualifiers: ", thing[2])
                     print("")
                 print("")
 
