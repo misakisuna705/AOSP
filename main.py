@@ -6,8 +6,6 @@ from src import model, selector
 
 
 def main():
-    # selector = Selector()
-
     workload = []
 
     with open("bin/Dhrystone/dry.csv", newline="") as f:
@@ -24,22 +22,21 @@ def main():
 
     # print(cores, frequencies)
 
-    datalist = selector.Selector().select(6)
+    worklists = selector.Selector().select(6)
 
-    # for i in range(len(cores)):
-    # for j in range(len(frequencies[i])):
-    # for pmu in datalist[i][j]:
-    # print(pmu["pmu"])
-    # print("")
+    for worklist in worklists:
+        for row in worklist:
+            print(row)
+        print("")
 
     flag = 1
 
     for i in range(len(cores)):
         for j in range(len(frequencies[i])):
             if (flag):
-                dataset = [sample for data in datalist[i][j] for sample in data["samples"]]
+                # dataset = [sample for data in worklist[i][j] for sample in data["samples"]]
 
-                model.Model().train(dataset)
+                # model.Model().train(dataset)
 
                 flag = 0
 

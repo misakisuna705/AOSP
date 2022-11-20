@@ -54,12 +54,12 @@ class Selector(object):
         # print(frequencies)
         # print(pmus)
 
-        datas = [[[{"pmu": str(), "samples": [], "correlation": float()} for k in range(len(pmus))] for j in range(len(frequencies[i]))] for i in range(len(cores))]
+        datalist = [[[{"pmu": (), "samples": [], "correlation": 0.0} for k in range(len(pmus))] for j in range(len(frequencies[i]))] for i in range(len(cores))]
 
         # for i in range(len(cores)):
         # for j in range(len(frequencies[i])):
         # for k in range(len(pmus)):
-        # print(cores[i], frequencies[i][j], datas[i][j][k])
+        # print(cores[i], frequencies[i][j], datalist[i][j][k])
 
         for workload in workloads:
             for i in range(len(cores)):
@@ -67,8 +67,8 @@ class Selector(object):
                     for k in range(len(pmus)):
                         row = workload[i * len(workload) // len(cores) + j * len(pmus) + k]
 
-                        datas[i][j][k]["pmu"] = pmus[k]
-                        datas[i][j][k]["samples"].append((int(row["count"].replace(',', '')), float(row["time"].replace(',', ''))))
+                        datalist[i][j][k]["pmu"] = (k, pmus[k])
+                        datalist[i][j][k]["samples"].append((int(row["count"].replace(',', '')), float(row["time"].replace(',', ''))))
 
         def rSquare(listA, listB):
             aAvg = sum(listA) / len(listA)
@@ -82,28 +82,37 @@ class Selector(object):
         for i in range(len(cores)):
             for j in range(len(frequencies[i])):
                 for k in range(len(pmus)):
-                    count = [sample[0] for sample in datas[i][j][k]["samples"]]
-                    time = [sample[1] for sample in datas[i][j][k]["samples"]]
+                    count = [sample[0] for sample in datalist[i][j][k]["samples"]]
+                    time = [sample[1] for sample in datalist[i][j][k]["samples"]]
 
-                    datas[i][j][k]["correlation"] = rSquare(count, time)
+                    datalist[i][j][k]["correlation"] = rSquare(count, time)
 
         for i in range(len(cores)):
             for j in range(len(frequencies[i])):
-                datas[i][j] = sorted(datas[i][j], key=lambda dict: dict["correlation"], reverse=True)
+                datalist[i][j] = sorted(datalist[i][j], key=lambda dict: dict["correlation"], reverse=True)
 
         # for i in range(len(cores)):
         # for j in range(len(frequencies[i])):
         # for k in range(len(pmus)):
-        # print(cores[i], frequencies[i][j], datas[i][j][k]["pmu"], datas[i][j][k]["correlation"])
+        # print(cores[i], frequencies[i][j], datalist[i][j][k]["pmu"], datalist[i][j][k]["correlation"])
         # print("")
 
-        datalist = [[[] for j in range(len(frequencies[i]))] for i in range(len(cores))]
+        worklists = [[] for i in range(len(workloads))]
 
-        for i in range(len(cores)):
-            for j in range(len(frequencies[i])):
-                datalist[i][j] = [datas[i][j][k] for k in range(num)]
+        for i in range(len(worklists)):
+            for j in range(len(cores)):
+                for k in range(len(frequencies[j])):
+                    for idx in range(num):
+                        row = workloads[i][j * len(workload) // len(cores) + k * len(pmus) + datalist[j][k][idx]["pmu"][0]]
 
-        return datalist
+                        worklists[i].append(row)
+
+        # for worklist in worklists:
+        # for row in worklist:
+        # print(row)
+        # print("")
+
+        return worklists
 
 
 def main():
