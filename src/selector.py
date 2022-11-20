@@ -105,35 +105,39 @@ class Selector(object):
 
         rankset = [[[] for j in range(len(frequencies[i]))] for i in range(len(cores))]
 
-        for workload in workloads:
-            for i in range(len(cores)):
-                for j in range(len(frequencies[i])):
+        for i in range(len(cores)):
+            for j in range(len(frequencies[i])):
+                counts = []
+                meanTimes = []
+                qualifiers = []
+
+                for workload in workloads:
                     anchor = i * len(workload) // len(cores) + j * len(pmus)
 
-                    meanTime = mean([row["time"] for row in workload[anchor:anchor + len(pmus)]])
-
-                    counts = []
-                    qualifiers = []
+                    meanTimes.append(mean([row["time"] for row in workload[anchor:anchor + len(pmus)]]))
 
                     for k in range(num):
                         row = workload[anchor + datalist[i][j][k]["pmu"][0]]
 
                         counts.append(row["count"])
-                        qualifiers.append(row["event"])
 
-                    rankset[i][j].append((counts, meanTime, qualifiers))
+                        if (row["event"] not in qualifiers): 
+                            qualifiers.append(row["event"])
 
-        # for i in range(len(cores)):
-        # for j in range(len(frequencies[i])):
-        # print(cores[i], frequencies[i][j])
+                rankset[i][j].append((counts, meanTimes, qualifiers))
 
-        # for workload in rankset[i][j]:
-        # print(workload[0])
-        # print(workload[1])
-        # print(workload[2])
-        # print("")
+        for i in range(len(cores)):
+            for j in range(len(frequencies[i])):
+                print(cores[i], frequencies[i][j])
 
-        # print("")
+                for workload in rankset[i][j]:
+                    print(len(workload[0]))
+                    print(workload[0])
+                    print(len(workload[1]))
+                    print(workload[1])
+                    print(workload[2])
+                    print("")
+                print("")
 
         return rankset
 
