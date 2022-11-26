@@ -9,10 +9,7 @@ class Predictor(object):
         pass
 
     def train(self, dataset):
-        for item in dataset:
-            print(item)
-            print("")
-        print("")
+        pass
 
 
 def main():
