@@ -85,11 +85,13 @@ class PerFreqSelector(_Selector):
         super().__init__()
 
     def select(self, num):
-        perFreqRanks = [[[{
-            "pmu": (),
-            "samples": [],
-            "correlation": 0.0
-        } for k in range(len(self.pmus))] for j in range(len(self.frequencies[i]))] for i in range(len(self.cores))]
+        ranks = self._rank()
+        dataset = self._format(ranks, num)
+
+        return dataset
+
+    def _rank(self):
+        ranks = [[[{"pmu": (), "samples": [], "correlation": 0.0} for k in range(len(self.pmus))] for j in range(len(self.frequencies[i]))] for i in range(len(self.cores))]
 
         for workload in self.workloads:
             for i in range(len(self.cores)):
@@ -97,28 +99,31 @@ class PerFreqSelector(_Selector):
                     for k in range(len(self.pmus)):
                         row = workload[i * len(workload) // len(self.cores) + j * len(self.pmus) + k]
 
-                        perFreqRanks[i][j][k]["pmu"] = (k, self.pmus[k])
-                        perFreqRanks[i][j][k]["samples"].append((row["count"], row["time"]))
+                        ranks[i][j][k]["pmu"] = (k, self.pmus[k])
+                        ranks[i][j][k]["samples"].append((row["count"], row["time"]))
 
         for i in range(len(self.cores)):
             for j in range(len(self.frequencies[i])):
                 for k in range(len(self.pmus)):
-                    count = [sample[0] for sample in perFreqRanks[i][j][k]["samples"]]
-                    time = [sample[1] for sample in perFreqRanks[i][j][k]["samples"]]
+                    count = [sample[0] for sample in ranks[i][j][k]["samples"]]
+                    time = [sample[1] for sample in ranks[i][j][k]["samples"]]
 
-                    perFreqRanks[i][j][k]["correlation"] = self.rSquare(count, time)
+                    ranks[i][j][k]["correlation"] = self.rSquare(count, time)
 
         for i in range(len(self.cores)):
             for j in range(len(self.frequencies[i])):
-                perFreqRanks[i][j] = sorted(perFreqRanks[i][j], key=lambda dict: dict["correlation"], reverse=True)
+                ranks[i][j] = sorted(ranks[i][j], key=lambda dict: dict["correlation"], reverse=True)
 
         for i in range(len(self.cores)):
             for j in range(len(self.frequencies[i])):
                 for k in range(len(self.pmus)):
-                    print(self.cores[i], self.frequencies[i][j], perFreqRanks[i][j][k]["pmu"], perFreqRanks[i][j][k]["correlation"])
+                    print(self.cores[i], self.frequencies[i][j], ranks[i][j][k]["pmu"], ranks[i][j][k]["correlation"])
                 print("")
 
-        perFreqDataset = [[[] for j in range(len(self.frequencies[i]))] for i in range(len(self.cores))]
+        return ranks
+
+    def _format(self, ranks, num):
+        dataset = [[[] for j in range(len(self.frequencies[i]))] for i in range(len(self.cores))]
 
         for i in range(len(self.cores)):
             for j in range(len(self.frequencies[i])):
@@ -130,34 +135,30 @@ class PerFreqSelector(_Selector):
 
                     for workload in self.workloads:
                         anchor = i * len(workload) // len(self.cores) + j * len(self.pmus)
+                        row = workload[anchor + ranks[i][j][k]["pmu"][0]]
 
                         meanTime = statistics.mean([row["time"] for row in workload[anchor:anchor + len(self.pmus)]])
 
-                        if (meanTime not in meanTimes):
-                            meanTimes.append(meanTime)
-
-                        row = workload[anchor + perFreqRanks[i][j][k]["pmu"][0]]
+                        qualifiers.append(row["event"]) if (row["event"] not in qualifiers) else None
                         counts.append(row["count"])
+                        meanTimes.append(meanTime) if (meanTime not in meanTimes) else None
 
-                        if (row["event"] not in qualifiers):
-                            qualifiers.append(row["event"])
+                    dataset[i][j].append({qualifiers[k]: counts})
 
-                    perFreqDataset[i][j].append({qualifiers[k]: counts})
-
-                perFreqDataset[i][j].append({"times": meanTimes})
+                dataset[i][j].append({"times": meanTimes})
 
         for i in range(len(self.cores)):
             for j in range(len(self.frequencies[i])):
                 print("cores: ", self.cores[i], "frequencies: ", self.frequencies[i][j])
                 print("")
 
-                for item in perFreqDataset[i][j]:
+                for item in dataset[i][j]:
                     print(item)
                     print("")
                 print("")
             print("")
 
-        return perFreqDataset
+        return dataset
 
 
 class PerCoreSelector(_Selector):
@@ -205,17 +206,13 @@ class PerCoreSelector(_Selector):
                 for k in range(len(self.frequencies[i])):
                     for workload in self.workloads:
                         anchor = i * len(workload) // len(self.cores) + k * len(self.pmus)
+                        row = workload[anchor + perCoreRanks[i][j]["pmu"][0]]
 
                         meanTime = statistics.mean([row["time"] for row in workload[anchor:anchor + len(self.pmus)]])
 
-                        if (meanTime not in meanTimes):
-                            meanTimes.append(meanTime)
-
-                        row = workload[anchor + perCoreRanks[i][j]["pmu"][0]]
+                        qualifiers.append(row["event"]) if (row["event"] not in qualifiers) else None
                         counts.append(row["count"])
-
-                        if (row["event"] not in qualifiers):
-                            qualifiers.append(row["event"])
+                        meanTimes.append(meanTime) if (meanTime not in meanTimes) else None
 
                 perCoreDataset[i].append({qualifiers[j]: counts})
 
