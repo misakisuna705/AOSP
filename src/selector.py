@@ -2,7 +2,7 @@
 
 import csv
 import logging
-from statistics import mean
+import statistics
 
 logging.basicConfig(
     level=logging.INFO,
@@ -80,10 +80,10 @@ class Selector(object):
                         datalist[i][j][k]["samples"].append((row["count"], row["time"]))
 
         def rSquare(listA, listB):
-            covariance = sum([(x - mean(listA)) * (y - mean(listB)) for x, y in zip(listA, listB)])
-            stdDeviationProduct = (sum([(x - mean(listA))**2 for x in listA]) * sum([(y - mean(listB))**2 for y in listB]))**0.5
+            cov = statistics.covariance(listA, listB)
+            stDevProduct = statistics.pstdev(listA) * statistics.pstdev(listB)
 
-            return (covariance / stdDeviationProduct)**2 if stdDeviationProduct else 0
+            return pow(cov / stDevProduct, 2) if stDevProduct else 0
 
         for i in range(len(cores)):
             for j in range(len(frequencies[i])):
@@ -117,7 +117,7 @@ class Selector(object):
                     for workload in workloads:
                         anchor = i * len(workload) // len(cores) + j * len(pmus)
 
-                        meanTime = mean([row["time"] for row in workload[anchor:anchor + len(pmus)]])
+                        meanTime = statistics.mean([row["time"] for row in workload[anchor:anchor + len(pmus)]])
 
                         if (meanTime not in meanTimes):
                             meanTimes.append(meanTime)
@@ -132,15 +132,15 @@ class Selector(object):
 
                 dataset[i][j].append({"times": meanTimes})
 
-        # for i in range(len(cores)):
-        # for j in range(len(frequencies[i])):
-        # print("cores: ", cores[i], "frequencies: ", frequencies[i][j])
-        # print("")
+        for i in range(len(cores)):
+            for j in range(len(frequencies[i])):
+                print("cores: ", cores[i], "frequencies: ", frequencies[i][j])
+                print("")
 
-        # for item in dataset[i][j]:
-        # print(item)
-        # print("")
-        # print("")
+                for item in dataset[i][j]:
+                    print(item)
+                print("")
+            print("")
 
         return dataset
 

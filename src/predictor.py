@@ -3,7 +3,7 @@
 import tensorflow as tf
 
 
-class Model(object):
+class Predictor(object):
 
     def __init__(self) -> None:
         pass
@@ -16,9 +16,9 @@ class Model(object):
 
 
 def main():
-    model = Model()
+    predictor = Predictor()
 
-    model.train()
+    predictor.train()
 
 
 if __name__ == "__main__":

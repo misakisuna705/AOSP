@@ -2,7 +2,7 @@
 
 import csv
 
-from src import model, selector
+from src import predictor, selector
 
 
 def main():
@@ -42,7 +42,9 @@ def main():
                 print("cores: ", cores[i], "frequencies: ", frequencies[i][j])
                 print("")
 
-                model.Model().train(dataset[i][j])
+                # print(list(dataset[i][j][0].values())[0])
+
+                # predictor.Predictor().train(dataset[i][j])
 
                 flag = 0
 
