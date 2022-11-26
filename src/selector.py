@@ -12,10 +12,11 @@ logging.basicConfig(
 
 
 def main():
-    selector = PerFreqSelector()
-    # selector = PerCoreSelector()
+    perFreqSelector = PerFreqSelector()
+    perCoreSelector = PerCoreSelector()
 
-    selector.select(6)
+    perFreqSelector.select(6)
+    perCoreSelector.select(6)
 
 
 class _Selector(object):
