@@ -12,8 +12,8 @@ logging.basicConfig(
 
 
 def main():
-    # selector = PerFreqSelector()
-    selector = PerCoreSelector()
+    selector = PerFreqSelector()
+    # selector = PerCoreSelector()
 
     selector.select(6)
 
@@ -72,6 +72,12 @@ class _Selector(object):
 
         # print(self.workloads[0])
 
+    def select(self, num):
+        ranks = self._rank()
+        dataset = self._format(ranks, num)
+
+        return dataset
+
     def rSquare(self, listA, listB):
         cov = statistics.covariance(listA, listB)
         stDevProduct = statistics.stdev(listA) * statistics.stdev(listB)
@@ -83,12 +89,6 @@ class PerFreqSelector(_Selector):
 
     def __init__(self) -> None:
         super().__init__()
-
-    def select(self, num):
-        ranks = self._rank()
-        dataset = self._format(ranks, num)
-
-        return dataset
 
     def _rank(self):
         ranks = [[[{"pmu": (), "samples": [], "correlation": 0.0} for k in range(len(self.pmus))] for j in range(len(self.frequencies[i]))] for i in range(len(self.cores))]
@@ -114,11 +114,13 @@ class PerFreqSelector(_Selector):
             for j in range(len(self.frequencies[i])):
                 ranks[i][j] = sorted(ranks[i][j], key=lambda dict: dict["correlation"], reverse=True)
 
+        logging.info("correlation ranks: ")
         for i in range(len(self.cores)):
             for j in range(len(self.frequencies[i])):
                 for k in range(len(self.pmus)):
-                    print(self.cores[i], self.frequencies[i][j], ranks[i][j][k]["pmu"], ranks[i][j][k]["correlation"])
-                print("")
+                    logging.info("\tcore" + str(self.cores[i]) + " frequency: " + str(self.frequencies[i][j]).ljust(8, " ") + "No." +
+                                 str(ranks[i][j][k]["pmu"][0]).ljust(3, " ") + " " + ranks[i][j][k]["pmu"][1].ljust(27, " ") + str(ranks[i][j][k]["correlation"]))
+                logging.info("")
 
         return ranks
 
@@ -166,35 +168,40 @@ class PerCoreSelector(_Selector):
     def __init__(self) -> None:
         super().__init__()
 
-    def select(self, num):
-        perCoreRanks = [[{"pmu": (), "samples": [], "correlation": 0.0} for j in range(len(self.pmus))] for i in range(len(self.cores))]
+    def _rank(self):
+        ranks = [[{"pmu": (), "samples": [], "correlation": 0.0} for j in range(len(self.pmus))] for i in range(len(self.cores))]
 
         for workload in self.workloads:
             for i in range(len(self.cores)):
                 for j in range(len(self.pmus)):
-                    perCoreRanks[i][j]["pmu"] = (j, self.pmus[j])
+                    ranks[i][j]["pmu"] = (j, self.pmus[j])
 
                     for k in range(len(self.frequencies[i])):
                         row = workload[i * len(workload) // len(self.cores) + k * len(self.pmus) + j]
 
-                        perCoreRanks[i][j]["samples"].append((row["count"], row["time"]))
+                        ranks[i][j]["samples"].append((row["count"], row["time"]))
 
         for i in range(len(self.cores)):
             for j in range(len(self.pmus)):
-                count = [sample[0] for sample in perCoreRanks[i][j]["samples"]]
-                time = [sample[1] for sample in perCoreRanks[i][j]["samples"]]
+                count = [sample[0] for sample in ranks[i][j]["samples"]]
+                time = [sample[1] for sample in ranks[i][j]["samples"]]
 
-                perCoreRanks[i][j]["correlation"] = self.rSquare(count, time)
+                ranks[i][j]["correlation"] = self.rSquare(count, time)
 
         for i in range(len(self.cores)):
-            perCoreRanks[i] = sorted(perCoreRanks[i], key=lambda dict: dict["correlation"], reverse=True)
+            ranks[i] = sorted(ranks[i], key=lambda dict: dict["correlation"], reverse=True)
 
+        logging.info("correlation ranks: ")
         for i in range(len(self.cores)):
             for j in range(len(self.pmus)):
-                print(self.cores[i], perCoreRanks[i][j]["pmu"], perCoreRanks[i][j]["correlation"])
-            print("")
+                logging.info("\tcore" + str(self.cores[i]) + " No." + str(ranks[i][j]["pmu"][0]).ljust(3, " ") + " " + ranks[i][j]["pmu"][1].ljust(27, " ") +
+                             str(ranks[i][j]["correlation"]))
+            logging.info("")
 
-        perCoreDataset = [[] for i in range(len(self.cores))]
+        return ranks
+
+    def _format(self, ranks, num):
+        dataset = [[] for i in range(len(self.cores))]
 
         for i in range(len(self.cores)):
             qualifiers = []
@@ -206,7 +213,7 @@ class PerCoreSelector(_Selector):
                 for k in range(len(self.frequencies[i])):
                     for workload in self.workloads:
                         anchor = i * len(workload) // len(self.cores) + k * len(self.pmus)
-                        row = workload[anchor + perCoreRanks[i][j]["pmu"][0]]
+                        row = workload[anchor + ranks[i][j]["pmu"][0]]
 
                         meanTime = statistics.mean([row["time"] for row in workload[anchor:anchor + len(self.pmus)]])
 
@@ -214,20 +221,20 @@ class PerCoreSelector(_Selector):
                         counts.append(row["count"])
                         meanTimes.append(meanTime) if (meanTime not in meanTimes) else None
 
-                perCoreDataset[i].append({qualifiers[j]: counts})
+                dataset[i].append({qualifiers[j]: counts})
 
-            perCoreDataset[i].append({"times": meanTimes})
+            dataset[i].append({"times": meanTimes})
 
         for i in range(len(self.cores)):
             print("cores: ", self.cores[i])
             print("")
 
-            for item in perCoreDataset[i]:
+            for item in dataset[i]:
                 print(item)
                 print("")
             print("")
 
-        return perCoreDataset
+        return dataset
 
 
 if __name__ == "__main__":
