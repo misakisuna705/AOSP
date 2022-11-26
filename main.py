@@ -22,21 +22,29 @@ def main():
 
     # print(cores, frequencies)
 
-    perFreqDataset = selector.PerFreqSelector().select(6)
+    getPerFreqError(cores, frequencies)
+    getPerCoreError(cores, frequencies)
+
+
+def getPerFreqError(cores, frequencies):
+    dataset = selector.PerFreqSelector().select(6)
 
     flag = 1
 
     for i in range(len(cores)):
         for j in range(len(frequencies[i])):
             if (flag):
-                # print("cores: ", cores[i], "frequencies: ", frequencies[i][j])
-                # print("")
-
-                # print(list(dataset[i][j][0].values())[0])
-
-                # predictor.Predictor().train(dataset[i][j])
-
                 flag = 0
+
+
+def getPerCoreError(cores, frequencies):
+    dataset = selector.PerCoreSelector().select(6)
+
+    flag = 1
+
+    for i in range(len(cores)):
+        if (flag):
+            flag = 0
 
 
 if __name__ == "__main__":
