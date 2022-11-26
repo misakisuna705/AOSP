@@ -22,25 +22,15 @@ def main():
 
     # print(cores, frequencies)
 
-    dataset = selector.Selector().select(6)
-
-    # for i in range(len(cores)):
-    # for j in range(len(frequencies[i])):
-    # print("cores: ", cores[i], "frequencies: ", frequencies[i][j])
-    # print("")
-
-    # for item in dataset[i][j]:
-    # print(item)
-    # print("")
-    # print("")
+    perFreqDataset = selector.PerFreqSelector().select(6)
 
     flag = 1
 
     for i in range(len(cores)):
         for j in range(len(frequencies[i])):
             if (flag):
-                print("cores: ", cores[i], "frequencies: ", frequencies[i][j])
-                print("")
+                # print("cores: ", cores[i], "frequencies: ", frequencies[i][j])
+                # print("")
 
                 # print(list(dataset[i][j][0].values())[0])
 
