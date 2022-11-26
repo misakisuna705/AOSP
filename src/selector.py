@@ -97,11 +97,11 @@ class Selector(object):
             for j in range(len(frequencies[i])):
                 datalist[i][j] = sorted(datalist[i][j], key=lambda dict: dict["correlation"], reverse=True)
 
-        for i in range(len(cores)):
-            for j in range(len(frequencies[i])):
-                for k in range(len(pmus)):
-                    print(cores[i], frequencies[i][j], datalist[i][j][k]["pmu"], datalist[i][j][k]["correlation"])
-                print("")
+        # for i in range(len(cores)):
+        # for j in range(len(frequencies[i])):
+        # for k in range(len(pmus)):
+        # print(cores[i], frequencies[i][j], datalist[i][j][k]["pmu"], datalist[i][j][k]["correlation"])
+        # print("")
 
         dataset = [[[] for j in range(len(frequencies[i]))] for i in range(len(cores))]
 
