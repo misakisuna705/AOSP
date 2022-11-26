@@ -83,7 +83,7 @@ class Selector(object):
             cov = statistics.covariance(listA, listB)
             stDevProduct = statistics.pstdev(listA) * statistics.pstdev(listB)
 
-            return pow(cov / stDevProduct, 2) if stDevProduct else 0
+            return pow(cov / stDevProduct, 2) if stDevProduct else -1
 
         for i in range(len(cores)):
             for j in range(len(frequencies[i])):
