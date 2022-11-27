@@ -79,12 +79,6 @@ class _Selector(object):
 
         return dataset
 
-    def rSquare(self, listA, listB):
-        cov = statistics.covariance(listA, listB)
-        stDevProduct = statistics.stdev(listA) * statistics.stdev(listB)
-
-        return pow(cov / stDevProduct, 2) if stDevProduct else False
-
 
 class PerFreqSelector(_Selector):
 
@@ -109,7 +103,7 @@ class PerFreqSelector(_Selector):
                     count = [sample[0] for sample in ranks[i][j][k]["samples"]]
                     time = [sample[1] for sample in ranks[i][j][k]["samples"]]
 
-                    ranks[i][j][k]["correlation"] = self.rSquare(count, time)
+                    ranks[i][j][k]["correlation"] = pow(statistics.correlation(count, time), 2) if statistics.stdev(count) and statistics.stdev(time) else False
 
         for i in range(len(self.cores)):
             for j in range(len(self.frequencies[i])):
@@ -187,7 +181,7 @@ class PerCoreSelector(_Selector):
                 count = [sample[0] for sample in ranks[i][j]["samples"]]
                 time = [sample[1] for sample in ranks[i][j]["samples"]]
 
-                ranks[i][j]["correlation"] = self.rSquare(count, time)
+                ranks[i][j]["correlation"] = pow(statistics.correlation(count, time), 2) if statistics.stdev(count) and statistics.stdev(time) else False
 
         for i in range(len(self.cores)):
             ranks[i] = sorted(ranks[i], key=lambda dict: dict["correlation"], reverse=True)
