@@ -5,13 +5,10 @@
 * [QuickStart](#quickstart)
     - [環境](#環境)
     - [執行](#執行)
-* [AOSP](#aosp)
-* [Benchmark](#benchmark)
-* [Profiler](#profiler)
-* [info](#info)
-    - [paper](#paper)
-    - [doc](#doc)
-    - [stackoverflow](#stackoverflow)
+* [Reference](#reference)
+    - [AOSP](#aosp)
+    - [Benchmark](#benchmark)
+    - [Profiler](#profiler)
 * [Deprecated](#deprecated)
     - [MediaBench](#mediabench)
         + [H.264](#h264)
@@ -54,11 +51,15 @@ adb push res/SpecCpu2017 /data/local/tmp
 pipenv run python3 main.py
 ```
 
-## AOSP
+---
+
+## Reference
+
+### AOSP
 
 -   [Pixel 4a](doc/aosp.md)
 
-## Benchmark
+### Benchmark
 
 -   [Dhrystone](https://github.com/misakisuna705/Dhrystone)
 -   [LMbench](https://github.com/misakisuna705/LMbench)
@@ -66,7 +67,7 @@ pipenv run python3 main.py
 -   [SPEC CPU® 2006](https://github.com/misakisuna705/SPEC-CPU-2006)
 -   [SPEC CPU® 2017](https://github.com/misakisuna705/SPEC-CPU-2017)
 
-## Profiler
+### Profiler
 
 -   [CpuFreq](doc/cpufreq.md)
 -   [Simpleperf](https://github.com/misakisuna705/Simpleperf)
@@ -75,21 +76,7 @@ pipenv run python3 main.py
 python3 profiler.py [-h] [-b BENCHMARK] [-o OUTPUTFILE]
 ```
 
-## info
-
-### paper
-
--   [Run-Time CPU Power Modelling](http://www.powmon.ecs.soton.ac.uk/powermodeling/index.html)
-
-### doc
-
--   [使用 Batterystats 和 Battery Historian 剖析電池用量](https://developer.android.com/topic/performance/power/setup-battery-historian)
--   [Android 分析器](https://developer.android.com/studio/profile/android-profiler?hl=zh-tw)
--   [使用能源分析器檢查能源用量](https://developer.android.com/studio/profile/energy-profiler)
-
-### stackoverflow
-
--   [How to change clock frequency in Android?](https://stackoverflow.com/questions/4238959/how-to-change-clock-frequency-in-android)
+---
 
 ## Deprecated
 
