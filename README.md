@@ -249,7 +249,7 @@ adb push res/Mibench /data/local/tmp
 ### [Dhrystone](https://github.com/misakisuna705/Dhrystone)
 
 ```zsh
-adb push Dhrystone/v2.2/dry /data/local/tmp/Dhrystone/dry
+adb push res/Dhrystone/v2.2/dry /data/local/tmp/Dhrystone/dry
 ```
 
 ### [MediaBench（Deprecated）](https://github.com/misakisuna705/MediaBench)
