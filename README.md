@@ -237,19 +237,19 @@ adb root // don't need root under the path "/data/local/tmp/"
 ### [LMbench](https://github.com/misakisuna705/LMbench)
 
 ```zsh
-adb push lmbench-3.0-a9/bin/aarch64 /data/local/tmp/LMbench
+adb push res/LMbench/bin/aarch64 /data/local/tmp/LMbench
 ```
 
 ### [MiBench](https://github.com/misakisuna705/MiBench)
 
 ```zsh
-adb push dat/Mibench /data/local/tmp
+adb push res/Mibench /data/local/tmp
 ```
 
 ### [Dhrystone](https://github.com/misakisuna705/Dhrystone)
 
 ```zsh
-adb push dhrystone/v2.2/dry /data/local/tmp/Dhrystone/dry
+adb push Dhrystone/v2.2/dry /data/local/tmp/Dhrystone/dry
 ```
 
 ### [MediaBench（Deprecated）](https://github.com/misakisuna705/MediaBench)
@@ -315,7 +315,7 @@ wa run -f -c geekbench/Geekbench\ 4_4.4.2_Apkpure/geekbench.yaml geekbench
 #### 刷入
 
 ```zsh
-adb push speccpu2017 /data/local/tmp
+adb push res/SpecCpu2017 /data/local/tmp
 ```
 
 ### [SPEC CPU® 2006](https://github.com/misakisuna705/SPEC-CPU-2006)
@@ -323,7 +323,7 @@ adb push speccpu2017 /data/local/tmp
 #### 刷入
 
 ```zsh
-adb push speccpu2006 /data/local/tmp
+adb push res/SpecCpu2006 /data/local/tmp
 ```
 
 ## Profiler
