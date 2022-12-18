@@ -51,8 +51,6 @@ adb push res/SpecCpu2017 /data/local/tmp
 pipenv run python3 main.py
 ```
 
----
-
 ## Reference
 
 ### AOSP
@@ -71,8 +69,6 @@ pipenv run python3 main.py
 
 -   [CpuFreq](doc/cpufreq.md)
 -   [Simpleperf](https://github.com/misakisuna705/Simpleperf)
-
----
 
 ## Deprecated
 
