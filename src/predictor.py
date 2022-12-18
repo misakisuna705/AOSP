@@ -81,7 +81,6 @@ class Predictor(object):
         # loss, accuracy = model.evaluate(validationSet)
 
         # print(loss, accuracy)
-
         pass
 
 
