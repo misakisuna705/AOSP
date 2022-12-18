@@ -44,9 +44,9 @@
 
 -   adb
 -   python 3.10.8
--   pipenv
-    -   pandas
-    -   sklearn
+    -   pipenv
+        -   pandas
+        -   sklearn
 
 ### 執行
 
