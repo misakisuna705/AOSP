@@ -8,6 +8,7 @@ pandas = "*"
 tensorflow-macos = "==2.9"
 tensorflow-metal = "==0.5.0"
 scikit-learn = "*"
+matplotlib = "*"
 
 [dev-packages]
 
