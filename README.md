@@ -59,7 +59,7 @@ adb push res/SpecCpu2006 /data/local/tmp
 adb push res/SpecCpu2017 /data/local/tmp
 
 # profile
-./test.sh # python3 profiler.py [-h] [-b BENCHMARK] [-o OUTPUTFILE]
+./test.sh # ./profiler.py [-h] [-b BENCHMARK] [-o OUTPUTFILE]
 
 # run
 pipenv run python3 main.py
