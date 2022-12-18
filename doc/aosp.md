@@ -2,7 +2,7 @@
 
 <!-- vim-markdown-toc GFM -->
 
-* [AOSP](#aosp)
+* [Pixel 4a](#pixel-4a)
     - [代碼同步](#代碼同步)
     - [驅動導入](#驅動導入)
         + [Google](#google)
@@ -17,7 +17,7 @@
 
 ---
 
-## AOSP
+## Pixel 4a
 
 -   [CpuFreq](doc/cpufreq.md)
 
