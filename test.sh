@@ -1,5 +1,8 @@
 # Profiler
 
+## Dhrystone
+pipenv run python3 src/profiler.py -b "/data/local/tmp/Dhrystone/dry" -o "dat/Dhrystone/dry.csv"
+
 ## Mibench
 
 ### automotive
@@ -24,15 +27,12 @@ pipenv run python3 src/profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m bzero
 ### bcopy
 pipenv run python3 src/profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m bcopy" -o "dat/LMbench/bw_mem/512m/bcopy.csv"
 
-## Dhrystone
-pipenv run python3 src/profiler.py -b "/data/local/tmp/Dhrystone/dry" -o "dat/Dhrystone/dry.csv"
-
 ## SPEC CPU® 2017
 
 ### 600.perlbench_s
 pipenv run python3 src/profiler.py -b "/data/local/tmp/SpecCpu2017/600.perlbench_s/run_base_test_mytest-64.0000/600.perlbench_s.sh" -o "dat/SpecCpu2017/600.perlbench_s.csv"
 ### 602.gcc_s
-pipenv run python3 src/profiler.py -b "/data/local/tmp/SpecCpu2017/602.gcc_s/run_base_test_mytest-64.0000/602.gcc_s.sh" -o "dat/SpecCpu2017/602.gcc_s.csv"
+#pipenv run python3 src/profiler.py -b "/data/local/tmp/SpecCpu2017/602.gcc_s/run_base_test_mytest-64.0000/602.gcc_s.sh" -o "dat/SpecCpu2017/602.gcc_s.csv"
 ### 605.mcf_s
 pipenv run python3 src/profiler.py -b "/data/local/tmp/SpecCpu2017/605.mcf_s/run_base_test_mytest-64.0000/605.mcf_s.sh" -o "dat/SpecCpu2017/605.mcf_s.csv"
 ### 619.lbm_s

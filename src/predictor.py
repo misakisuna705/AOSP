@@ -4,7 +4,8 @@ import pandas as pd
 import sklearn.linear_model
 import sklearn.metrics
 import sklearn.model_selection
-import tensorflow as tf
+
+# import tensorflow as tf
 
 
 class Predictor(object):
@@ -42,7 +43,7 @@ class Predictor(object):
         print("")
 
     def _regressByTensorflow(self, dataframe):
-        dataset = tf.data.Dataset.from_tensor_slices((dataframe.iloc[:, :-1], dataframe.iloc[:, -1]))
+        # dataset = tf.data.Dataset.from_tensor_slices((dataframe.iloc[:, :-1], dataframe.iloc[:, -1]))
 
         # print("")
         # print(dataset)

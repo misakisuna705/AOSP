@@ -3,6 +3,8 @@
 <!-- vim-markdown-toc GFM -->
 
 * [QuickStart](#quickstart)
+    - [環境](#環境)
+    - [執行](#執行)
 * [AOSP](#aosp)
 * [Benchmark](#benchmark)
 * [Profiler](#profiler)
@@ -17,16 +19,25 @@
     - [Geekbench](#geekbench)
         + [binary](#binary)
             * [刷入](#刷入)
-            * [執行](#執行)
+            * [執行](#執行-1)
         + [apk](#apk)
             * [刷入](#刷入-1)
-            * [執行](#執行-1)
+            * [執行](#執行-2)
 
 <!-- vim-markdown-toc -->
 
 ---
 
 ## QuickStart
+
+### 環境
+
+-   python 3.10.8
+-   pipenv
+    -   pandas
+    -   sklearn
+
+### 執行
 
 ```zsh
 # setup
@@ -40,7 +51,7 @@ adb push res/SpecCpu2017 /data/local/tmp
 ./test.sh
 
 # run
-python3 main.py # or pipenv run python3 main.py
+pipenv run python3 main.py
 ```
 
 ## AOSP
