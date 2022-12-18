@@ -9,6 +9,8 @@
     - [AOSP](#aosp)
     - [Benchmark](#benchmark)
     - [Profiler](#profiler)
+    - [Selector](#selector)
+    - [Predictor](#predictor)
 * [Deprecated](#deprecated)
     - [MediaBench](#mediabench)
         + [H.264](#h264)
@@ -75,6 +77,10 @@ pipenv run python3 main.py
 ```zsh
 python3 profiler.py [-h] [-b BENCHMARK] [-o OUTPUTFILE]
 ```
+
+### Selector
+
+### Predictor
 
 ---
 
