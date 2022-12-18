@@ -249,7 +249,20 @@ class PerCoreSelector(_Selector):
         # print("")
         # print("")
 
-        return dataset
+        data = [{} for i in range(len(self.cores))]
+
+        for i in range(len(self.cores)):
+            for item in dataset[i]:
+                data[i] |= item
+
+        # for i in range(len(self.cores)):
+        # print("cores: ", self.cores[i])
+        # print("")
+
+        # print(data[i])
+        # print("")
+
+        return data
 
 
 if __name__ == "__main__":

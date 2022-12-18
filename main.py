@@ -23,25 +23,31 @@ def main():
     # print(cores, frequencies)
 
     getPerFreqError(cores, frequencies)
-    # getPerCoreError(cores, frequencies)
+    getPerCoreError(cores, frequencies)
 
 
 def getPerFreqError(cores, frequencies):
-    dataset = selector.PerFreqSelector().select(6)
+    data = selector.PerFreqSelector().select(6)
 
     for i in range(len(cores)):
         for j in range(len(frequencies[i])):
-            predictor.Predictor().predict(dataset[i][j])
+            print("cores: ", cores[i], "frequencies: ", frequencies[i][j])
+            print("")
+
+            predictor.Predictor().predict(data[i][j])
+            print("")
+        print("")
 
 
 def getPerCoreError(cores, frequencies):
-    dataset = selector.PerCoreSelector().select(6)
-
-    flag = 1
+    data = selector.PerCoreSelector().select(6)
 
     for i in range(len(cores)):
-        if (flag):
-            flag = 0
+        print("cores: ", cores[i])
+        print("")
+
+        predictor.Predictor().predict(data[i])
+        print("")
 
 
 if __name__ == "__main__":
