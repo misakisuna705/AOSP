@@ -3,6 +3,9 @@
 <!-- vim-markdown-toc GFM -->
 
 * [QuickStart](#quickstart)
+    - [參數](#參數)
+        + [系統](#系統)
+        + [目標](#目標)
     - [環境](#環境)
     - [執行](#執行)
 * [Reference](#reference)
@@ -27,8 +30,19 @@
 
 ## QuickStart
 
+### 參數
+
+#### 系統
+
+-   Ubuntu 18.04
+
+#### 目標
+
+-   arm64
+
 ### 環境
 
+-   adb
 -   python 3.10.8
 -   pipenv
     -   pandas
