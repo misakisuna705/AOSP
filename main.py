@@ -8,7 +8,7 @@ from src import predictor, selector
 def main():
     workload = []
 
-    with open("bin/Dhrystone/dry.csv", newline="") as f:
+    with open("dat/Dhrystone/dry.csv", newline="") as f:
         rows = csv.DictReader(f)
 
         workload = [row for row in rows]
@@ -23,18 +23,15 @@ def main():
     # print(cores, frequencies)
 
     getPerFreqError(cores, frequencies)
-    getPerCoreError(cores, frequencies)
+    # getPerCoreError(cores, frequencies)
 
 
 def getPerFreqError(cores, frequencies):
     dataset = selector.PerFreqSelector().select(6)
 
-    flag = 1
-
     for i in range(len(cores)):
         for j in range(len(frequencies[i])):
-            if (flag):
-                flag = 0
+            predictor.Predictor().predict(dataset[i][j])
 
 
 def getPerCoreError(cores, frequencies):
