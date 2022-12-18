@@ -8,9 +8,7 @@
 * [Reference](#reference)
     - [AOSP](#aosp)
     - [Benchmark](#benchmark)
-    - [Profiler](#profiler)
-    - [Selector](#selector)
-    - [Predictor](#predictor)
+    - [Profiling Tool](#profiling-tool)
 * [Deprecated](#deprecated)
     - [MediaBench](#mediabench)
         + [H.264](#h264)
@@ -50,7 +48,7 @@ adb push res/SpecCpu2017 /data/local/tmp
 ./test.sh
 
 # run
-pipenv run python3 main.py
+pipenv run python3 main.py # python3 profiler.py [-h] [-b BENCHMARK] [-o OUTPUTFILE]
 ```
 
 ---
@@ -69,18 +67,10 @@ pipenv run python3 main.py
 -   [SPEC CPU® 2006](https://github.com/misakisuna705/SPEC-CPU-2006)
 -   [SPEC CPU® 2017](https://github.com/misakisuna705/SPEC-CPU-2017)
 
-### Profiler
+### Profiling Tool
 
 -   [CpuFreq](doc/cpufreq.md)
 -   [Simpleperf](https://github.com/misakisuna705/Simpleperf)
-
-```zsh
-python3 profiler.py [-h] [-b BENCHMARK] [-o OUTPUTFILE]
-```
-
-### Selector
-
-### Predictor
 
 ---
 
