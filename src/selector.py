@@ -44,10 +44,10 @@ class _Selector(object):
 
         self.frequencies = []
 
-        # print(self.frequencies)
-
         for core in self.cores:
             self.frequencies.append(sorted(set([int(row["frequency"]) for row in self.workloads[0] if row["setup core"] == core])))
+
+        # print(self.frequencies)
 
         self.pmus = sorted(set([row["event"] for row in self.workloads[0]]))
 
