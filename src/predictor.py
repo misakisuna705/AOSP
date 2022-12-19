@@ -10,6 +10,10 @@ import sklearn.model_selection
 # import tensorflow as tf
 
 
+def main():
+    pass
+
+
 class Predictor(object):
 
     def __init__(self) -> None:
@@ -109,10 +113,6 @@ class Predictor(object):
         # print(loss, accuracy)
 
         pass
-
-
-def main():
-    pass
 
 
 if __name__ == "__main__":

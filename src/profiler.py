@@ -14,6 +14,12 @@ logging.basicConfig(
 )
 
 
+def main(argv):
+    profiler = Profiler()
+
+    profiler.profile(argv.benchmark[0], argv.outputfile[0])
+
+
 class Profiler(object):
 
     def __init__(self) -> None:
@@ -210,12 +216,6 @@ class Profiler(object):
 
         logging.info("set output file: ")
         logging.info(outputfile)
-
-
-def main(argv):
-    profiler = Profiler()
-
-    profiler.profile(argv.benchmark[0], argv.outputfile[0])
 
 
 if __name__ == "__main__":
