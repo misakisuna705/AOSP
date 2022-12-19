@@ -8,10 +8,10 @@ from src import predictor, selector
 def main():
     workload = []
 
-    with open("dat/Doshin/MiBench/bitcnts/84600000.csv", newline="") as f:
-    # with open("dat/Peihsuan/MiBench/bitcnts/84600000.csv", newline="") as f:
-    # with open("dat/Essen/MiBench/bitcount/bitcnt86400000_4XL.csv", newline="") as f:
     # with open("dat/Weichun/Mibench/bitcnts/84600000.csv") as f:
+    # with open("dat/Essen/MiBench/bitcount/bitcnt86400000_4XL.csv", newline="") as f:
+    # with open("dat/Peihsuan/MiBench/bitcnts/84600000.csv", newline="") as f:
+    with open("dat/Doshin/MiBench/bitcnts/84600000.csv", newline="") as f:
 
         rows = csv.DictReader(f)
 

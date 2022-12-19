@@ -26,10 +26,10 @@ class _Selector(object):
 
         self.workloads = []
 
-        for file in glob.glob("dat/Doshin/**/*.csv", recursive=True):
-        # for file in glob.glob("dat/Peihsuan/**/*.csv", recursive=True):
-        # for file in glob.glob("dat/Essen/**/*.csv", recursive=True):
         # for file in glob.glob("dat/Weichun/**/*.csv", recursive=True):
+        # for file in glob.glob("dat/Essen/**/*.csv", recursive=True):
+        # for file in glob.glob("dat/Peihsuan/**/*.csv", recursive=True):
+        for file in glob.glob("dat/Doshin/**/*.csv", recursive=True):
             # print(file)
 
             with open(file, newline="") as f:
