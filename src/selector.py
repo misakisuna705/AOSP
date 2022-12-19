@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 
 import csv
+import glob
 import logging
 import statistics
 
@@ -22,32 +23,18 @@ def main():
 class _Selector(object):
 
     def __init__(self) -> None:
-        self.sheets = [
-            "dat/Dhrystone/dry.csv",
-            \
-            "dat/LMbench/bw_mem/512m/bcopy.csv", "dat/LMbench/bw_mem/512m/bzero.csv", "dat/LMbench/bw_mem/512m/cp.csv",
-            "dat/LMbench/bw_mem/512m/fcp.csv", "dat/LMbench/bw_mem/512m/frd.csv", "dat/LMbench/bw_mem/512m/rd.csv", "dat/Mibench/bitcnts/84600000.csv",
-            \
-            "dat/SpecCpu2006/400.perlbench.csv", "dat/SpecCpu2006/401.bzip2.csv", "dat/SpecCpu2006/403.gcc.csv", "dat/SpecCpu2006/429.mcf.csv",
-            "dat/SpecCpu2006/433.milc.csv", "dat/SpecCpu2006/444.namd.csv", "dat/SpecCpu2006/445.gobmk.csv", "dat/SpecCpu2006/447.dealII.csv",
-            "dat/SpecCpu2006/450.soplex.csv", "dat/SpecCpu2006/453.povray.csv", "dat/SpecCpu2006/456.hmmer.csv", "dat/SpecCpu2006/458.sjeng.csv",
-            "dat/SpecCpu2006/462.libquantum.csv", "dat/SpecCpu2006/464.h264ref.csv", "dat/SpecCpu2006/470.lbm.csv", "dat/SpecCpu2006/471.omnetpp.csv",
-            "dat/SpecCpu2006/473.astar.csv", "dat/SpecCpu2006/482.sphinx3.csv", "dat/SpecCpu2006/483.xalancbmk.csv",
-            \
-            "dat/SpecCpu2017/600.perlbench_s.csv", "dat/SpecCpu2017/602.gcc_s.csv", "dat/SpecCpu2017/605.mcf_s.csv", "dat/SpecCpu2017/619.lbm_s.csv",
-            "dat/SpecCpu2017/620.omnetpp_s.csv", "dat/SpecCpu2017/623.xalancbmk_s.csv", "dat/SpecCpu2017/625.x264_s.csv", "dat/SpecCpu2017/638.imagick_s.csv",
-            "dat/SpecCpu2017/641.leela_s.csv", "dat/SpecCpu2017/644.nab_s.csv", "dat/SpecCpu2017/657.xz_s.csv"
-        ]
-
-        # print(len(self.sheets))
 
         self.workloads = []
 
-        for sheet in self.sheets:
-            with open(sheet, newline="") as f:
+        # for file in glob.glob("dat/Essen/**/*.csv", recursive=True):
+        for file in glob.glob("dat/Doshin/**/*.csv", recursive=True):
+            # print(file)
+
+            with open(file, newline="") as f:
                 rows = csv.DictReader(f)
 
                 self.workloads.append([row for row in rows])
+        # print("")
 
         # print(self.workloads[0])
 

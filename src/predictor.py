@@ -21,7 +21,7 @@ class Predictor(object):
         # print(dataframe)
         # print("")
 
-        dataframe.drop(dataframe[dataframe['times'] < 1.0].index, axis=0, inplace=True)  # filter
+        # dataframe.drop(dataframe[dataframe['times'] < 1.0].index, axis=0, inplace=True)  # filter
 
         # print(dataframe)
         # print("")
@@ -40,23 +40,23 @@ class Predictor(object):
 
         model = sklearn.linear_model.LinearRegression().fit(X_train, y_train)
 
-        # print("coefficient weights: ", model.coef_.tolist())
-        # print("intercept bias: ", model.intercept_)
-        # print("robustness R²: ", model.score(X, y))
-        # print("")
+        print("coefficient weights: ", model.coef_.tolist())
+        print("intercept bias: ", model.intercept_)
+        print("robustness R²: ", model.score(X, y))
+        print("")
 
         y_pred = model.predict(X_test)
 
-        # print(y_test.to_frame().assign(y_pred=y_pred))
-        # print("")
+        print(y_test.to_frame().assign(y_pred=y_pred))
+        print("")
 
         print("R²: ", sklearn.metrics.r2_score(y_test, y_pred))
         print("")
-        # print("Max error: ", sklearn.metrics.max_error(y_test, y_pred), "(s)")
-        # print("Median absolute error: ", sklearn.metrics.median_absolute_error(y_test, y_pred), "(s)")
-        # print("Mean absolute error: ", sklearn.metrics.mean_absolute_error(y_test, y_pred), "(s)")
-        # print("Mean squared error: ", sklearn.metrics.mean_squared_error(y_test, y_pred), "(s²)")
-        # print("")
+        print("Max error: ", sklearn.metrics.max_error(y_test, y_pred), "(s)")
+        print("Median absolute error: ", sklearn.metrics.median_absolute_error(y_test, y_pred), "(s)")
+        print("Mean absolute error: ", sklearn.metrics.mean_absolute_error(y_test, y_pred), "(s)")
+        print("Mean squared error: ", sklearn.metrics.mean_squared_error(y_test, y_pred), "(s²)")
+        print("")
         print("Mean absolute percentage error: ", sklearn.metrics.mean_absolute_percentage_error(y_test, y_pred) * 100, "(%)")
         print("")
 

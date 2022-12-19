@@ -8,7 +8,7 @@ from src import predictor, selector
 def main():
     workload = []
 
-    with open("dat/Dhrystone/dry.csv", newline="") as f:
+    with open("dat/Doshin/Dhrystone/dry.csv", newline="") as f:
         rows = csv.DictReader(f)
 
         workload = [row for row in rows]
