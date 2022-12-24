@@ -88,6 +88,7 @@ pipenv run python3 main.py [-h] [-d DIRECTORY]
 │   ├── Peihsuan
 │   └── Weichun
 └── bin
+    └── (None)
 ```
 
 ## Reference
