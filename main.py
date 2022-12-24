@@ -6,7 +6,7 @@ import pathlib
 
 import pandas as pd
 
-from src import predictor, selector
+from src import predictor, preprocessor, selector
 
 logging.basicConfig(
     level=logging.INFO,
@@ -31,12 +31,12 @@ def main(argv):
     for anchor in range(len(cores)):
         step = len(workloads[0]) // len(cores)
 
-        frequencies.append(sorted(set(workloads[0]["frequency"][anchor * step: anchor * step + step])))
+        frequencies.append(sorted(set(workloads[0]["frequency"][anchor * step:anchor * step + step])))
 
     # print(frequencies)
     # print("")
 
-    pmus = sorted(set(workloads[0]["event"][0: len(workloads[0]) // len(cores) // len(frequencies[0])]))
+    pmus = sorted(set(workloads[0]["event"][0:len(workloads[0]) // len(cores) // len(frequencies[0])]))
 
     # print(pmus)
     # print("")
@@ -47,11 +47,13 @@ def main(argv):
                 for k in range(len(pmus)):
                     idx = i * len(workload) // len(cores) + j * len(pmus) + k
 
-                    workload.loc[idx, "count"] = int(workload["count"][idx].replace(",", "")) 
+                    workload.loc[idx, "count"] = int(workload["count"][idx].replace(",", ""))
                     workload.loc[idx, "time"] = float(workload["time"][idx])
 
     # print(workloads[0])
     # print("")
+
+    workloads = preprocessor._Preprocessor(workloads).preprocess()
 
     getPerFreqError(workloads, cores, frequencies)
     getPerCoreError(workloads, cores, frequencies)

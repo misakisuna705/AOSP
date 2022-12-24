@@ -26,7 +26,7 @@ class _Selector(object):
 
         self.workloads = workloads
 
-        # print(self.workloads[0])
+        # print(self.workloads)
 
         self.cores = sorted(set(workloads[0]["setup core"]))
 
