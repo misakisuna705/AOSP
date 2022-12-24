@@ -27,8 +27,8 @@ class Predictor(object):
     def __init__(self) -> None:
         pass
 
-    def predict(self, data):
-        dataframe = pd.DataFrame.from_dict(data)  # pd.read_csv
+    def predict(self, dataframe):
+        # dataframe = pd.DataFrame.from_dict(data)
 
         # print(dataframe)
         # print("")

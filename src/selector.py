@@ -3,6 +3,8 @@
 import logging
 import statistics
 
+import pandas as pd
+
 logging.basicConfig(
     level=logging.INFO,
     format="[%(asctime)s line:%(lineno)-3d %(levelname)-8s ] %(message)s",
@@ -26,26 +28,28 @@ class _Selector(object):
 
         # print(self.workloads[0])
 
-        self.cores = sorted(set([row["setup core"] for row in self.workloads[0]]))
+        self.cores = sorted(set(workloads[0]["setup core"]))
 
         # print(self.cores)
 
         self.frequencies = []
 
-        for core in self.cores:
-            self.frequencies.append(sorted(set([int(row["frequency"]) for row in self.workloads[0] if row["setup core"] == core])))
+        for anchor in range(len(self.cores)):
+            step = len(workloads[0]) // len(self.cores)
+
+            self.frequencies.append(sorted(set(workloads[0]["frequency"][anchor * step:anchor * step + step])))
 
         # print(self.frequencies)
 
-        self.pmus = sorted(set([row["event"] for row in self.workloads[0]]))
+        self.pmus = sorted(set(workloads[0]["event"][0:len(workloads[0]) // len(self.cores) // len(self.frequencies[0])]))
 
         # print(self.pmus)
 
     def select(self, num):
         ranks = self._rank()
-        dataset = self._format(ranks, num)
+        dataframes = self._format(ranks, num)
 
-        return dataset
+        return dataframes
 
 
 class PerFreqSelector(_Selector):
@@ -60,10 +64,10 @@ class PerFreqSelector(_Selector):
             for i in range(len(self.cores)):
                 for j in range(len(self.frequencies[i])):
                     for k in range(len(self.pmus)):
-                        row = workload[i * len(workload) // len(self.cores) + j * len(self.pmus) + k]
+                        idx = i * len(workload) // len(self.cores) + j * len(self.pmus) + k
 
                         ranks[i][j][k]["pmu"] = (k, self.pmus[k])
-                        ranks[i][j][k]["samples"].append((row["count"], row["time"]))
+                        ranks[i][j][k]["samples"].append((workload["count"][idx], workload["time"][idx]))
 
         for i in range(len(self.cores)):
             for j in range(len(self.frequencies[i])):
@@ -88,7 +92,7 @@ class PerFreqSelector(_Selector):
         return ranks
 
     def _format(self, ranks, num):
-        dataset = [[[] for j in range(len(self.frequencies[i]))] for i in range(len(self.cores))]
+        datalist = [[[] for j in range(len(self.frequencies[i]))] for i in range(len(self.cores))]
 
         for i in range(len(self.cores)):
             for j in range(len(self.frequencies[i])):
@@ -100,46 +104,53 @@ class PerFreqSelector(_Selector):
 
                     for workload in self.workloads:
                         anchor = i * len(workload) // len(self.cores) + j * len(self.pmus)
-                        row = workload[anchor + ranks[i][j][k]["pmu"][0]]
 
-                        meanTime = statistics.mean([row["time"] for row in workload[anchor:anchor + len(self.pmus)]])
+                        meanTime = statistics.mean(workload["time"][anchor:anchor + len(self.pmus)])
 
-                        qualifiers.append(row["event"]) if (row["event"] not in qualifiers) else None
-                        counts.append(row["count"])
+                        idx = anchor + ranks[i][j][k]["pmu"][0]
+
+                        qualifiers.append(workload["event"][idx]) if (workload["event"][idx] not in qualifiers) else None
+                        counts.append(workload["count"][idx])
                         meanTimes.append(meanTime) if (meanTime not in meanTimes) else None
 
-                    dataset[i][j].append({qualifiers[k]: counts})
+                    datalist[i][j].append({qualifiers[k]: counts})
 
-                dataset[i][j].append({"times": meanTimes})
+                datalist[i][j].append({"times": meanTimes})
 
         # for i in range(len(self.cores)):
         # for j in range(len(self.frequencies[i])):
         # print("cores: ", self.cores[i], "frequencies: ", self.frequencies[i][j])
         # print("")
 
-        # for item in dataset[i][j]:
+        # for item in datalist[i][j]:
         # print(item)
         # print("")
         # print("")
         # print("")
 
-        data = [[{} for j in range(len(self.frequencies[i]))] for i in range(len(self.cores))]
+        datadict = [[{} for j in range(len(self.frequencies[i]))] for i in range(len(self.cores))]
 
         for i in range(len(self.cores)):
             for j in range(len(self.frequencies[i])):
-                for item in dataset[i][j]:
-                    data[i][j] |= item
+                for item in datalist[i][j]:
+                    datadict[i][j] |= item
+
+        dataframes = [[pd.DataFrame() for j in range(len(self.frequencies[i]))] for i in range(len(self.cores))]
+
+        for i in range(len(self.cores)):
+            for j in range(len(self.frequencies[i])):
+                dataframes[i][j] = pd.DataFrame.from_dict(datadict[i][j])
 
         # for i in range(len(self.cores)):
         # for j in range(len(self.frequencies[i])):
         # print("cores: ", self.cores[i], "frequencies: ", self.frequencies[i][j])
         # print("")
 
-        # print(data[i][j])
+        # print(dataframes[i][j])
         # print("")
         # print("")
 
-        return data
+        return dataframes
 
 
 class PerCoreSelector(_Selector):
@@ -156,9 +167,9 @@ class PerCoreSelector(_Selector):
                     ranks[i][j]["pmu"] = (j, self.pmus[j])
 
                     for k in range(len(self.frequencies[i])):
-                        row = workload[i * len(workload) // len(self.cores) + k * len(self.pmus) + j]
+                        idx = i * len(workload) // len(self.cores) + k * len(self.pmus) + j
 
-                        ranks[i][j]["samples"].append((row["count"], row["time"]))
+                        ranks[i][j]["samples"].append((workload["count"][idx], workload["time"][idx]))
 
         for i in range(len(self.cores)):
             for j in range(len(self.pmus)):
@@ -180,7 +191,7 @@ class PerCoreSelector(_Selector):
         return ranks
 
     def _format(self, ranks, num):
-        dataset = [[] for i in range(len(self.cores))]
+        datalist = [[] for i in range(len(self.cores))]
 
         for i in range(len(self.cores)):
             qualifiers = []
@@ -192,41 +203,47 @@ class PerCoreSelector(_Selector):
                 for k in range(len(self.frequencies[i])):
                     for workload in self.workloads:
                         anchor = i * len(workload) // len(self.cores) + k * len(self.pmus)
-                        row = workload[anchor + ranks[i][j]["pmu"][0]]
 
-                        meanTime = statistics.mean([row["time"] for row in workload[anchor:anchor + len(self.pmus)]])
+                        meanTime = statistics.mean(workload["time"][anchor:anchor + len(self.pmus)])
 
-                        qualifiers.append(row["event"]) if (row["event"] not in qualifiers) else None
-                        counts.append(row["count"])
+                        idx = anchor + ranks[i][j]["pmu"][0]
+
+                        qualifiers.append(workload["event"][idx]) if (workload["event"][idx] not in qualifiers) else None
+                        counts.append(workload["count"][idx])
                         meanTimes.append(meanTime) if (meanTime not in meanTimes) else None
 
-                dataset[i].append({qualifiers[j]: counts})
+                datalist[i].append({qualifiers[j]: counts})
 
-            dataset[i].append({"times": meanTimes})
+            datalist[i].append({"times": meanTimes})
 
         # for i in range(len(self.cores)):
         # print("cores: ", self.cores[i])
         # print("")
 
-        # for item in dataset[i]:
+        # for item in datalist[i]:
         # print(item)
         # print("")
         # print("")
 
-        data = [{} for i in range(len(self.cores))]
+        datadict = [{} for i in range(len(self.cores))]
 
         for i in range(len(self.cores)):
-            for item in dataset[i]:
-                data[i] |= item
+            for item in datalist[i]:
+                datadict[i] |= item
+
+        dataframes = [pd.DataFrame() for i in range(len(self.cores))]
+
+        for i in range(len(self.cores)):
+            dataframes[i] = pd.DataFrame.from_dict(datadict[i])
 
         # for i in range(len(self.cores)):
         # print("cores: ", self.cores[i])
         # print("")
 
-        # print(data[i])
+        # print(dataframes[i])
         # print("")
 
-        return data
+        return dataframes
 
 
 if __name__ == "__main__":

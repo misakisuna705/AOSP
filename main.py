@@ -5,6 +5,8 @@ import csv
 import logging
 import pathlib
 
+import pandas as pd
+
 from src import predictor, selector
 
 logging.basicConfig(
@@ -15,34 +17,27 @@ logging.basicConfig(
 
 
 def main(argv):
-    workloads = []
+    workloads = [pd.read_csv(file) for file in pathlib.Path(argv.directory[0]).glob("**/*.csv")]
 
-    for file in pathlib.Path(argv.directory[0]).glob("**/*.csv"):
-        # print(file)
-
-        with open(file, newline="") as f:
-            rows = csv.DictReader(f)
-
-            workloads.append([row for row in rows])
+    # print(workloads)
     # print("")
 
-    # print(workloads[0])
-    # print("")
-
-    cores = sorted(set([row["setup core"] for row in workloads[0]]))
+    cores = sorted(set(workloads[0]["setup core"]))
 
     # print(cores)
     # print("")
 
     frequencies = []
 
-    for core in cores:
-        frequencies.append(sorted(set([int(row["frequency"]) for row in workloads[0] if row["setup core"] == core])))
+    for anchor in range(len(cores)):
+        step = len(workloads[0]) // len(cores)
+
+        frequencies.append(sorted(set(workloads[0]["frequency"][anchor * step: anchor * step + step])))
 
     # print(frequencies)
     # print("")
 
-    pmus = sorted(set([row["event"] for row in workloads[0]]))
+    pmus = sorted(set(workloads[0]["event"][0: len(workloads[0]) // len(cores) // len(frequencies[0])]))
 
     # print(pmus)
     # print("")
@@ -51,10 +46,10 @@ def main(argv):
         for i in range(len(cores)):
             for j in range(len(frequencies[i])):
                 for k in range(len(pmus)):
-                    row = workload[i * len(workload) // len(cores) + j * len(pmus) + k]
+                    idx = i * len(workload) // len(cores) + j * len(pmus) + k
 
-                    row["count"] = int(row["count"].replace(',', ''))
-                    row["time"] = float(row["time"].replace(',', ''))
+                    workload.loc[idx, "count"] = int(workload["count"][idx].replace(",", "")) 
+                    workload.loc[idx, "time"] = float(workload["time"][idx])
 
     # print(workloads[0])
     # print("")
@@ -64,26 +59,26 @@ def main(argv):
 
 
 def getPerFreqError(workloads, cores, frequencies):
-    data = selector.PerFreqSelector(workloads).select(6)
+    dataframes = selector.PerFreqSelector(workloads).select(6)
 
     for i in range(len(cores)):
         for j in range(len(frequencies[i])):
             print("cores: ", cores[i], "frequencies: ", frequencies[i][j])
             print("")
 
-            predictor.Predictor().predict(data[i][j])
+            predictor.Predictor().predict(dataframes[i][j])
             print("")
         print("")
 
 
 def getPerCoreError(workloads, cores, frequencies):
-    data = selector.PerCoreSelector(workloads).select(6)
+    dataframes = selector.PerCoreSelector(workloads).select(6)
 
     for i in range(len(cores)):
         print("cores: ", cores[i])
         print("")
 
-        predictor.Predictor().predict(data[i])
+        predictor.Predictor().predict(dataframes[i])
         print("")
 
 
