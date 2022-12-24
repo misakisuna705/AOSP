@@ -2,9 +2,16 @@
 
 import argparse
 import csv
+import logging
 import pathlib
 
 from src import predictor, selector
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="[%(asctime)s line:%(lineno)-3d %(levelname)-8s ] %(message)s",
+    datefmt="%Y/%m/%d %H:%M:%S",
+)
 
 
 def main(argv):

@@ -2,12 +2,20 @@
 
 # import matplotlib.pyplot
 
+import logging
+
 import pandas as pd
 import sklearn.linear_model
 import sklearn.metrics
 import sklearn.model_selection
 
 # import tensorflow as tf
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="[%(asctime)s line:%(lineno)-3d %(levelname)-8s ] %(message)s",
+    datefmt="%Y/%m/%d %H:%M:%S",
+)
 
 
 def main():
