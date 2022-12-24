@@ -5,7 +5,7 @@ def main(argv):
     pass
 
 
-class _Preprocessor(object):
+class Preprocessor(object):
 
     def __init__(self, workloads) -> None:
 
@@ -31,10 +31,16 @@ class _Preprocessor(object):
         # print(self.pmus)
 
     def preprocess(self):
+        self._filter()
+
+        return self._classify()
+
+    def _filter(self):
         for workload in self.workloads:
             if ():
                 self.workloads.remove(workload)
 
+    def _classify(self):
         cpuBounds = []
         memBounds = []
         ioBounds = []

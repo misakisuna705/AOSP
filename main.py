@@ -53,7 +53,7 @@ def main(argv):
     # print(workloads[0])
     # print("")
 
-    workloads = preprocessor._Preprocessor(workloads).preprocess()
+    workloads = preprocessor.Preprocessor(workloads).preprocess()
 
     getPerFreqError(workloads, cores, frequencies)
     getPerCoreError(workloads, cores, frequencies)
