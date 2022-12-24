@@ -70,10 +70,6 @@ pipenv run python3 main.py [-h] [-d DIRECTORY]
 
 ```zsh
 .
-├── Pipfile
-├── Pipfile.lock
-├── README.md
-├── bin
 ├── dat
 │   ├── Doshin
 │   ├── Essen
