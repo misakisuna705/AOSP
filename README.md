@@ -70,28 +70,24 @@ pipenv run python3 main.py [-h] [-d DIRECTORY]
 
 ```zsh
 .
-├── bin
-├── dat
-│   ├── Doshin
-│   ├── Essen
-│   ├── Peihsuan
-│   └── Weichun
-├── doc
-│   ├── aosp.md
-│   └── cpufreq.md
 ├── main.py
-├── res
-│   ├── Dhrystone
-│   ├── LMbench
-│   ├── Mibench
-│   ├── SpecCpu2006
-│   ├── SpecCpu2017
 ├── src
 │   ├── profiler.py
 │   ├── preprocessor.py
 │   ├── selector.py
 │   └── predictor.py
-└── test.sh
+├── res
+│   ├── Dhrystone
+│   ├── LMbench
+│   ├── Mibench
+│   ├── SpecCpu2006
+│   └── SpecCpu2017
+├── dat
+│   ├── Doshin
+│   ├── Essen
+│   ├── Peihsuan
+│   └── Weichun
+└── bin
 ```
 
 ## Reference
