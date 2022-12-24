@@ -70,6 +70,7 @@ pipenv run python3 main.py [-h] [-d DIRECTORY]
 
 ```zsh
 .
+├── bin
 ├── dat
 │   ├── Doshin
 │   ├── Essen
