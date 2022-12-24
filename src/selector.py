@@ -1,7 +1,5 @@
 #! /usr/bin/env python3
 
-import csv
-import glob
 import logging
 import statistics
 
@@ -22,21 +20,9 @@ def main():
 
 class _Selector(object):
 
-    def __init__(self) -> None:
+    def __init__(self, workloads) -> None:
 
-        self.workloads = []
-
-        # for file in glob.glob("dat/Weichun/**/*.csv", recursive=True):
-        # for file in glob.glob("dat/Essen/**/*.csv", recursive=True):
-        # for file in glob.glob("dat/Peihsuan/**/*.csv", recursive=True):
-        for file in glob.glob("dat/Doshin/**/*.csv", recursive=True):
-            # print(file)
-
-            with open(file, newline="") as f:
-                rows = csv.DictReader(f)
-
-                self.workloads.append([row for row in rows])
-        # print("")
+        self.workloads = workloads
 
         # print(self.workloads[0])
 
@@ -55,17 +41,6 @@ class _Selector(object):
 
         # print(self.pmus)
 
-        for workload in self.workloads:
-            for i in range(len(self.cores)):
-                for j in range(len(self.frequencies[i])):
-                    for k in range(len(self.pmus)):
-                        row = workload[i * len(workload) // len(self.cores) + j * len(self.pmus) + k]
-
-                        row["count"] = int(row["count"].replace(',', ''))
-                        row["time"] = float(row["time"].replace(',', ''))
-
-        # print(self.workloads[0])
-
     def select(self, num):
         ranks = self._rank()
         dataset = self._format(ranks, num)
@@ -75,8 +50,8 @@ class _Selector(object):
 
 class PerFreqSelector(_Selector):
 
-    def __init__(self) -> None:
-        super().__init__()
+    def __init__(self, workloads) -> None:
+        super().__init__(workloads)
 
     def _rank(self):
         ranks = [[[{"pmu": (), "samples": [], "correlation": 0.0} for k in range(len(self.pmus))] for j in range(len(self.frequencies[i]))] for i in range(len(self.cores))]
@@ -169,8 +144,8 @@ class PerFreqSelector(_Selector):
 
 class PerCoreSelector(_Selector):
 
-    def __init__(self) -> None:
-        super().__init__()
+    def __init__(self, workloads) -> None:
+        super().__init__(workloads)
 
     def _rank(self):
         ranks = [[{"pmu": (), "samples": [], "correlation": 0.0} for j in range(len(self.pmus))] for i in range(len(self.cores))]

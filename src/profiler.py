@@ -3,9 +3,9 @@
 import argparse
 import csv
 import logging
+import pathlib
 import re
 import subprocess
-from pathlib import Path
 
 logging.basicConfig(
     level=logging.INFO,
@@ -78,8 +78,8 @@ class Profiler(object):
 
         ###
 
-        cwd = "cd " + str(Path(benchmark).parent)
-        bin = "./" + Path(benchmark).name
+        cwd = "cd " + str(pathlib.Path(benchmark).parent)
+        bin = "./" + pathlib.Path(benchmark).name
 
         logging.info("set benchmark: ")
         logging.info("\t" + benchmark)
@@ -203,10 +203,10 @@ class Profiler(object):
 
                     ###
 
-        Path(outputfile).parent.mkdir(parents=True, exist_ok=True)
+        pathlib.Path(outputfile).parent.mkdir(parents=True, exist_ok=True)
 
         logging.info("set output directory: ")
-        logging.info(Path(outputfile).parent)
+        logging.info(pathlib.Path(outputfile).parent)
         logging.info("")
 
         with open(outputfile, "w") as f:
@@ -224,12 +224,12 @@ if __name__ == "__main__":
 
     group = parser.add_argument_group()
 
-    group.add_argument("-b", "--benchmark", nargs=1, type=str, help="string of benchmark command")
-    group.add_argument("-o", "--outputfile", nargs=1, type=str, help="string of path to csv file")
+    group.add_argument("-b", "--benchmark", nargs=1, type=str, help="profiling cmd")
+    group.add_argument("-o", "--outputfile", nargs=1, type=str, help="profiled csv")
 
     argv = parser.parse_args()
 
     if not argv.benchmark or not argv.outputfile:
-        parser.error("Should have both benchmark and outputfile")
+        parser.error("Should have both profiling cmd and profiled csv!")
 
     main(argv)

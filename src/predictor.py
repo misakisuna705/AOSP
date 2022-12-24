@@ -64,13 +64,6 @@ class Predictor(object):
         print("Mean absolute percentage error: ", sklearn.metrics.mean_absolute_percentage_error(y_test, y_pred) * 100, "(%)")
         print("")
 
-        # print("test")
-        # a = [39.032870, 178.547973, 0.285950, 273.209226, 52.829471, 0.572401, 1.530566, 19.949575]
-        # b = [39.684027, 179.659327, -0.291524, 270.484430, 51.311926, 0.134621, 1.525343, 20.274504]
-
-        # print(sklearn.metrics.mean_absolute_percentage_error(a, b) * 100, "%")
-        # print("test")
-
     def _regressByTensorflow(self, dataframe):
         # dataset = tf.data.Dataset.from_tensor_slices((dataframe.iloc[:, :-1], dataframe.iloc[:, -1]))
 
