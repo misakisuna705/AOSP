@@ -4,7 +4,6 @@
 
 import logging
 
-import pandas as pd
 import sklearn.linear_model
 import sklearn.metrics
 import sklearn.model_selection
