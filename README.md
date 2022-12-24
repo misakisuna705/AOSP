@@ -8,6 +8,7 @@
         + [目標](#目標)
     - [環境](#環境)
     - [執行](#執行)
+    - [架構](#架構)
 * [Reference](#reference)
     - [AOSP](#aosp)
     - [Benchmark](#benchmark)
@@ -63,6 +64,37 @@ adb push res/SpecCpu2017 /data/local/tmp
 
 # run
 pipenv run python3 main.py [-h] [-d DIRECTORY]
+```
+
+### 架構
+
+```zsh
+.
+├── Pipfile
+├── Pipfile.lock
+├── README.md
+├── bin
+├── dat
+│   ├── Doshin
+│   ├── Essen
+│   ├── Peihsuan
+│   └── Weichun
+├── doc
+│   ├── aosp.md
+│   └── cpufreq.md
+├── main.py
+├── res
+│   ├── Dhrystone
+│   ├── LMbench
+│   ├── Mibench
+│   ├── SpecCpu2006
+│   ├── SpecCpu2017
+├── src
+│   ├── profiler.py
+│   ├── preprocessor.py
+│   ├── selector.py
+│   └── predictor.py
+└── test.sh
 ```
 
 ## Reference
