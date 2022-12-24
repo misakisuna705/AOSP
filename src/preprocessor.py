@@ -31,12 +31,26 @@ class _Preprocessor(object):
         # print(self.pmus)
 
     def preprocess(self):
-        # print(self.workloads)
-        # print(self.cores)
-        # print(self.frequencies)
-        # print(self.pmus)
+        for workload in self.workloads:
+            if ():
+                self.workloads.remove(workload)
 
-        return self.workloads
+        cpuBounds = []
+        memBounds = []
+        ioBounds = []
+        others = []
+
+        for workload in self.workloads:
+            if ():
+                cpuBounds.append(workload)
+            elif ():
+                memBounds.append(workload)
+            elif ():
+                ioBounds.append(workload)
+            else:
+                others.append(workload)
+
+        return self.workloads or cpuBounds or memBounds or ioBounds or others
 
 
 if __name__ == "__main__":
