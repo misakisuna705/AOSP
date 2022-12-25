@@ -75,7 +75,7 @@ class Preprocessor(object):
                 for j in range(len(self.frequencies[i])):
                     anchor = i * len(workload) // len(self.cores) + j * len(self.pmus)
 
-                    hasZero |= int(statistics.mean(workload["time"][anchor:anchor + len(self.pmus)])) == 0
+                    hasZero |= int(statistics.mean(workload["time"][anchor:anchor + len(self.pmus)])) <= 1
 
             self.workloads.pop(idx) if (hasZero) else None
 
@@ -90,6 +90,8 @@ class Preprocessor(object):
 
         # print("cores: ", self.cores[i], "meanTimes: ", meanTimes)
         # print("")
+
+        print(len(self.workloads))
 
     def _classify(self):
         cpuBounds = []
