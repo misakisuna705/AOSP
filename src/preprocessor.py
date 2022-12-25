@@ -1,5 +1,7 @@
 #! /usr/bin/env python3
 
+import statistics
+
 
 def main(argv):
     pass
@@ -36,9 +38,21 @@ class Preprocessor(object):
         return self._classify()
 
     def _filter(self):
-        for workload in self.workloads:
-            if ():
-                self.workloads.remove(workload)
+
+        for idx, workload in enumerate(self.workloads):
+            isOrdered = True
+
+            for i in range(len(self.cores)):
+                meanTimes = []
+
+                for j in range(len(self.frequencies[i])):
+                    anchor = i * len(workload) // len(self.cores) + j * len(self.pmus)
+
+                    meanTimes.append(int(statistics.mean(workload["time"][anchor:anchor + len(self.pmus)])))
+
+                    isOrdered &= meanTimes == sorted(meanTimes, reverse=True)
+
+            self.workloads.pop(idx) if (not isOrdered) else None
 
     def _classify(self):
         cpuBounds = []

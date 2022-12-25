@@ -4,6 +4,7 @@ import logging
 import statistics
 
 import pandas as pd
+import statsmodels.stats.outliers_influence
 
 logging.basicConfig(
     level=logging.INFO,
@@ -140,6 +141,28 @@ class PerFreqSelector(_Selector):
         # print(dataframes[i][j])
         # print("")
         # print("")
+
+        # test ###############################################################################################################
+
+        # for i in range(len(self.cores)):
+        # for j in range(len(self.frequencies[i])):
+        # print("cores: ", self.cores[i], "frequencies: ", self.frequencies[i][j])
+        # print("")
+
+        # vifframe = pd.DataFrame()
+
+        # vifframe["pmu"] = dataframes[i][j].iloc[:, :-1].columns
+        # vifframe["VIF"] = [
+        # statsmodels.stats.outliers_influence.variance_inflation_factor(dataframes[i][j].iloc[:, :-1].values, k)
+        # for k in range(len(dataframes[i][j].iloc[:, :-1].columns))
+        # ]
+
+        # print(dataframes[i][j])
+        # print(vifframe.to_string())
+
+        # print("")
+
+        # test ###############################################################################################################
 
         return dataframes
 

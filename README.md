@@ -46,8 +46,16 @@
 -   adb
 -   python 3.10.8
     -   pipenv
-        -   pandas
-        -   sklearn
+
+```zsh
+pipenv graph
+
+matplotlib==3.6.2
+scikit-learn==1.2.0
+statsmodels==0.13.5
+tensorflow-macos==2.9.0
+tensorflow-metal==0.5.0
+```
 
 ### 執行
 

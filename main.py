@@ -62,6 +62,8 @@ def main(argv):
 def getPerFreqError(workloads, cores, frequencies):
     dataframes = selector.PerFreqSelector(workloads).select(6)
 
+    print("getPerFreqError: ")
+    print("")
     for i in range(len(cores)):
         for j in range(len(frequencies[i])):
             print("cores: ", cores[i], "frequencies: ", frequencies[i][j])
@@ -75,6 +77,8 @@ def getPerFreqError(workloads, cores, frequencies):
 def getPerCoreError(workloads, cores, frequencies):
     dataframes = selector.PerCoreSelector(workloads).select(6)
 
+    print("getPerCoreError: ")
+    print("")
     for i in range(len(cores)):
         print("cores: ", cores[i])
         print("")
