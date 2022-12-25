@@ -4,8 +4,9 @@ import logging
 import statistics
 
 import pandas as pd
-import statsmodels.api
-import statsmodels.stats.outliers_influence
+
+# import statsmodels.api
+# import statsmodels.stats.outliers_influence
 
 logging.basicConfig(
     level=logging.INFO,
