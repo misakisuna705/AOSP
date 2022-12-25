@@ -151,14 +151,18 @@ class PerFreqSelector(_Selector):
 
         # vifframe = pd.DataFrame()
 
-        # vifframe["pmu"] = dataframes[i][j].iloc[:, :-1].columns
-        # vifframe["VIF"] = [
+        # for type in dataframes[i][j].iloc[:, :-1].columns:
+        # vifframe[type] = pd.Series(dtype="float")
+
+        # vifframe.loc[len(vifframe.index)] = [
         # statsmodels.stats.outliers_influence.variance_inflation_factor(dataframes[i][j].iloc[:, :-1].values, k)
         # for k in range(len(dataframes[i][j].iloc[:, :-1].columns))
         # ]
 
         # print(dataframes[i][j])
+        # print("")
         # print(vifframe.to_string())
+        # print("")
 
         # print("")
 

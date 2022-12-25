@@ -91,8 +91,6 @@ class Preprocessor(object):
         # print("cores: ", self.cores[i], "meanTimes: ", meanTimes)
         # print("")
 
-        print(len(self.workloads))
-
     def _classify(self):
         cpuBounds = []
         memBounds = []
