@@ -92,7 +92,7 @@ class PerFreqSelector(_Selector):
         return ranks
 
     def _format(self, ranks, num):
-        datalist = [[[] for j in range(len(self.frequencies[i]))] for i in range(len(self.cores))]
+        datadict = [[{} for j in range(len(self.frequencies[i]))] for i in range(len(self.cores))]
 
         for i in range(len(self.cores)):
             for j in range(len(self.frequencies[i])):
@@ -113,27 +113,18 @@ class PerFreqSelector(_Selector):
                         counts.append(workload["count"][idx])
                         meanTimes.append(meanTime) if (meanTime not in meanTimes) else None
 
-                    datalist[i][j].append({qualifiers[k]: counts})
+                    datadict[i][j] |= {qualifiers[k]: counts}
 
-                datalist[i][j].append({"times": meanTimes})
+                datadict[i][j] |= {"times": meanTimes}
 
         # for i in range(len(self.cores)):
         # for j in range(len(self.frequencies[i])):
         # print("cores: ", self.cores[i], "frequencies: ", self.frequencies[i][j])
         # print("")
 
-        # for item in datalist[i][j]:
-        # print(item)
+        # print(datadict[i][j])
         # print("")
         # print("")
-        # print("")
-
-        datadict = [[{} for j in range(len(self.frequencies[i]))] for i in range(len(self.cores))]
-
-        for i in range(len(self.cores)):
-            for j in range(len(self.frequencies[i])):
-                for item in datalist[i][j]:
-                    datadict[i][j] |= item
 
         dataframes = [[pd.DataFrame() for j in range(len(self.frequencies[i]))] for i in range(len(self.cores))]
 
@@ -191,7 +182,7 @@ class PerCoreSelector(_Selector):
         return ranks
 
     def _format(self, ranks, num):
-        datalist = [[] for i in range(len(self.cores))]
+        datadict = [{} for i in range(len(self.cores))]
 
         for i in range(len(self.cores)):
             qualifiers = []
@@ -212,24 +203,16 @@ class PerCoreSelector(_Selector):
                         counts.append(workload["count"][idx])
                         meanTimes.append(meanTime) if (meanTime not in meanTimes) else None
 
-                datalist[i].append({qualifiers[j]: counts})
+                datadict[i] |= {qualifiers[j]: counts}
 
-            datalist[i].append({"times": meanTimes})
+            datadict[i] |= {"times": meanTimes}
 
         # for i in range(len(self.cores)):
         # print("cores: ", self.cores[i])
         # print("")
 
-        # for item in datalist[i]:
-        # print(item)
+        # print(datadict[i])
         # print("")
-        # print("")
-
-        datadict = [{} for i in range(len(self.cores))]
-
-        for i in range(len(self.cores)):
-            for item in datalist[i]:
-                datadict[i] |= item
 
         dataframes = [pd.DataFrame() for i in range(len(self.cores))]
 
