@@ -50,10 +50,13 @@ def main(argv):
                     workload.loc[idx, "count"] = int(workload["count"][idx].replace(",", ""))
                     workload.loc[idx, "time"] = float(workload["time"][idx])
 
-    # print(workloads[0])
+    # print(workloads)
     # print("")
 
     workloads = preprocessor.Preprocessor(workloads).preprocess()
+
+    # print(workloads)
+    # print("")
 
     getPerFreqError(workloads, cores, frequencies)
     getPerCoreError(workloads, cores, frequencies)

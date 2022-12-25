@@ -7,6 +7,7 @@ import logging
 import sklearn.linear_model
 import sklearn.metrics
 import sklearn.model_selection
+import statsmodels.api
 
 # import tensorflow as tf
 
@@ -27,30 +28,47 @@ class Predictor(object):
         pass
 
     def predict(self, dataframe):
-        # dataframe = pd.DataFrame.from_dict(data)
-
-        # print(dataframe)
-        # print("")
-
-        # dataframe.drop(dataframe[dataframe['times'] < 1.0].index, axis=0, inplace=True)  # filter
-
         # print(dataframe)
         # print("")
 
         self._predictRegression(dataframe)
 
     def _predictRegression(self, dataframe):
+        self._regressByStatsmodels(dataframe)
         self._regressBySklearn(dataframe)
         # self._regressByTensorflow(dataframe)
+
+    def _regressByStatsmodels(self, dataframe):
+        X = statsmodels.api.add_constant(dataframe.iloc[:, :-1])
+        y = dataframe.iloc[:, -1]
+
+        X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y, train_size=0.8, random_state=42)
+
+        model = statsmodels.api.OLS(y_train, X_train).fit()
+
+        print("regression with statsmodels: ")
+        print("")
+        # print(model.summary())
+        # print("")
+
+        y_pred = model.predict(X_test)
+
+        # print(y_test.to_frame().assign(y_pred=y_pred))
+        # print("")
+
+        print("Mean absolute percentage error: ", sklearn.metrics.mean_absolute_percentage_error(y_test, y_pred) * 100, "(%)")
+        print("")
 
     def _regressBySklearn(self, dataframe):
         X = dataframe.iloc[:, :-1]
         y = dataframe.iloc[:, -1]
 
-        X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y, train_size=0.8, random_state=0)
+        X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y, train_size=0.8, random_state=42)
 
         model = sklearn.linear_model.LinearRegression().fit(X_train, y_train)
 
+        print("regression with sklearn: ")
+        print("")
         # print("coefficient weights: ", model.coef_.tolist())
         # print("intercept bias: ", model.intercept_)
         # print("robustness R²: ", model.score(X, y))

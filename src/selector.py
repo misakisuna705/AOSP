@@ -4,6 +4,7 @@ import logging
 import statistics
 
 import pandas as pd
+import statsmodels.api
 import statsmodels.stats.outliers_influence
 
 logging.basicConfig(
@@ -149,17 +150,17 @@ class PerFreqSelector(_Selector):
         # print("cores: ", self.cores[i], "frequencies: ", self.frequencies[i][j])
         # print("")
 
+        # X = statsmodels.api.add_constant(dataframes[i][j].iloc[:, :-1])
+
         # vifframe = pd.DataFrame()
 
-        # for type in dataframes[i][j].iloc[:, :-1].columns:
+        # for type in X.columns:
         # vifframe[type] = pd.Series(dtype="float")
 
-        # vifframe.loc[len(vifframe.index)] = [
-        # statsmodels.stats.outliers_influence.variance_inflation_factor(dataframes[i][j].iloc[:, :-1].values, k)
-        # for k in range(len(dataframes[i][j].iloc[:, :-1].columns))
-        # ]
+        # vifframe.loc[len(vifframe.index)] = [-(1 / statsmodels.stats.outliers_influence.variance_inflation_factor(X.values, k) - 1) for k in range(len(X.columns))]
+        # vifframe.loc[len(vifframe.index)] = [statsmodels.stats.outliers_influence.variance_inflation_factor(X.values, k) for k in range(len(X.columns))]
 
-        # print(dataframes[i][j])
+        # print(X)
         # print("")
         # print(vifframe.to_string())
         # print("")
