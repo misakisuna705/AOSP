@@ -77,7 +77,7 @@ class Preprocessor(object):
 
                 meanTimes.append(int(statistics.mean(workload["time"][anchor:anchor + len(self.pmus)])))
 
-                isOrdered &= meanTimes == sorted(meanTimes, reverse=True)
+            isOrdered &= meanTimes == sorted(meanTimes, reverse=True)
 
         return isOrdered
 
