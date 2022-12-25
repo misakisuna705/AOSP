@@ -4,6 +4,7 @@
 
 import logging
 
+import pandas as pd
 import sklearn.linear_model
 import sklearn.metrics
 import sklearn.model_selection
@@ -34,7 +35,7 @@ class Predictor(object):
         # self._predictRegression(dataframe)
 
         self._predictedByStatsmodelsOLS(dataframe)
-        self._predictedBySklearnLinearRegression(dataframe)
+        # self._predictedBySklearnLinearRegression(dataframe)
         # self._regressByTensorflow(dataframe)
 
     def _predictedByStatsmodelsOLS(self, dataframe):
