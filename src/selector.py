@@ -101,7 +101,7 @@ class PerFreqSelector(_Selector):
                 qualifiers = []
                 meanTimes = []
 
-                for k in range(num):
+                for k in range(len(self.pmus)):
                     counts = []
 
                     for workload in self.workloads:
@@ -146,26 +146,26 @@ class PerFreqSelector(_Selector):
         # test ###############################################################################################################
 
         # for i in range(len(self.cores)):
-            # for j in range(len(self.frequencies[i])):
-                # print("cores: ", self.cores[i], "frequencies: ", self.frequencies[i][j])
-                # print("")
+        # for j in range(len(self.frequencies[i])):
+        # print("cores: ", self.cores[i], "frequencies: ", self.frequencies[i][j])
+        # print("")
 
-                # X = statsmodels.api.add_constant(dataframes[i][j].iloc[:, :-1])
+        # X = statsmodels.api.add_constant(dataframes[i][j].iloc[:, :-1])
 
-                # vifframe = pd.DataFrame()
+        # vifframe = pd.DataFrame()
 
-                # for type in X.columns:
-                    # vifframe[type] = pd.Series(dtype="float")
+        # for type in X.columns:
+        # vifframe[type] = pd.Series(dtype="float")
 
-                # vifframe.loc[len(vifframe.index)] = [-(1 / statsmodels.stats.outliers_influence.variance_inflation_factor(X.values, k) - 1) for k in range(len(X.columns))]
-                # vifframe.loc[len(vifframe.index)] = [statsmodels.stats.outliers_influence.variance_inflation_factor(X.values, k) for k in range(len(X.columns))]
+        # vifframe.loc[len(vifframe.index)] = [-(1 / statsmodels.stats.outliers_influence.variance_inflation_factor(X.values, k) - 1) for k in range(len(X.columns))]
+        # vifframe.loc[len(vifframe.index)] = [statsmodels.stats.outliers_influence.variance_inflation_factor(X.values, k) for k in range(len(X.columns))]
 
-                # print(X)
-                # print("")
-                # print(vifframe)
-                # print("")
+        # print(X)
+        # print("")
+        # print(vifframe)
+        # print("")
 
-            # print("")
+        # print("")
 
         # test ###############################################################################################################
 
@@ -216,7 +216,7 @@ class PerCoreSelector(_Selector):
             qualifiers = []
             meanTimes = []
 
-            for j in range(num):
+            for j in range(len(self.pmus)):
                 counts = []
 
                 for k in range(len(self.frequencies[i])):

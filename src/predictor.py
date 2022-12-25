@@ -4,7 +4,7 @@
 
 import logging
 
-import pandas as pd
+import sklearn.feature_selection
 import sklearn.linear_model
 import sklearn.metrics
 import sklearn.model_selection
@@ -32,18 +32,16 @@ class Predictor(object):
         # print(dataframe)
         # print("")
 
-        # self._predictRegression(dataframe)
-
-        self._predictedByStatsmodelsOLS(dataframe)
-        # self._predictedBySklearnLinearRegression(dataframe)
-        # self._regressByTensorflow(dataframe)
-
-    def _predictedByStatsmodelsOLS(self, dataframe):
-        X = statsmodels.api.add_constant(dataframe.iloc[:, :-1])
+        X = sklearn.feature_selection.SelectKBest(score_func=sklearn.feature_selection.r_regression, k=6).fit_transform(dataframe.iloc[:, :-1], dataframe.iloc[:, -1])
         y = dataframe.iloc[:, -1]
 
         X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y, train_size=0.8, random_state=42)
 
+        self._predictedByStatsmodelsOLS(X_train, X_test, y_train, y_test)
+        self._predictedBySklearnLinearRegression(X_train, X_test, y_train, y_test)
+        # self._regressByTensorflow(X_train, X_test, y_train, y_test)
+
+    def _predictedByStatsmodelsOLS(self, X_train, X_test, y_train, y_test):
         model = statsmodels.api.OLS(y_train, X_train).fit()
 
         print("predicted by Statsmodels OLS: ")
@@ -59,12 +57,7 @@ class Predictor(object):
         print("Mean absolute percentage error: ", sklearn.metrics.mean_absolute_percentage_error(y_test, y_pred) * 100, "(%)")
         print("")
 
-    def _predictedBySklearnLinearRegression(self, dataframe):
-        X = dataframe.iloc[:, :-1]
-        y = dataframe.iloc[:, -1]
-
-        X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y, train_size=0.8, random_state=42)
-
+    def _predictedBySklearnLinearRegression(self, X_train, X_test, y_train, y_test):
         model = sklearn.linear_model.LinearRegression().fit(X_train, y_train)
 
         print("predicted by Sklearn LinearRegression: ")
