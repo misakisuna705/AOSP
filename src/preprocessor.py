@@ -54,6 +54,43 @@ class Preprocessor(object):
 
             self.workloads.pop(idx) if (not isOrdered) else None
 
+        # for idx, workload in enumerate(self.workloads):
+        # for i in range(len(self.cores)):
+        # meanTimes = []
+
+        # for j in range(len(self.frequencies[i])):
+        # anchor = i * len(workload) // len(self.cores) + j * len(self.pmus)
+
+        # meanTimes.append(int(statistics.mean(workload["time"][anchor:anchor + len(self.pmus)])))
+
+        # print("cores: ", self.cores[i], "meanTimes: ", meanTimes)
+        # print("")
+
+        for idx, workload in enumerate(self.workloads):
+            hasZero = False
+
+            for i in range(len(self.cores)):
+                meanTimes = []
+
+                for j in range(len(self.frequencies[i])):
+                    anchor = i * len(workload) // len(self.cores) + j * len(self.pmus)
+
+                    hasZero |= int(statistics.mean(workload["time"][anchor:anchor + len(self.pmus)])) == 0
+
+            self.workloads.pop(idx) if (hasZero) else None
+
+        # for idx, workload in enumerate(self.workloads):
+        # for i in range(len(self.cores)):
+        # meanTimes = []
+
+        # for j in range(len(self.frequencies[i])):
+        # anchor = i * len(workload) // len(self.cores) + j * len(self.pmus)
+
+        # meanTimes.append(int(statistics.mean(workload["time"][anchor:anchor + len(self.pmus)])))
+
+        # print("cores: ", self.cores[i], "meanTimes: ", meanTimes)
+        # print("")
+
     def _classify(self):
         cpuBounds = []
         memBounds = []
