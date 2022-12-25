@@ -38,7 +38,7 @@ class Preprocessor(object):
         return self._classify()
 
     def _filter(self):
-        self.workloads = list(filter(self._isTimeOrdered, self.workloads))
+        self.workloads = list(filter(self._isTimeOrdered, self.workloads))  # ##################################################################
 
         # for idx, workload in enumerate(self.workloads):
         # for i in range(len(self.cores)):
@@ -52,9 +52,23 @@ class Preprocessor(object):
         # print("cores: ", self.cores[i], "meanTimes: ", meanTimes)
         # print("")
 
-        self.workloads = list(filter(self._isTimeLarge, self.workloads))
+        # self.workloads = list(filter(self._isTimeStrictlyOrdered, self.workloads))  # ##################################################################
 
-        # for workload in self.workloads:
+        # for idx, workload in enumerate(self.workloads):
+        # for i in range(len(self.cores)):
+        # meanTimes = []
+
+        # for j in range(len(self.frequencies[i])):
+        # anchor = i * len(workload) // len(self.cores) + j * len(self.pmus)
+
+        # meanTimes.append(int(statistics.mean(workload["time"][anchor:anchor + len(self.pmus)])))
+
+        # print("cores: ", self.cores[i], "meanTimes: ", meanTimes)
+        # print("")
+
+        self.workloads = list(filter(self._isTimeLarge, self.workloads))  # ##################################################################
+
+        # for idx, workload in enumerate(self.workloads):
         # for i in range(len(self.cores)):
         # meanTimes = []
 
@@ -81,8 +95,8 @@ class Preprocessor(object):
 
         return isOrdered
 
-    def _isTimeLarge(self, workload):
-        isSmall = False
+    def _isTimeStrictlyOrdered(self, workload):
+        isStrictlyOrdered = True
 
         for i in range(len(self.cores)):
             meanTimes = []
@@ -90,9 +104,21 @@ class Preprocessor(object):
             for j in range(len(self.frequencies[i])):
                 anchor = i * len(workload) // len(self.cores) + j * len(self.pmus)
 
-                isSmall |= statistics.mean(workload["time"][anchor:anchor + len(self.pmus)]) < 1.0
-
                 meanTimes.append(int(statistics.mean(workload["time"][anchor:anchor + len(self.pmus)])))
+
+            isStrictlyOrdered &= len(meanTimes) == len(set(meanTimes))
+
+        return isStrictlyOrdered
+
+    def _isTimeLarge(self, workload):
+        isSmall = False
+
+        for i in range(len(self.cores)):
+            for j in range(len(self.frequencies[i])):
+                if (j <= 1):
+                    anchor = i * len(workload) // len(self.cores) + j * len(self.pmus)
+
+                    isSmall |= statistics.mean(workload["time"][anchor:anchor + len(self.pmus)]) < 1.0
 
         return not isSmall
 

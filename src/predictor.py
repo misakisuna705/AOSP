@@ -31,14 +31,13 @@ class Predictor(object):
         # print(dataframe)
         # print("")
 
-        self._predictRegression(dataframe)
+        # self._predictRegression(dataframe)
 
-    def _predictRegression(self, dataframe):
-        self._regressByStatsmodels(dataframe)
-        self._regressBySklearn(dataframe)
+        self._predictedByStatsmodelsOLS(dataframe)
+        self._predictedBySklearnLinearRegression(dataframe)
         # self._regressByTensorflow(dataframe)
 
-    def _regressByStatsmodels(self, dataframe):
+    def _predictedByStatsmodelsOLS(self, dataframe):
         X = statsmodels.api.add_constant(dataframe.iloc[:, :-1])
         y = dataframe.iloc[:, -1]
 
@@ -46,7 +45,7 @@ class Predictor(object):
 
         model = statsmodels.api.OLS(y_train, X_train).fit()
 
-        print("regression with statsmodels: ")
+        print("predicted by Statsmodels OLS: ")
         print("")
         # print(model.summary())
         # print("")
@@ -59,7 +58,7 @@ class Predictor(object):
         print("Mean absolute percentage error: ", sklearn.metrics.mean_absolute_percentage_error(y_test, y_pred) * 100, "(%)")
         print("")
 
-    def _regressBySklearn(self, dataframe):
+    def _predictedBySklearnLinearRegression(self, dataframe):
         X = dataframe.iloc[:, :-1]
         y = dataframe.iloc[:, -1]
 
@@ -67,7 +66,7 @@ class Predictor(object):
 
         model = sklearn.linear_model.LinearRegression().fit(X_train, y_train)
 
-        print("regression with sklearn: ")
+        print("predicted by Sklearn LinearRegression: ")
         print("")
         # print("coefficient weights: ", model.coef_.tolist())
         # print("intercept bias: ", model.intercept_)
