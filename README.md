@@ -68,19 +68,19 @@ adb push res/SpecCpu2006 /data/local/tmp
 adb push res/SpecCpu2017 /data/local/tmp
 
 # profile
-./test.sh # pipenv run python3 src/profiler.py [-h] [-b BENCHMARK] [-o OUTPUTFILE]
+./test.sh
 
 # run
-pipenv run python3 main.py [-h] [-d DIRECTORY]
+pipenv run python3 main.py -d "dat/Doshin/"
 ```
 
 ### 架構
 
 ```zsh
 .
-├── main.py
+├── main.py             # pipenv run python3 main.py [-h] [-d DIRECTORY]
 ├── src
-│   ├── profiler.py
+│   ├── profiler.py     # pipenv run python3 src/profiler.py [-h] [-b BENCHMARK] [-o OUTPUTFILE]
 │   ├── preprocessor.py
 │   ├── formatter.py
 │   └── predictor.py
