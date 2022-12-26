@@ -30,7 +30,9 @@ class Predictor(object):
         # print(dataframe)
         # print("")
 
-        selector = sklearn.feature_selection.SelectKBest(score_func=sklearn.feature_selection.r_regression, k=6)
+        # selector = sklearn.feature_selection.SelectKBest(score_func=sklearn.feature_selection.r_regression, k=6)
+        # selector = sklearn.feature_selection.RFE(estimator=sklearn.linear_model.LinearRegression(), n_features_to_select=6)
+        selector = sklearn.feature_selection.SequentialFeatureSelector(estimator=sklearn.linear_model.LinearRegression(), n_features_to_select=6)
 
         selector.fit_transform(dataframe.iloc[:, :-1], dataframe.iloc[:, -1])
 
@@ -42,31 +44,14 @@ class Predictor(object):
 
         X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y, train_size=0.8, random_state=42)
 
-        self._predictedByStatsmodelsOLS(X_train, X_test, y_train, y_test)
         self._predictedBySklearnLinearRegression(X_train, X_test, y_train, y_test)
+        # self._predictedByStatsmodelsOLS(X_train, X_test, y_train, y_test)
         # self._regressByTensorflow(X_train, X_test, y_train, y_test)
-
-    def _predictedByStatsmodelsOLS(self, X_train, X_test, y_train, y_test):
-        model = statsmodels.api.OLS(y_train, X_train).fit()
-
-        print("predicted by Statsmodels OLS: ")
-        print("")
-        # print(model.summary())
-        # print("")
-
-        y_pred = model.predict(X_test)
-
-        # print(y_test.to_frame().assign(y_pred=y_pred))
-        # print("")
-
-        print("Mean absolute percentage error: ", sklearn.metrics.mean_absolute_percentage_error(y_test, y_pred) * 100, "(%)")
-        print("")
 
     def _predictedBySklearnLinearRegression(self, X_train, X_test, y_train, y_test):
         model = sklearn.linear_model.LinearRegression().fit(X_train, y_train)
 
-        print("predicted by Sklearn LinearRegression: ")
-        print("")
+        print("Sklearn LinearRegression: ")
         # print("coefficient weights: ", model.coef_.tolist())
         # print("intercept bias: ", model.intercept_)
         # print("robustness R²: ", model.score(X, y))
@@ -84,6 +69,21 @@ class Predictor(object):
         # print("Mean absolute error: ", sklearn.metrics.mean_absolute_error(y_test, y_pred), "(s)")
         # print("Mean squared error: ", sklearn.metrics.mean_squared_error(y_test, y_pred), "(s²)")
         # print("")
+        print("Mean absolute percentage error: ", sklearn.metrics.mean_absolute_percentage_error(y_test, y_pred) * 100, "(%)")
+        print("")
+
+    def _predictedByStatsmodelsOLS(self, X_train, X_test, y_train, y_test):
+        model = statsmodels.api.OLS(y_train, X_train).fit()
+
+        print("Statsmodels OLS: ")
+        # print(model.summary())
+        # print("")
+
+        y_pred = model.predict(X_test)
+
+        # print(y_test.to_frame().assign(y_pred=y_pred))
+        # print("")
+
         print("Mean absolute percentage error: ", sklearn.metrics.mean_absolute_percentage_error(y_test, y_pred) * 100, "(%)")
         print("")
 

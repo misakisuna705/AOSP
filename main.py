@@ -73,8 +73,6 @@ def getPerFreqError(workloads, cores, frequencies):
             print("")
 
             predictor.Predictor().predict(dataframes[i][j])
-            print("")
-        print("")
 
 
 def getPerCoreError(workloads, cores, frequencies):
@@ -87,7 +85,6 @@ def getPerCoreError(workloads, cores, frequencies):
         print("")
 
         predictor.Predictor().predict(dataframes[i])
-        print("")
 
 
 if __name__ == "__main__":
