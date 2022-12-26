@@ -54,7 +54,6 @@ adb push res/SpecCpu2017 /data/local/tmp
 -   profile
 
 ```zsh
-# profile
 ./test.sh
 ```
 
