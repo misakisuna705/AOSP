@@ -1,7 +1,6 @@
 #! /usr/bin/env python3
 
 import logging
-import statistics
 
 import pandas as pd
 
@@ -73,7 +72,7 @@ class PerFreqFormatter(_Formatter):
                     for workload in self.workloads:
                         anchor = i * len(workload) // len(self.cores) + j * len(self.pmus)
 
-                        meanTime = statistics.mean(workload["time"][anchor:anchor + len(self.pmus)])
+                        meanTime = sum(workload["time"][anchor:anchor + len(self.pmus)]) / len(workload["time"][anchor:anchor + len(self.pmus)])
 
                         idx = anchor + k
 
@@ -127,7 +126,7 @@ class PerCoreFormatter(_Formatter):
                     for workload in self.workloads:
                         anchor = i * len(workload) // len(self.cores) + k * len(self.pmus)
 
-                        meanTime = statistics.mean(workload["time"][anchor:anchor + len(self.pmus)])
+                        meanTime = sum(workload["time"][anchor:anchor + len(self.pmus)]) / len(workload["time"][anchor:anchor + len(self.pmus)])
 
                         idx = anchor + j
 
