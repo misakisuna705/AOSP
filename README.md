@@ -45,15 +45,10 @@
 
 -   adb
 -   python 3.10.8
-    -   pipenv
-
-```zsh
-pipenv graph
-
-matplotlib==3.6.2
-scikit-learn==1.2.0
-statsmodels==0.13.5
-```
+    -   pipenv # pipenv graph
+        -   matplotlib
+        -   scikit-learn
+        -   statsmodels
 
 ### 執行
 
