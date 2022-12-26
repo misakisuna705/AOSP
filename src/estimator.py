@@ -32,7 +32,7 @@ class Estimator(object):
 
         X, y = self._select(dataframe)
 
-        X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y, train_size=0.8, random_state=42)
+        X_train, X_test, y_train, y_test = self._split(X, y, 0.8)
 
         self._predict(X_train, X_test, y_train, y_test)
 
@@ -48,6 +48,9 @@ class Estimator(object):
         # print("")
 
         return dataframe.iloc[:, selector.get_support(indices=True)], dataframe.iloc[:, -1]
+
+    def _split(self, X, y, ratio):
+        return sklearn.model_selection.train_test_split(X, y, train_size=ratio, random_state=42)
 
     def _predict(self, X_train, X_test, y_train, y_test):
         self._predictedBySklearnLinearRegression(X_train, X_test, y_train, y_test)
