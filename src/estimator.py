@@ -56,17 +56,17 @@ class Estimator(object):
         summary = pd.DataFrame(columns=X_train.columns)  # "coefficient weight
 
         summary.loc[len(summary.index)] = model.coef_.tolist()
-        summary["intercept bias"] = model.intercept_
-        summary["robustness R²"] = model.score(X_train, y_train)
+        summary["bias (intercept)"] = model.intercept_
+        summary["robustness (R²)"] = model.score(X_train, y_train)
 
-        print(summary, "\n")
+        # print(summary, "\n")
 
         return model
 
     def _trainedByStatsmodelsOLS(self, X_train, y_train):
         model = statsmodels.api.OLS(y_train, X_train).fit()
 
-        print(model.summary(), "\n")
+        # print(model.summary(), "\n")
 
         return model
 
