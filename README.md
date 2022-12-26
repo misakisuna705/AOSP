@@ -41,18 +41,26 @@
 
 ### 執行
 
+-   setup
+
 ```zsh
-# setup
 adb push res/Dhrystone/v2.2/dry /data/local/tmp/Dhrystone/dry
 adb push res/LMbench/bin/aarch64 /data/local/tmp/LMbench
 adb push res/Mibench /data/local/tmp
 adb push res/SpecCpu2006 /data/local/tmp
 adb push res/SpecCpu2017 /data/local/tmp
+```
 
+-   profile
+
+```zsh
 # profile
 ./test.sh
+```
 
-# run
+-   run
+
+```zsh
 pipenv run python3 main.py -d "dat/26/Pixel4a/Doshin"
 ```
 
