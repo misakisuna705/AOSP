@@ -30,20 +30,26 @@ class Predictor(object):
         # print(dataframe)
         # print("")
 
-        # selector = sklearn.feature_selection.SelectKBest(score_func=sklearn.feature_selection.r_regression, k=6)
+        X, y = self._select(dataframe)
+
+        X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y, train_size=0.8, random_state=42)
+
+        self._predict(X_train, X_test, y_train, y_test)
+
+    def _select(self, dataframe):
         # selector = sklearn.feature_selection.RFE(estimator=sklearn.linear_model.LinearRegression(), n_features_to_select=6)
+        # selector = sklearn.feature_selection.SelectFromModel(estimator=sklearn.linear_model.LinearRegression(), max_features=6)
+        # selector = sklearn.feature_selection.SelectKBest(score_func=sklearn.feature_selection.r_regression, k=6)
         selector = sklearn.feature_selection.SequentialFeatureSelector(estimator=sklearn.linear_model.LinearRegression(), n_features_to_select=6)
 
         selector.fit_transform(dataframe.iloc[:, :-1], dataframe.iloc[:, -1])
 
-        X = dataframe.iloc[:, selector.get_support(indices=True)]
-        y = dataframe.iloc[:, -1]
-
-        # print(list(X.columns))
+        # print(list(dataframe.iloc[:, selector.get_support(indices=True)].columns))
         # print("")
 
-        X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y, train_size=0.8, random_state=42)
+        return dataframe.iloc[:, selector.get_support(indices=True)], dataframe.iloc[:, -1]
 
+    def _predict(self, X_train, X_test, y_train, y_test):
         self._predictedBySklearnLinearRegression(X_train, X_test, y_train, y_test)
         # self._predictedByStatsmodelsOLS(X_train, X_test, y_train, y_test)
         # self._regressByTensorflow(X_train, X_test, y_train, y_test)
