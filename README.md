@@ -71,7 +71,7 @@ adb push res/SpecCpu2017 /data/local/tmp
 ./test.sh
 
 # run
-pipenv run python3 main.py -d "dat/Doshin/"
+pipenv run python3 main.py -d "dat"
 ```
 
 ### 架構
