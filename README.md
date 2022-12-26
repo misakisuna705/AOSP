@@ -82,7 +82,7 @@ pipenv run python3 main.py [-h] [-d DIRECTORY]
 ├── src
 │   ├── profiler.py
 │   ├── preprocessor.py
-│   ├── selector.py
+│   ├── formatter.py
 │   └── predictor.py
 ├── res
 │   ├── Dhrystone
