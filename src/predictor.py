@@ -32,8 +32,15 @@ class Predictor(object):
         # print(dataframe)
         # print("")
 
-        X = sklearn.feature_selection.SelectKBest(score_func=sklearn.feature_selection.r_regression, k=6).fit_transform(dataframe.iloc[:, :-1], dataframe.iloc[:, -1])
+        selector = sklearn.feature_selection.SelectKBest(score_func=sklearn.feature_selection.r_regression, k=6)
+
+        selector.fit_transform(dataframe.iloc[:, :-1], dataframe.iloc[:, -1])
+
+        X = dataframe.iloc[:, selector.get_support(indices=True)]
         y = dataframe.iloc[:, -1]
+
+        # print(list(X.columns))
+        # print("")
 
         X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y, train_size=0.8, random_state=42)
 
