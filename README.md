@@ -83,7 +83,7 @@ pipenv run python3 main.py -d "dat/26/Pixel4a/Doshin"
 │   ├── profiler.py     # pipenv run python3 src/profiler.py [-h] [-b BENCHMARK] [-o OUTPUTFILE]
 │   ├── preprocessor.py
 │   ├── formatter.py
-│   └── predictor.py
+│   └── estimator.py
 ├── res
 │   ├── Dhrystone
 │   ├── LMbench

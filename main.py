@@ -6,7 +6,7 @@ import pathlib
 
 import pandas as pd
 
-from src import formatter, predictor, preprocessor
+from src import estimator, formatter, preprocessor
 
 logging.basicConfig(
     level=logging.INFO,
@@ -72,7 +72,7 @@ def getPerFreqError(workloads, cores, frequencies):
             print("cores: ", cores[i], "frequencies: ", frequencies[i][j])
             print("")
 
-            predictor.Predictor().predict(dataframes[i][j])
+            estimator.Estimator().estimate(dataframes[i][j])
 
 
 def getPerCoreError(workloads, cores, frequencies):
@@ -84,7 +84,7 @@ def getPerCoreError(workloads, cores, frequencies):
         print("cores: ", cores[i])
         print("")
 
-        predictor.Predictor().predict(dataframes[i])
+        estimator.Estimator().estimate(dataframes[i])
 
 
 if __name__ == "__main__":

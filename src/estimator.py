@@ -21,12 +21,12 @@ def main():
     pass
 
 
-class Predictor(object):
+class Estimator(object):
 
     def __init__(self) -> None:
         pass
 
-    def predict(self, dataframe):
+    def estimate(self, dataframe):
         # print(dataframe)
         # print("")
 
