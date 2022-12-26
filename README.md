@@ -85,7 +85,7 @@ pipenv run python3 main.py -d "dat/26/Pixel4a/Doshin"
 
 ### AOSP
 
--   [Pixel 4a](doc/aosp.md)
+-   [Google Pixel](doc/aosp.md)
 
 ### Benchmark
 
