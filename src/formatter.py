@@ -59,7 +59,7 @@ class PerFreqFormatter(_Formatter):
         super().__init__(workloads)
 
     def _format(self):
-        datadict = [[{} for j in range(len(self.frequencies[i]))] for i in range(len(self.cores))]
+        dataColumns = [[{} for j in range(len(self.frequencies[i]))] for i in range(len(self.cores))]
 
         for i in range(len(self.cores)):
             for j in range(len(self.frequencies[i])):
@@ -80,31 +80,20 @@ class PerFreqFormatter(_Formatter):
                         counts.append(workload["count"][idx])
                         meanTimes.append(meanTime) if (meanTime not in meanTimes) else None
 
-                    datadict[i][j] |= {qualifiers[k]: counts}
+                    dataColumns[i][j] |= {qualifiers[k]: counts}
 
-                datadict[i][j] |= {"times": meanTimes}
-
-        # for i in range(len(self.cores)):
-        # for j in range(len(self.frequencies[i])):
-        # print("cores: ", self.cores[i], "frequencies: ", self.frequencies[i][j])
-        # print("")
-
-        # print(datadict[i][j])
-        # print("")
-        # print("")
-
-        dataframes = [[pd.DataFrame.from_dict(datadict[i][j]) for j in range(len(self.frequencies[i]))] for i in range(len(self.cores))]
+                dataColumns[i][j] |= {"times": meanTimes}
 
         # for i in range(len(self.cores)):
         # for j in range(len(self.frequencies[i])):
         # print("cores: ", self.cores[i], "frequencies: ", self.frequencies[i][j])
         # print("")
 
-        # print(dataframes[i][j])
+        # print(dataColumns[i][j])
         # print("")
         # print("")
 
-        return dataframes
+        return [[pd.DataFrame(dataColumns[i][j]) for j in range(len(self.frequencies[i]))] for i in range(len(self.cores))]
 
 
 class PerCoreFormatter(_Formatter):
@@ -113,7 +102,7 @@ class PerCoreFormatter(_Formatter):
         super().__init__(workloads)
 
     def _format(self):
-        datadict = [{} for i in range(len(self.cores))]
+        dataColumns = [{} for i in range(len(self.cores))]
 
         for i in range(len(self.cores)):
             qualifiers = []
@@ -134,27 +123,18 @@ class PerCoreFormatter(_Formatter):
                         counts.append(workload["count"][idx])
                         meanTimes.append(meanTime) if (meanTime not in meanTimes) else None
 
-                datadict[i] |= {qualifiers[j]: counts}
+                dataColumns[i] |= {qualifiers[j]: counts}
 
-            datadict[i] |= {"times": meanTimes}
-
-        # for i in range(len(self.cores)):
-        # print("cores: ", self.cores[i])
-        # print("")
-
-        # print(datadict[i])
-        # print("")
-
-        dataframes = [pd.DataFrame.from_dict(datadict[i]) for i in range(len(self.cores))]
+            dataColumns[i] |= {"times": meanTimes}
 
         # for i in range(len(self.cores)):
         # print("cores: ", self.cores[i])
         # print("")
 
-        # print(dataframes[i])
+        # print(dataColumns[i])
         # print("")
 
-        return dataframes
+        return [pd.DataFrame(dataColumns[i]) for i in range(len(self.cores))]
 
 
 if __name__ == "__main__":
