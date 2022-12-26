@@ -1,7 +1,5 @@
 #! /usr/bin/env python3
 
-# import matplotlib.pyplot
-
 import logging
 
 import sklearn.feature_selection
