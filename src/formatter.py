@@ -94,11 +94,7 @@ class PerFreqFormatter(_Formatter):
         # print("")
         # print("")
 
-        dataframes = [[pd.DataFrame() for j in range(len(self.frequencies[i]))] for i in range(len(self.cores))]
-
-        for i in range(len(self.cores)):
-            for j in range(len(self.frequencies[i])):
-                dataframes[i][j] = pd.DataFrame.from_dict(datadict[i][j])
+        dataframes = [[pd.DataFrame.from_dict(datadict[i][j]) for j in range(len(self.frequencies[i]))] for i in range(len(self.cores))]
 
         # for i in range(len(self.cores)):
         # for j in range(len(self.frequencies[i])):
@@ -150,10 +146,7 @@ class PerCoreFormatter(_Formatter):
         # print(datadict[i])
         # print("")
 
-        dataframes = [pd.DataFrame() for i in range(len(self.cores))]
-
-        for i in range(len(self.cores)):
-            dataframes[i] = pd.DataFrame.from_dict(datadict[i])
+        dataframes = [pd.DataFrame.from_dict(datadict[i]) for i in range(len(self.cores))]
 
         # for i in range(len(self.cores)):
         # print("cores: ", self.cores[i])
