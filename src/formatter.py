@@ -19,8 +19,8 @@ def main():
     perFreqFormatter = PerFreqFormatter()
     perCoreFormatter = PerCoreFormatter()
 
-    perFreqFormatter.format(6)
-    perCoreFormatter.format(6)
+    perFreqFormatter.format()
+    perCoreFormatter.format()
 
 
 class _Formatter(object):
