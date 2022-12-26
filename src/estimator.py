@@ -26,8 +26,7 @@ class Estimator(object):
         pass
 
     def estimate(self, dataframe):
-        # print(dataframe)
-        # print("")
+        # print(dataframe, "\n")
 
         X, y = self._select(dataframe, 6)
         X_train, X_test, y_train, y_test = self._split(X, y, 0.8)
@@ -60,24 +59,21 @@ class Estimator(object):
         summary["intercept bias"] = model.intercept_
         summary["robustness R²"] = model.score(X_train, y_train)
 
-        print(summary)
-        print("")
+        print(summary, "\n")
 
         return model
 
     def _trainedByStatsmodelsOLS(self, X_train, y_train):
         model = statsmodels.api.OLS(y_train, X_train).fit()
 
-        print(model.summary())
-        print("")
+        print(model.summary(), "\n")
 
         return model
 
     def _test(self, X_test, y_test, model):
         y_pred = model.predict(X_test)
 
-        # print(y_test.to_frame().assign(y_pred=y_pred))
-        # print("")
+        # print(y_test.to_frame().assign(y_pred=y_pred), "\n")
 
         print(
             pd.DataFrame({
@@ -87,8 +83,7 @@ class Estimator(object):
                 "Mean absolute error (s)": [sklearn.metrics.mean_absolute_error(y_test, y_pred)],
                 "Mean squared error (s²)": [sklearn.metrics.mean_squared_error(y_test, y_pred)],
                 "Mean absolute percentage error (%)": [sklearn.metrics.mean_absolute_percentage_error(y_test, y_pred) * 100]
-            }))
-        print("")
+            }), "\n")
 
 
 if __name__ == "__main__":
