@@ -30,17 +30,17 @@ class Estimator(object):
         # print(dataframe)
         # print("")
 
-        X, y = self._select(dataframe)
+        X, y = self._select(dataframe, 6)
 
         X_train, X_test, y_train, y_test = self._split(X, y, 0.8)
 
         self._predict(X_train, X_test, y_train, y_test)
 
-    def _select(self, dataframe):
-        # selector = sklearn.feature_selection.RFE(estimator=sklearn.linear_model.LinearRegression(), n_features_to_select=6)
-        # selector = sklearn.feature_selection.SelectFromModel(estimator=sklearn.linear_model.LinearRegression(), max_features=6)
-        # selector = sklearn.feature_selection.SelectKBest(score_func=sklearn.feature_selection.r_regression, k=6)
-        selector = sklearn.feature_selection.SequentialFeatureSelector(estimator=sklearn.linear_model.LinearRegression(), n_features_to_select=6)
+    def _select(self, dataframe, num):
+        # selector = sklearn.feature_selection.RFE(estimator=sklearn.linear_model.LinearRegression(), n_features_to_select=num)
+        # selector = sklearn.feature_selection.SelectFromModel(estimator=sklearn.linear_model.LinearRegression(), max_features=num)
+        # selector = sklearn.feature_selection.SelectKBest(score_func=sklearn.feature_selection.r_regression, k=num)
+        selector = sklearn.feature_selection.SequentialFeatureSelector(estimator=sklearn.linear_model.LinearRegression(), n_features_to_select=num)
 
         selector.fit_transform(dataframe.iloc[:, :-1], dataframe.iloc[:, -1])
 
