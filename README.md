@@ -71,7 +71,7 @@ adb push res/SpecCpu2017 /data/local/tmp
 ./test.sh
 
 # run
-pipenv run python3 main.py -d "dat"
+pipenv run python3 main.py -d "dat/26/Pixel4a/Doshin"
 ```
 
 ### 架構
