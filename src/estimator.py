@@ -7,7 +7,6 @@ import sklearn.feature_selection
 import sklearn.linear_model
 import sklearn.metrics
 import sklearn.model_selection
-import statsmodels.api
 
 logging.basicConfig(
     level=logging.INFO,
@@ -29,9 +28,15 @@ class Estimator(object):
         # print(dataframe, "\n")
 
         X, y = self._select(dataframe, 6)
-        X_train, X_test, y_train, y_test = self._split(X, y, 0.8)
-        model = self._train(X_train, y_train)
-        self._test(X_test, y_test, model)
+
+        for trainIdxs, testIdxs in sklearn.model_selection.KFold(n_splits=5, shuffle=True, random_state=42).split(X):
+            # print(trainIdxs)
+            # print(testIdxs)
+
+            X_train, X_test, y_train, y_test = X.iloc[trainIdxs], X.iloc[testIdxs], y.iloc[trainIdxs], y.iloc[testIdxs]
+
+            model = self._train(X_train, y_train)
+            self._test(X_test, y_test, model)
 
     def _select(self, dataframe, num):
         # selector = sklearn.feature_selection.RFE(estimator=sklearn.linear_model.LinearRegression(), n_features_to_select=num)
@@ -43,15 +48,9 @@ class Estimator(object):
 
         return dataframe.iloc[:, selector.get_support(indices=True)], dataframe.iloc[:, -1]
 
-    def _split(self, X, y, ratio):
-        return sklearn.model_selection.train_test_split(X, y, train_size=ratio, random_state=42)
-
     def _train(self, X_train, y_train):
-        return self._trainedBySklearnLinearRegression(X_train, y_train)
-        # return self._trainedByStatsmodelsOLS(X_train, y_train)
-
-    def _trainedBySklearnLinearRegression(self, X_train, y_train):
         model = sklearn.linear_model.LinearRegression().fit(X_train, y_train)
+        # model = sklearn.linear_model.Ridge(alpha=3.0).fit(X_train, y_train)
 
         summary = pd.DataFrame(columns=X_train.columns)  # "coefficient weight
 
@@ -63,13 +62,6 @@ class Estimator(object):
 
         return model
 
-    def _trainedByStatsmodelsOLS(self, X_train, y_train):
-        model = statsmodels.api.OLS(y_train, X_train).fit()
-
-        # print(model.summary(), "\n")
-
-        return model
-
     def _test(self, X_test, y_test, model):
         y_pred = model.predict(X_test)
 
@@ -77,13 +69,15 @@ class Estimator(object):
 
         print(
             pd.DataFrame({
-                "R²": [sklearn.metrics.r2_score(y_test, y_pred)],
-                "Max error (s)": [sklearn.metrics.max_error(y_test, y_pred)],
-                "Median absolute error (s)": [sklearn.metrics.median_absolute_error(y_test, y_pred)],
-                "Mean absolute error (s)": [sklearn.metrics.mean_absolute_error(y_test, y_pred)],
-                "Mean squared error (s²)": [sklearn.metrics.mean_squared_error(y_test, y_pred)],
-                "Mean absolute percentage error (%)": [sklearn.metrics.mean_absolute_percentage_error(y_test, y_pred) * 100]
-            }), "\n")
+                # "R²": [sklearn.metrics.r2_score(y_test, y_pred)],
+                "Mean absolute percentage error (%)": [sklearn.metrics.mean_absolute_percentage_error(y_test, y_pred) * 100],
+                # "Mean absolute error (s)": [sklearn.metrics.mean_absolute_error(y_test, y_pred)],
+                # "Max error (s)": [sklearn.metrics.max_error(y_test, y_pred)],
+                # "Median absolute error (s)": [sklearn.metrics.median_absolute_error(y_test, y_pred)],
+                # "Mean squared error (s²)": [sklearn.metrics.mean_squared_error(y_test, y_pred)],
+                # "Mean squared log error (s²)": [sklearn.metrics.mean_squared_log_error(y_test, y_pred)],
+            }),
+            "\n")
 
 
 if __name__ == "__main__":

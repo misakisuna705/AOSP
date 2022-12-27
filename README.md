@@ -35,9 +35,7 @@
 -   adb
 -   python 3.10.8
     -   pipenv # pipenv graph
-        -   matplotlib
         -   scikit-learn
-        -   statsmodels
 
 ### 執行
 
