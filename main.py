@@ -18,13 +18,11 @@ logging.basicConfig(
 def main(argv):
     workloads = [pd.read_csv(file) for file in pathlib.Path(argv.directory[0]).glob("**/*.csv")]
 
-    # print(workloads)
-    # print("")
+    # print(workloads, "\n")
 
     cores = sorted(set(workloads[0]["setup core"]))
 
-    # print(cores)
-    # print("")
+    # print(cores, "\n")
 
     frequencies = []
 
@@ -33,13 +31,11 @@ def main(argv):
 
         frequencies.append(sorted(set(workloads[0]["frequency"][anchor * step:anchor * step + step])))
 
-    # print(frequencies)
-    # print("")
+    # print(frequencies, "\n")
 
     pmus = sorted(set(workloads[0]["event"][0:len(workloads[0]) // len(cores) // len(frequencies[0])]))
 
-    # print(pmus)
-    # print("")
+    # print(pmus, "\n")
 
     for workload in workloads:
         for i in range(len(cores)):
@@ -50,13 +46,11 @@ def main(argv):
                     workload.loc[idx, "count"] = int(workload["count"][idx].replace(",", ""))
                     workload.loc[idx, "time"] = float(workload["time"][idx])
 
-    # print(workloads)
-    # print("")
+    # print(workloads, "\n")
 
     workloads = preprocessor.Preprocessor(workloads).preprocess()
 
-    # print(workloads)
-    # print("")
+    # print(workloads, "\n")
 
     getPerFreqError(workloads, cores, frequencies)
     getPerCoreError(workloads, cores, frequencies)
