@@ -65,26 +65,27 @@ def main(argv):
 def getPerFreqError(workloads, cores, frequencies):
     dataframes = formatter.PerFreqFormatter(workloads).format()
 
-    print("getPerFreqError: ")
-    print("")
+    print("getPerFreqError: \n")
     for i in range(len(cores)):
         for j in range(len(frequencies[i])):
-            print("cores: ", cores[i], "frequencies: ", frequencies[i][j])
-            print("")
+            result = estimator.Estimator().estimate(dataframes[i][j])
 
-            estimator.Estimator().estimate(dataframes[i][j])
+            result.insert(loc=0, column='core', value=[cores[i] for _ in range(len(result))])
+            result.insert(loc=1, column='frequency', value=[frequencies[i][j] for _ in range(len(result))])
+
+            print(result, "\n")
 
 
 def getPerCoreError(workloads, cores, frequencies):
     dataframes = formatter.PerCoreFormatter(workloads).format()
 
-    print("getPerCoreError: ")
-    print("")
+    print("getPerCoreError: \n")
     for i in range(len(cores)):
-        print("cores: ", cores[i])
-        print("")
+        result = estimator.Estimator().estimate(dataframes[i])
 
-        estimator.Estimator().estimate(dataframes[i])
+        result.insert(loc=0, column='core', value=[cores[i] for _ in range(len(result))])
+
+        print(result, "\n")
 
 
 if __name__ == "__main__":
