@@ -37,10 +37,9 @@ class Estimator(object):
 
             xTrain, xTest, yTrain, yTest = X.iloc[trainIdxs], X.iloc[testIdxs], y.iloc[trainIdxs], y.iloc[testIdxs]
             model = self._train(xTrain, yTrain)
+            result.append(pd.concat([pd.DataFrame({"fold": [foldID]}), self._test(xTest, yTest, model)], axis=1))
 
-            result.append(self._test(xTest, yTest, model, foldID))
-
-        return pd.concat(result, axis=0)
+        return pd.concat(result, ignore_index=True)
 
     def _select(self, dataframe, num):
         # selector = sklearn.feature_selection.RFE(estimator=sklearn.linear_model.LinearRegression(), n_features_to_select=num)
@@ -66,13 +65,12 @@ class Estimator(object):
 
         return model
 
-    def _test(self, xTest, yTest, model, foldID):
+    def _test(self, xTest, yTest, model):
         y_pred = model.predict(xTest)
 
         # print(yTest.to_frame().assign(y_pred=y_pred), "\n")
 
         return pd.DataFrame({
-            "fold": [foldID],
             "R²": [sklearn.metrics.r2_score(yTest, y_pred)],
             "Mean absolute percentage error (%)": [sklearn.metrics.mean_absolute_percentage_error(yTest, y_pred) * 100],
             "Mean absolute error (s)": [sklearn.metrics.mean_absolute_error(yTest, y_pred)],

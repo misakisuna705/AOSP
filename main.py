@@ -70,10 +70,7 @@ def getPerFreqError(workloads, cores, frequencies):
         for j in range(len(frequencies[i])):
             result = estimator.Estimator().estimate(dataframes[i][j])
 
-            result.insert(loc=0, column='core', value=[cores[i] for _ in range(len(result))])
-            result.insert(loc=1, column='frequency', value=[frequencies[i][j] for _ in range(len(result))])
-
-            print(result, "\n")
+            print(pd.concat([pd.DataFrame({"core": [cores[i] for _ in range(len(result))], "frequency": [frequencies[i][j] for _ in range(len(result))]}), result], axis=1))
 
 
 def getPerCoreError(workloads, cores, frequencies):
@@ -83,9 +80,7 @@ def getPerCoreError(workloads, cores, frequencies):
     for i in range(len(cores)):
         result = estimator.Estimator().estimate(dataframes[i])
 
-        result.insert(loc=0, column='core', value=[cores[i] for _ in range(len(result))])
-
-        print(result, "\n")
+        print(pd.concat([pd.DataFrame({"core": [cores[i] for _ in range(len(result))], "frequency": ["*********" for _ in range(len(result))]}), result], axis=1))
 
 
 if __name__ == "__main__":
