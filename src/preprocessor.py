@@ -38,7 +38,7 @@ class Preprocessor(object):
         return self._classify()
 
     def _filter(self):
-        self.workloads = list(filter(self._isTimeOrdered, self.workloads))  # ##################################################################
+        self.workloads = list(filter(self._isTimeOrdered, self.workloads))  # filter1
 
         # for idx, workload in enumerate(self.workloads):
         # for i in range(len(self.cores)):
@@ -52,7 +52,7 @@ class Preprocessor(object):
         # print("cores: ", self.cores[i], "meanTimes: ", meanTimes)
         # print("")
 
-        # self.workloads = list(filter(self._isTimeStrictlyOrdered, self.workloads))  # ##################################################################
+        # self.workloads = list(filter(self._isTimeStrictlyOrdered, self.workloads))  # filter2
 
         # for idx, workload in enumerate(self.workloads):
         # for i in range(len(self.cores)):
@@ -66,7 +66,7 @@ class Preprocessor(object):
         # print("cores: ", self.cores[i], "meanTimes: ", meanTimes)
         # print("")
 
-        self.workloads = list(filter(self._isTimeLarge, self.workloads))  # ##################################################################
+        self.workloads = list(filter(self._isTimeLarge, self.workloads))  # filter3
 
         # for idx, workload in enumerate(self.workloads):
         # for i in range(len(self.cores)):
