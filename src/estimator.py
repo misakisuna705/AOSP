@@ -81,8 +81,6 @@ class Estimator(object):
 
             return dataframe[ranks[0:num]]
 
-        # return _selectedByWalker2016(dataframe), dataframe.iloc[:, -1] # test
-
         # selector = sklearn.feature_selection.RFE(estimator=sklearn.linear_model.LinearRegression(), n_features_to_select=num)
         # selector = sklearn.feature_selection.SelectFromModel(estimator=sklearn.linear_model.LinearRegression(), max_features=num)
         # selector = sklearn.feature_selection.SelectKBest(score_func=sklearn.feature_selection.r_regression, k=num)
@@ -90,6 +88,7 @@ class Estimator(object):
 
         selector.fit(dataframe.iloc[:, :-1], dataframe.iloc[:, -1])
 
+        # return _selectedByWalker2016(dataframe), dataframe.iloc[:, -1]  # test
         return dataframe.iloc[:, selector.get_support(indices=True)], dataframe.iloc[:, -1]
 
     def _train(self, xTrain, yTrain):
