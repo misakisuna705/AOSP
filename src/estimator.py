@@ -1,12 +1,16 @@
 #! /usr/bin/env python3
 
 import logging
+import math
 
 import pandas as pd
+import sklearn.cluster
 import sklearn.feature_selection
 import sklearn.linear_model
 import sklearn.metrics
 import sklearn.model_selection
+import statsmodels.stats.outliers_influence
+import statsmodels.tools.tools
 
 logging.basicConfig(
     level=logging.INFO,
@@ -42,12 +46,49 @@ class Estimator(object):
         return pd.concat(result, ignore_index=True)
 
     def _select(self, dataframe, num):
+
+        def _selectedByWalker2016(dataframe):
+            ranks = list(dataframe.iloc[:, :-1].columns)
+
+            for i in range(len(ranks)):
+                if not i:
+                    initevent = sklearn.feature_selection.SelectKBest(score_func=sklearn.feature_selection.r_regression,
+                                                                      k=1).fit(dataframe.iloc[:, :-1], dataframe.iloc[:, -1]).get_support(indices=True)[0]
+
+                    ranks[i], ranks[initevent] = ranks[initevent], ranks[i]
+                else:
+                    bestEvent = i
+                    bestR2 = -math.inf
+
+                    for pmuEvent in range(i, len(ranks)):
+                        newR2 = sklearn.linear_model.LinearRegression().fit(dataframe[ranks[0:i] + [ranks[pmuEvent]]],
+                                                                            dataframe.iloc[:, -1]).score(dataframe[ranks[0:i] + [ranks[pmuEvent]]], dataframe.iloc[:, -1])
+
+                        if (newR2 > bestR2):
+                            bestEvent = pmuEvent
+                            bestR2 = newR2
+
+                    ranks[i], ranks[bestEvent] = ranks[bestEvent], ranks[i]
+
+            # print(
+            # pd.DataFrame({
+            # "pmu": ["X"] + ranks[0:num],
+            # "VIF": [
+            # statsmodels.stats.outliers_influence.variance_inflation_factor(statsmodels.tools.tools.add_constant(dataframe[ranks[0:num]]).values, _)
+            # for _ in range(len(statsmodels.tools.tools.add_constant(dataframe[ranks[0:num]]).columns))
+            # ]
+            # }))
+
+            return dataframe[ranks[0:num]]
+
+        # return _selectedByWalker2016(dataframe), dataframe.iloc[:, -1] # test
+
         # selector = sklearn.feature_selection.RFE(estimator=sklearn.linear_model.LinearRegression(), n_features_to_select=num)
         # selector = sklearn.feature_selection.SelectFromModel(estimator=sklearn.linear_model.LinearRegression(), max_features=num)
         # selector = sklearn.feature_selection.SelectKBest(score_func=sklearn.feature_selection.r_regression, k=num)
         selector = sklearn.feature_selection.SequentialFeatureSelector(estimator=sklearn.linear_model.LinearRegression(), n_features_to_select=num)
 
-        selector.fit_transform(dataframe.iloc[:, :-1], dataframe.iloc[:, -1])
+        selector.fit(dataframe.iloc[:, :-1], dataframe.iloc[:, -1])
 
         return dataframe.iloc[:, selector.get_support(indices=True)], dataframe.iloc[:, -1]
 

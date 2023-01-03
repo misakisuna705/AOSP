@@ -82,7 +82,7 @@ class PerFreqFormatter(_Formatter):
 
                     dataColumns[i][j] |= {qualifiers[k]: counts}
 
-                dataColumns[i][j] |= {"times": meanTimes}
+                dataColumns[i][j] |= {"time": meanTimes}
 
         # for i in range(len(self.cores)):
         # for j in range(len(self.frequencies[i])):
