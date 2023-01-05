@@ -46,7 +46,7 @@ class Estimator(object):
 
     def _select(self, dataframe, num):
 
-        def _rankedByWalker2016(_X, y):
+        def _evalWithWalker2016(_X, y):
             X = pd.DataFrame(_X)
 
             ranks = list(range(len(X.columns)))
@@ -89,7 +89,7 @@ class Estimator(object):
         # selector = sklearn.feature_selection.SelectFromModel(estimator=sklearn.linear_model.LinearRegression(), max_features=num)
         # selector = sklearn.feature_selection.SelectKBest(score_func=sklearn.feature_selection.r_regression, k=num)
         # selector = sklearn.feature_selection.SequentialFeatureSelector(estimator=sklearn.linear_model.LinearRegression(), n_features_to_select=num)
-        selector = sklearn.feature_selection.SelectKBest(score_func=_rankedByWalker2016, k=num)
+        selector = sklearn.feature_selection.SelectKBest(score_func=_evalWithWalker2016, k=num)
 
         selector.fit(dataframe.iloc[:, :-1], dataframe.iloc[:, -1])
 
