@@ -100,10 +100,6 @@ class Estimator(object):
                 "group": [sklearn.cluster.FeatureAgglomeration(n_clusters=num).fit(dataframe.iloc[:, :-1]).labels_[item] for item in selector.get_support(indices=True)]
             }), "\n")
 
-        # for item in selector.get_support(indices=True):
-        # print(item, dataframe.columns[item], cluster.labels_[item])
-        # print("")
-
         return dataframe.iloc[:, selector.get_support(indices=True)], dataframe.iloc[:, -1]
 
     def _train(self, xTrain, yTrain):
