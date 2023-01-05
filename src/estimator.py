@@ -3,14 +3,13 @@
 import logging
 import math
 
+import numpy
 import pandas as pd
 import sklearn.cluster
 import sklearn.feature_selection
 import sklearn.linear_model
 import sklearn.metrics
 import sklearn.model_selection
-import statsmodels.stats.outliers_influence
-import statsmodels.tools.tools
 
 logging.basicConfig(
     level=logging.INFO,
@@ -47,26 +46,26 @@ class Estimator(object):
 
     def _select(self, dataframe, num):
 
-        def _selectedByWalker2016(dataframe):
-            ranks = list(dataframe.iloc[:, :-1].columns)
+        def _rankedByWalker2016(_X, y):
+            X = pd.DataFrame(_X)
+
+            ranks = list(range(len(X.columns)))
 
             for i in range(len(ranks)):
                 if not i:
-                    initevent = sklearn.feature_selection.SelectKBest(score_func=sklearn.feature_selection.r_regression,
-                                                                      k=1).fit(dataframe.iloc[:, :-1], dataframe.iloc[:, -1]).get_support(indices=True)[0]
+                    initEvent = sklearn.feature_selection.SelectKBest(score_func=sklearn.feature_selection.r_regression, k=1).fit(X, y).get_support(indices=True)[0]
 
-                    ranks[i], ranks[initevent] = ranks[initevent], ranks[i]
+                    ranks[i], ranks[initEvent] = ranks[initEvent], ranks[i]
                 else:
-                    bestEvent = i
-                    bestR2 = -math.inf
+                    bestEvent, bestR2 = i, -math.inf
 
                     for pmuEvent in range(i, len(ranks)):
-                        newR2 = sklearn.linear_model.LinearRegression().fit(dataframe[ranks[0:i] + [ranks[pmuEvent]]],
-                                                                            dataframe.iloc[:, -1]).score(dataframe[ranks[0:i] + [ranks[pmuEvent]]], dataframe.iloc[:, -1])
+                        selectedList = X.iloc[:, ranks[0:i] + [ranks[pmuEvent]]]
+
+                        newR2 = sklearn.linear_model.LinearRegression().fit(selectedList, y).score(selectedList, y)
 
                         if (newR2 > bestR2):
-                            bestEvent = pmuEvent
-                            bestR2 = newR2
+                            bestEvent, bestR2 = pmuEvent, newR2
 
                     ranks[i], ranks[bestEvent] = ranks[bestEvent], ranks[i]
 
@@ -79,21 +78,24 @@ class Estimator(object):
             # ]
             # }))
 
-            # return dataframe[["raw-cpu-cycles", "raw-inst-spec", "raw-l2d-cache-rd", "raw-unaligned-ldst-spec", "raw-dp-spec", "raw-l1i-cache", "raw-bus-access"]]
-            return dataframe[ranks[0:num]]
+            weights = [int() for _ in range(len(X.columns))]
+
+            for idx, item in enumerate(list((reversed(ranks)))):
+                weights[item] = idx
+
+            return numpy.array(weights)
 
         # selector = sklearn.feature_selection.RFE(estimator=sklearn.linear_model.LinearRegression(), n_features_to_select=num)
         # selector = sklearn.feature_selection.SelectFromModel(estimator=sklearn.linear_model.LinearRegression(), max_features=num)
         # selector = sklearn.feature_selection.SelectKBest(score_func=sklearn.feature_selection.r_regression, k=num)
-        selector = sklearn.feature_selection.SequentialFeatureSelector(estimator=sklearn.linear_model.LinearRegression(), n_features_to_select=num)
+        # selector = sklearn.feature_selection.SequentialFeatureSelector(estimator=sklearn.linear_model.LinearRegression(), n_features_to_select=num)
+        selector = sklearn.feature_selection.SelectKBest(score_func=_rankedByWalker2016, k=num)
 
         selector.fit(dataframe.iloc[:, :-1], dataframe.iloc[:, -1])
 
-        # return _selectedByWalker2016(dataframe), dataframe.iloc[:, -1]  # test
         return dataframe.iloc[:, selector.get_support(indices=True)], dataframe.iloc[:, -1]
 
     def _train(self, xTrain, yTrain):
-        # model = sklearn.linear_model.Ridge(alpha=3.0).fit(xTrain, yTrain)
         model = sklearn.linear_model.LinearRegression().fit(xTrain, yTrain)
 
         summary = pd.DataFrame(columns=xTrain.columns)  # "coefficient weight
