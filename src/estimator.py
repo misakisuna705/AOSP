@@ -93,12 +93,12 @@ class Estimator(object):
 
         selector.fit(dataframe.iloc[:, :-1], dataframe.iloc[:, -1])
 
-        print(
-            pd.DataFrame({
-                "ID": [item for item in selector.get_support(indices=True)],
-                "pmu": [dataframe.columns[item] for item in selector.get_support(indices=True)],
-                "group": [sklearn.cluster.FeatureAgglomeration(n_clusters=num).fit(dataframe.iloc[:, :-1]).labels_[item] for item in selector.get_support(indices=True)]
-            }), "\n")
+        # print(
+        # pd.DataFrame({
+        # "ID": [item for item in selector.get_support(indices=True)],
+        # "pmu": [dataframe.columns[item] for item in selector.get_support(indices=True)],
+        # "group": [sklearn.cluster.FeatureAgglomeration(n_clusters=num).fit(dataframe.iloc[:, :-1]).labels_[item] for item in selector.get_support(indices=True)]
+        # }), "\n")
 
         return dataframe.iloc[:, selector.get_support(indices=True)], dataframe.iloc[:, -1]
 
