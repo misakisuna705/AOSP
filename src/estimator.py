@@ -30,19 +30,25 @@ class Estimator(object):
     def estimate(self, dataframe):
         # print(dataframe, "\n")
 
-        X, y = self._select(dataframe, 6)
-
         result = []
 
-        for foldID, (trainIdxs, testIdxs) in enumerate(sklearn.model_selection.KFold(n_splits=5, shuffle=True, random_state=42).split(X)):
+        dataframe = self._filter(dataframe)  # filter
+        X, y = self._select(dataframe, 6)  # selector
+
+        for foldID, (trainIdxs, testIdxs) in enumerate(sklearn.model_selection.KFold(n_splits=5, shuffle=True, random_state=42).split(X)):  # spliter
             # print(trainIdxs.tolist())
             # print(testIdxs.tolist(), "\n")
 
             xTrain, xTest, yTrain, yTest = X.iloc[trainIdxs], X.iloc[testIdxs], y.iloc[trainIdxs], y.iloc[testIdxs]
-            model = self._train(xTrain, yTrain)
+            model = self._train(xTrain, yTrain)  # predictor
             result.append(pd.concat([pd.DataFrame({"fold": [foldID]}), self._test(xTest, yTest, model)], axis=1))
 
         return pd.concat(result, ignore_index=True)
+
+    def _filter(self, dataframe):
+        # print(dataframe.iloc[:, :-1])
+
+        return dataframe
 
     def _select(self, dataframe, num):
 
