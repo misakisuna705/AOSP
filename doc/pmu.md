@@ -82,7 +82,6 @@ simpleperf list raw
 |                |      | raw-exc-trap-other         | Exception taken, Other traps not Taken locallyb                                            |                           |
 |                |      | raw-exc-trap-pabort        | Exception taken, Instruction Abort not Taken locallyb                                      |                           |
 |                |      | raw-exc-undef              | Exception taken, Other synchronous                                                         |                           |
-|                |      | raw-itlb-walk              | Attributable instruction TLB access with at least one translation table walk               |                           |
 | L1 I-Cache     | 0x14 | raw-l1i-cache              |                                                                                            |                           |
 |                | 0x1  | raw-l1i-cache-refill       |                                                                                            | ⊆ raw-l1i-cache           |
 |                |      | raw-l1i-cache-lmiss        |                                                                                            | ⊆ raw-l1i-cache-refill    |
@@ -130,6 +129,7 @@ simpleperf list raw
 |                | 0x5F | raw-l2d-tlb-wr             |                                                                                            | ⊆ raw-l2d-tlb             |
 |                | 0x2D | raw-l2d-tlb-refill         | = -rd + -wr                                                                                | ⊆ raw-l2d-tlb-wr          |
 |                | 0x34 | raw-dtlb-walk              | = raw-l2d-tlb-refill                                                                       |                           |
+|                | 0x35 | raw-itlb-walk              |                                                                                            |                           |
 |                | 0x5C | raw-l2d-tlb-refill-rd      |                                                                                            | ⊆ raw-l2d-tlb-refill      |
 |                | 0x5D | raw-l2d-tlb-refill-wr      |                                                                                            | ⊆ raw-l2d-tlb-refill      |
 | L3 D-Cache     | 0x2B | raw-l3d-cache              | = -rd + -wr                                                                                |                           |
