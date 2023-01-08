@@ -49,7 +49,7 @@ class Estimator(object):
         return pd.concat(result, ignore_index=True)
 
     def _filter(self, dataframe):
-        print(dataframe[["raw-stall-backend-mem"]], "\n")
+        print(dataframe[["raw-stall-slot", "raw-stall-slot-frontend", "raw-stall-slot-backend"]], "\n")
 
         return dataframe
 
