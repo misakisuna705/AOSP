@@ -36,7 +36,7 @@ simpleperf list raw
 |                |      | raw-ldst-spec              | Operation speculatively executed, load or store                                            |                           |
 |                |      | raw-ld-spec                | Operation speculatively executed, load                                                     |                           |
 |                |      | raw-st-spec                | Operation speculatively executed, store                                                    |                           |
-| unaligned      | 0x6A | raw-unaligned-ldst-spec    | = raw-unaligned-ld-spec + raw-unaligned-st-spec                                            |                           |
+|                | 0x6A | raw-unaligned-ldst-spec    | = raw-unaligned-ld-spec + raw-unaligned-st-spec                                            |                           |
 |                | 0x68 | raw-unaligned-ld-spec      |                                                                                            | ⊆ raw-unaligned-ldst-spec |
 |                | 0x69 | raw-unaligned-st-spec      |                                                                                            | ⊆ raw-unaligned-ldst-spec |
 |                |      | raw-pc-write-spec          | Operation speculatively executed, software change of the PC                                |                           |
