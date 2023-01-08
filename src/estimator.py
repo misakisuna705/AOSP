@@ -2,9 +2,12 @@
 
 import logging
 import math
+import sys
 
+import matplotlib.pyplot
 import numpy
 import pandas as pd
+import scipy.cluster.hierarchy
 import sklearn.cluster
 import sklearn.feature_selection
 import sklearn.linear_model
@@ -46,7 +49,6 @@ class Estimator(object):
         return pd.concat(result, ignore_index=True)
 
     def _filter(self, dataframe):
-        # print(dataframe.iloc[:, :-1])
 
         return dataframe
 
