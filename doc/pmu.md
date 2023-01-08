@@ -36,6 +36,9 @@ simpleperf list raw
 |                |      | raw-ldst-spec              | Operation speculatively executed, load or store                                            |                           |
 |                |      | raw-ld-spec                | Operation speculatively executed, load                                                     |                           |
 |                |      | raw-st-spec                | Operation speculatively executed, store                                                    |                           |
+| unaligned      | 0x6A | raw-unaligned-ldst-spec    | = raw-unaligned-ld-spec + raw-unaligned-st-spec                                            |                           |
+|                | 0x68 | raw-unaligned-ld-spec      |                                                                                            | ⊆ raw-unaligned-ldst-spec |
+|                | 0x69 | raw-unaligned-st-spec      |                                                                                            | ⊆ raw-unaligned-ldst-spec |
 |                |      | raw-pc-write-spec          | Operation speculatively executed, software change of the PC                                |                           |
 |                |      | raw-dp-spec                | Operation speculatively executed, integer data processing                                  |                           |
 |                |      | raw-vfp-spec               | Operation speculatively executed, floating-point instruction                               |                           |
@@ -155,13 +158,10 @@ simpleperf list raw
 |                | 0x66 | raw-mem-access-rd          |                                                                                            | ⊆ raw-mem-access          |
 |                | 0x67 | raw-mem-access-wr          |                                                                                            | ⊆ raw-mem-access          |
 |                |      | raw-memory-error           |                                                                                            |                           |
-| remote         |      | raw-remote-access          | Attributable access to another socket in a multi-socket system                             |                           |
-|                |      | raw-remote-access-rd       | Attributable memory read access to another socket in a multi-socket system                 |                           |
-| unaligned      |      | raw-unaligned-ldst-spec    | Unaligned access                                                                           |                           |
-|                |      | raw-unaligned-ld-spec      | Unaligned access, read                                                                     |                           |
-|                |      | raw-unaligned-st-spec      | Unaligned access, write                                                                    |                           |
-| sample         |      | raw-sample-feed            | Sample Taken                                                                               |                           |
-|                |      | raw-sample-filtrate        | Sample Taken and not removed by filtering                                                  |                           |
-|                |      | raw-sample-pop             | Sample Population                                                                          |                           |
-|                |      | raw-sample-collision       | Sample collided with previous sample                                                       |                           |
+| remote         | 0x31 | raw-remote-access          |                                                                                            |                           |
+|                |      | raw-remote-access-rd       |                                                                                            | ⊆ raw-remote-access       |
+| sample         |      | raw-sample-feed            |                                                                                            |                           |
+|                |      | raw-sample-filtrate        |                                                                                            |                           |
+|                |      | raw-sample-pop             |                                                                                            |                           |
+|                |      | raw-sample-collision       |                                                                                            |                           |
 |                | 0x1E | raw-chain                  |                                                                                            |                           |
