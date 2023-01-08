@@ -2,11 +2,11 @@
 
 <!-- vim-markdown-toc GFM -->
 
-* [event](#event)
+* [Cortex A76](#cortex-a76)
 
 <!-- vim-markdown-toc -->
 
-## event
+## Cortex A76
 
 ```zsh
 simpleperf list raw
@@ -81,20 +81,20 @@ simpleperf list raw
 |                |        | raw-exc-undef              | Exception taken, Other synchronous                                                         |                           |
 |                |        | raw-itlb-walk              | Attributable instruction TLB access with at least one translation table walk               |                           |
 | L1 I-Cache     | 0x14   | raw-l1i-cache              |                                                                                            |                           |
-|                | 0x1    | raw-l1i-cache-refill       | miss                                                                                       | ⊆ raw-l1i-cache           |
+|                | 0x1    | raw-l1i-cache-refill       |                                                                                            | ⊆ raw-l1i-cache           |
 |                |        | raw-l1i-cache-lmiss        |                                                                                            | ⊆ raw-l1i-cache-refill    |
 | L1 I-Cache TLB | 0x26   | raw-l1i-tlb                |                                                                                            |                           |
-|                | 0x2    | raw-l1i-tlb-refill         | miss                                                                                       | ⊆ raw-l1i-tlb             |
+|                | 0x2    | raw-l1i-tlb-refill         |                                                                                            | ⊆ raw-l1i-tlb             |
 | L1 D-Cache     | 0x4    | raw-l1d-cache              | = -rd + -wr                                                                                |                           |
 |                | 0x40   | raw-l1d-cache-rd           | CPU <= L1                                                                                  | ⊆ raw-l1d-cache           |
 |                | 0x41   | raw-l1d-cache-wr           | CPU => L1                                                                                  | ⊆ raw-l1d-cache           |
 |                |        | raw-l1d-cache-allocate     |                                                                                            | ⊆ raw-l1d-cache-wr        |
-|                | 0x3    | raw-l1d-cache-refill       | = -rd + -wr = -inner + -outer (miss)                                                       | ⊆ raw-l1d-cache-wr        |
+|                | 0x3    | raw-l1d-cache-refill       | = -rd + -wr = -inner + -outer                                                              | ⊆ raw-l1d-cache-wr        |
 |                | 0x44   | raw-l1d-cache-refill-inner | L1 miss, L2 and L3 hit                                                                     | ⊆ raw-l1d-cache-refill    |
 |                | 0x45   | raw-l1d-cache-refill-outer | L1 miss, L2 or L3 miss                                                                     | ⊆ raw-l1d-cache-refill    |
-|                | 0x42   | raw-l1d-cache-refill-rd    | miss                                                                                       | ⊆ raw-l1d-cache-refill    |
+|                | 0x42   | raw-l1d-cache-refill-rd    |                                                                                            | ⊆ raw-l1d-cache-refill    |
 |                |        | raw-l1d-cache-lmiss-rd     |                                                                                            | ⊆ raw-l1d-cache-refill-rd |
-|                | 0x43   | raw-l1d-cache-refill-wr    | miss                                                                                       | ⊆ raw-l1d-cache-refill    |
+|                | 0x43   | raw-l1d-cache-refill-wr    |                                                                                            | ⊆ raw-l1d-cache-refill    |
 |                | 0x15   | raw-l1d-cache-wb           | L1 => L2                                                                                   |                           |
 |                | 0x46   | raw-l1d-cache-wb-victim    |                                                                                            | ⊆ raw-l1d-cache-wb        |
 |                | 0x47   | raw-l1d-cache-wb-clean     |                                                                                            | ⊆ raw-l1d-cache-wb        |
@@ -102,48 +102,48 @@ simpleperf list raw
 | L1 D-Cache TLB | 0x25   | raw-l1d-tlb                | = -rd + -wr                                                                                |                           |
 |                | 0x4E   | raw-l1d-tlb-rd             |                                                                                            | ⊆ raw-l1d-tlb             |
 |                | 0x4F   | raw-l1d-tlb-wr             |                                                                                            | ⊆ raw-l1d-tlb             |
-|                | 0x5    | raw-l1d-tlb-refill         | = -rd + -wr (miss)                                                                         | ⊆ raw-l1d-tlb-wr          |
-|                | 0x4C   | raw-l1d-tlb-refill-rd      | miss                                                                                       | ⊆ raw-l1d-tlb-refill      |
-|                | 0x4D   | raw-l1d-tlb-refill-wr      | miss                                                                                       | ⊆ raw-l1d-tlb-refill      |
+|                | 0x5    | raw-l1d-tlb-refill         | = -rd + -wr                                                                                | ⊆ raw-l1d-tlb-wr          |
+|                | 0x4C   | raw-l1d-tlb-refill-rd      |                                                                                            | ⊆ raw-l1d-tlb-refill      |
+|                | 0x4D   | raw-l1d-tlb-refill-wr      |                                                                                            | ⊆ raw-l1d-tlb-refill      |
 | L2 I-Cache     |        | raw-l2i-cache              |                                                                                            |                           |
 |                |        | raw-l2i-cache-refill       |                                                                                            | ⊆ raw-l2i-cache           |
 |                |        | raw-l2i-cache-lmiss        |                                                                                            | ⊆ raw-l2i-cache-refill    |
 | L2 I-Cache TLB |        | raw-l2i-tlb                |                                                                                            |                           |
-|                |        | raw-l2i-tlb-refill         | miss                                                                                       | ⊆ raw-l2i-tlb             |
+|                |        | raw-l2i-tlb-refill         |                                                                                            | ⊆ raw-l2i-tlb             |
 | L2 D-Cache     | 0x16   | raw-l2d-cache              | = -rd + -wr                                                                                |                           |
 |                | 0x50   | raw-l2d-cache-rd           | L1 <= L2                                                                                   | ⊆ raw-l2d-cache           |
 |                | 0x51   | raw-l2d-cache-wr           | ≈ raw-l1d-cache-wb (L1 => L2)                                                              | ⊆ raw-l2d-cache           |
 |                | 0x20   | raw-l2d-cache-allocate     | ≈ raw-l2d-cache-wr                                                                         | ⊆ raw-l2d-cache-wr        |
-|                | 0x17   | raw-l2d-cache-refill       | = -rd + -wr (miss)                                                                         | ⊆ raw-l2d-cache-wr        |
-|                | 0x52   | raw-l2d-cache-refill-rd    | miss                                                                                       | ⊆ raw-l2d-cache-refill    |
+|                | 0x17   | raw-l2d-cache-refill       | = -rd + -wr                                                                                | ⊆ raw-l2d-cache-wr        |
+|                | 0x52   | raw-l2d-cache-refill-rd    |                                                                                            | ⊆ raw-l2d-cache-refill    |
 |                |        | raw-l2d-cache-lmiss-rd     |                                                                                            | ⊆ raw-l2d-cache-refill-rd |
-|                | 0x53   | raw-l2d-cache-refill-wr    | miss                                                                                       | ⊆ raw-l2d-cache-refill    |
+|                | 0x53   | raw-l2d-cache-refill-wr    |                                                                                            | ⊆ raw-l2d-cache-refill    |
 |                | 0x18   | raw-l2d-cache-wb           | L2 => L3                                                                                   |                           |
 |                | 0x56   | raw-l2d-cache-wb-victim    |                                                                                            | ⊆ raw-l2d-cache-wb        |
 |                | 0x57   | raw-l2d-cache-wb-clean     |                                                                                            | ⊆ raw-l2d-cache-wb        |
 |                | 0x58   | raw-l2d-cache-inval        |                                                                                            |                           |
-| L2 D-Cache TLB |        | raw-l2d-tlb                | Attributable Level 2 data or unified TLB access                                            |                           |
-|                |        | raw-l2d-tlb-rd             | Attributable Level 2 data or unified TLB access, read                                      |                           |
-|                |        | raw-l2d-tlb-refill         | Attributable Level 2 data or unified TLB refill                                            |                           |
-|                |        | raw-l2d-tlb-refill-rd      | Attributable Level 2 data or unified TLB refill, read                                      |                           |
-|                |        | raw-l2d-tlb-refill-wr      | Attributable Level 2 data or unified TLB refill, write                                     |                           |
-|                |        | raw-l2d-tlb-wr             | Attributable Level 2 data or unified TLB access, write                                     |                           |
-| L3 D-Cache     |        | raw-l3d-cache              | Attributable Level 3 data cache access                                                     |                           |
-|                |        | raw-l3d-cache-allocate     | Attributable Level 3 data or unified cache allocation without refill                       |                           |
-|                |        | raw-l3d-cache-inval        | Attributable Level 3 data or unified cache access, invalidate                              |                           |
-|                |        | raw-l3d-cache-lmiss-rd     | Level 3 data cache long-latency read miss                                                  |                           |
-|                |        | raw-l3d-cache-rd           | Attributable Level 3 data or unified cache access, read                                    |                           |
-|                |        | raw-l3d-cache-refill       | Attributable Level 3 data cache refill                                                     |                           |
-|                |        | raw-l3d-cache-refill-rd    | Attributable Level 3 data or unified cache refill, read                                    |                           |
-|                |        | raw-l3d-cache-refill-wr    | Attributable Level 3 data or unified cache refill, write                                   |                           |
-|                |        | raw-l3d-cache-wb           | Attributable Level 3 data or unified cache write-back                                      |                           |
-|                |        | raw-l3d-cache-wb-clean     | Attributable Level 3 data or unified cache Write-Back, cache clean                         |                           |
-|                |        | raw-l3d-cache-wb-victim    | Attributable Level 3 data or unified cache Write-Back, victim                              |                           |
-|                |        | raw-l3d-cache-wr           | Attributable Level 3 data or unified cache access, write                                   |                           |
-| LL Cache       |        | raw-ll-cache               | Attributable Last Level data cache access                                                  |                           |
-|                |        | raw-ll-cache-miss          | Attributable Last level data or unified cache miss                                         |                           |
-|                |        | raw-ll-cache-miss-rd       | Attributable Last Level cache memory read miss                                             |                           |
-|                |        | raw-ll-cache-rd            | Attributable Last Level cache memory read                                                  |                           |
+| L2 D-Cache TLB | 0x2F   | raw-l2d-tlb                | = -rd + -wr                                                                                |                           |
+|                | 0x5E   | raw-l2d-tlb-rd             |                                                                                            | ⊆ raw-l2d-tlb             |
+|                | 0x5F   | raw-l2d-tlb-wr             |                                                                                            | ⊆ raw-l2d-tlb             |
+|                | 0x2D   | raw-l2d-tlb-refill         | = -rd + -wr                                                                                | ⊆ raw-l2d-tlb-wr          |
+|                | 0x5C   | raw-l2d-tlb-refill-rd      |                                                                                            | ⊆ raw-l2d-tlb-refill      |
+|                | 0x5D   | raw-l2d-tlb-refill-wr      |                                                                                            | ⊆ raw-l2d-tlb-refill      |
+| L3 D-Cache     | 0x2B   | raw-l3d-cache              | = -rd + -wr                                                                                |                           |
+|                |        | raw-l3d-cache-rd           |                                                                                            | ⊆ raw-l3d-cache           |
+|                |        | raw-l3d-cache-wr           | ≈ raw-l2d-cache-wb (L2 => L3)                                                              | ⊆ raw-l3d-cache           |
+|                | 0x29   | raw-l3d-cache-allocate     | ≈ raw-l3d-cache-wr                                                                         | ⊆ raw-l3d-cache-wr        |
+|                | 0x2A   | raw-l3d-cache-refill       | = -rd + -wr                                                                                | ⊆ raw-l3d-cache-wr        |
+|                |        | raw-l3d-cache-refill-rd    |                                                                                            | ⊆ raw-l3d-cache-refill    |
+|                |        | raw-l3d-cache-lmiss-rd     |                                                                                            | ⊆ raw-l3d-cache-refill-rd |
+|                |        | raw-l3d-cache-refill-wr    |                                                                                            | ⊆ raw-l3d-cache-refill    |
+|                |        | raw-l3d-cache-wb           | L3 => MEM                                                                                  |                           |
+|                |        | raw-l3d-cache-wb-clean     |                                                                                            | ⊆ raw-l3d-cache-wb        |
+|                |        | raw-l3d-cache-wb-victim    |                                                                                            | ⊆ raw-l3d-cache-wb        |
+|                |        | raw-l3d-cache-inval        |                                                                                            |                           |
+| LL Cache       |        | raw-ll-cache               | = raw-l3d-cache                                                                            |                           |
+|                |        | raw-ll-cache-miss          | = raw-l3d-cache-refill                                                                     | ⊆ raw-ll-cache            |
+|                | 0x36   | raw-ll-cache-rd            | = raw-l3d-cache-rd                                                                         | ⊆ raw-ll-cache            |
+|                | 0x37   | raw-ll-cache-miss-rd       | = raw-l3d-cache-refill-rd                                                                  | ⊆ raw-ll-cache-rd         |
 | stall          |        | raw-stall                  | No operation sent for execution                                                            |                           |
 |                |        | raw-stall-backend          | No operation issued due to backend                                                         |                           |
 |                |        | raw-stall-backend-mem      | Memory stall cycles                                                                        |                           |
