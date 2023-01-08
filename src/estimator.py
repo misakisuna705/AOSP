@@ -49,7 +49,7 @@ class Estimator(object):
         return pd.concat(result, ignore_index=True)
 
     def _filter(self, dataframe):
-        print(dataframe[["raw-unaligned-ldst-spec", "raw-unaligned-ld-spec", "raw-unaligned-st-spec"]], "\n")
+        print(dataframe[["raw-dtlb-walk", "raw-l2d-tlb-refill"]], "\n")
 
         return dataframe
 

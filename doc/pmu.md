@@ -68,15 +68,14 @@ simpleperf list raw
 |                |      | raw-bus-access-shared      | Bus access, Normal, Cacheable, Shareable                                                   |                           |
 |                |      | raw-bus-access-not-shared  | Bus access, not Normal, Cacheable, Shareable                                               |                           |
 |                |      | raw-bus-access-periph      | Bus access, peripheral                                                                     |                           |
-|                |      | raw-dtlb-walk              | Attributable data or unified TLB access with at least one translation table walk           |                           |
+|                |      | raw-exc-taken              | Exception taken                                                                            |                           |
 |                |      | raw-exc-dabort             | Exception taken, Data Abort and SError                                                     |                           |
+|                |      | raw-exc-irq                | Exception taken, IRQ                                                                       |                           |
 |                |      | raw-exc-fiq                | Exception taken, FIQ                                                                       |                           |
 |                |      | raw-exc-hvc                | Exception taken, Hypervisor Call                                                           |                           |
-|                |      | raw-exc-irq                | Exception taken, IRQ                                                                       |                           |
 |                |      | raw-exc-pabort             | Exception taken, Instruction Abort                                                         |                           |
 |                |      | raw-exc-smc                | Exception taken, Secure Monitor Call                                                       |                           |
 |                |      | raw-exc-svc                | Exception taken, Supervisor Call                                                           |                           |
-|                |      | raw-exc-taken              | Exception taken                                                                            |                           |
 |                |      | raw-exc-trap-dabort        | Exception taken, Data Abort or SError not Taken locallyb                                   |                           |
 |                |      | raw-exc-trap-fiq           | Exception taken, FIQ not Taken locallyb                                                    |                           |
 |                |      | raw-exc-trap-irq           | Exception taken, IRQ not Taken locallyb                                                    |                           |
@@ -130,6 +129,7 @@ simpleperf list raw
 |                | 0x5E | raw-l2d-tlb-rd             |                                                                                            | ⊆ raw-l2d-tlb             |
 |                | 0x5F | raw-l2d-tlb-wr             |                                                                                            | ⊆ raw-l2d-tlb             |
 |                | 0x2D | raw-l2d-tlb-refill         | = -rd + -wr                                                                                | ⊆ raw-l2d-tlb-wr          |
+|                | 0x34 | raw-dtlb-walk              | = raw-l2d-tlb-refill                                                                       |                           |
 |                | 0x5C | raw-l2d-tlb-refill-rd      |                                                                                            | ⊆ raw-l2d-tlb-refill      |
 |                | 0x5D | raw-l2d-tlb-refill-wr      |                                                                                            | ⊆ raw-l2d-tlb-refill      |
 | L3 D-Cache     | 0x2B | raw-l3d-cache              | = -rd + -wr                                                                                |                           |
