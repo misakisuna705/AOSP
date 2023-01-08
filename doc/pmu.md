@@ -17,6 +17,7 @@ simpleperf list raw
 | cycle          |        | raw-cpu-cycles             | Cycle                                                                                      |                           |
 |                |        | raw-bus-cycles             | Bus cycle                                                                                  |                           |
 |                |        | raw-cnt-cycles             | Constant frequency cycles                                                                  |                           |
+|                |        | raw-stall-backend-mem      | Memory stall cycles                                                                        |                           |
 | instruction    |        | raw-inst-retired           | Instruction architecturally executed                                                       |                           |
 |                |        | raw-br-retired             | Instruction architecturally executed, branch                                               |                           |
 |                |        | raw-br-immed-retired       | Instruction architecturally executed, immediate branch                                     |                           |
@@ -145,9 +146,8 @@ simpleperf list raw
 |                | 0x36   | raw-ll-cache-rd            | = raw-l3d-cache-rd                                                                         | ⊆ raw-ll-cache            |
 |                | 0x37   | raw-ll-cache-miss-rd       | = raw-l3d-cache-refill-rd                                                                  | ⊆ raw-ll-cache-rd         |
 | stall          |        | raw-stall                  | No operation sent for execution                                                            |                           |
-|                |        | raw-stall-backend          | No operation issued due to backend                                                         |                           |
-|                |        | raw-stall-backend-mem      | Memory stall cycles                                                                        |                           |
 |                |        | raw-stall-frontend         | No operation issued due to the frontend                                                    |                           |
+|                |        | raw-stall-backend          | No operation issued due to backend                                                         |                           |
 |                |        | raw-stall-slot             | No operation sent for execution on a Slot                                                  |                           |
 |                |        | raw-stall-slot-backend     | No operation sent for execution on a Slot due to the backend                               |                           |
 |                |        | raw-stall-slot-frontend    | No operation send for execution on a Slot due to the frontend                              |                           |

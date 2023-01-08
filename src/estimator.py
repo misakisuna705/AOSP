@@ -49,7 +49,7 @@ class Estimator(object):
         return pd.concat(result, ignore_index=True)
 
     def _filter(self, dataframe):
-        print(dataframe[["raw-l3d-cache", "raw-ll-cache"]], "\n")
+        print(dataframe[["raw-stall-backend-mem"]], "\n")
 
         return dataframe
 
