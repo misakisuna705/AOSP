@@ -60,14 +60,14 @@ simpleperf list raw
 |                   |      | raw-rc-ld-spec             | Release consistency operation speculatively executed, Load-Acquire                         |                           |
 |                   |      | raw-rc-st-spec             | Release consistency operation speculatively executed, Store-Release                        |                           |
 |                   |      | raw-sve-inst-spec          | SVE Instructions speculatively executed                                                    |                           |
-|                   |      | raw-bus-access             | Bus access                                                                                 |                           |
+| bus               |      | raw-bus-access             | Bus access                                                                                 |                           |
 |                   |      | raw-bus-access-rd          | Bus access, read                                                                           |                           |
 |                   |      | raw-bus-access-wr          | Bus access, write                                                                          |                           |
 |                   |      | raw-bus-access-normal      | Bus access, normal                                                                         |                           |
 |                   |      | raw-bus-access-shared      | Bus access, Normal, Cacheable, Shareable                                                   |                           |
 |                   |      | raw-bus-access-not-shared  | Bus access, not Normal, Cacheable, Shareable                                               |                           |
 |                   |      | raw-bus-access-periph      | Bus access, peripheral                                                                     |                           |
-|                   |      | raw-exc-taken              | Exception taken                                                                            |                           |
+| exception         |      | raw-exc-taken              | Exception taken                                                                            |                           |
 |                   |      | raw-exc-dabort             | Exception taken, Data Abort and SError                                                     |                           |
 |                   |      | raw-exc-irq                | Exception taken, IRQ                                                                       |                           |
 |                   |      | raw-exc-fiq                | Exception taken, FIQ                                                                       |                           |
