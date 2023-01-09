@@ -14,29 +14,33 @@ simpleperf list raw
 
 | type           | id   | event                      | description                                                                                | note                      |
 | -------------- | ---- | -------------------------- | ------------------------------------------------------------------------------------------ | ------------------------- |
-| cycle          |      | raw-cpu-cycles             | Cycle                                                                                      |                           |
-|                |      | raw-bus-cycles             | Bus cycle                                                                                  |                           |
-|                |      | raw-cnt-cycles             | Constant frequency cycles                                                                  |                           |
-|                |      | raw-stall-backend-mem      | Memory stall cycles                                                                        |                           |
-| instruction    |      | raw-inst-retired           | Instruction architecturally executed                                                       |                           |
-|                |      | raw-br-retired             | Instruction architecturally executed, branch                                               |                           |
-|                |      | raw-br-immed-retired       | Instruction architecturally executed, immediate branch                                     |                           |
-|                |      | raw-br-mis-pred-retired    | Instruction architecturally executed, mispredicted branch                                  |                           |
-|                |      | raw-ld-retired             | Instruction architecturally executed, Condition code check pass, load                      |                           |
-|                |      | raw-st-retired             | Instruction architecturally executed, Condition code check pass, store                     |                           |
-|                |      | raw-unaligned-ldst-retired | Instruction architecturally executed, Condition code check pass, unaligned load or store   |                           |
+| cycle          | 0x11 | raw-cpu-cycles             |                                                                                            |                           |
+|                | 0x1D | raw-bus-cycles             | = raw-cpu-cycles                                                                           |                           |
+|                |      | raw-cnt-cycles             |                                                                                            |                           |
+| instruction    | 0x8  | raw-inst-retired           |                                                                                            |                           |
+|                | 0x21 | raw-br-retired             |                                                                                            | ⊆ raw-inst-retired        |
+|                |      | raw-br-immed-retired       |                                                                                            | ⊆ raw-br-retired          |
+|                |      | raw-br-return-retired      |                                                                                            | ⊆ raw-br-retired          |
+|                | 0x22 | raw-br-mis-pred-retired    |                                                                                            | ⊆ raw-br-retired          |
+|                |      | raw-ld-retired             |                                                                                            |                           |
+|                |      | raw-st-retired             |                                                                                            |                           |
+|                |      | raw-unaligned-ldst-retired |                                                                                            |                           |
 |                |      | raw-pc-write-retired       | Instruction architecturally executed, Condition code check pass, software change of the PC |                           |
 |                | 0x0  | raw-sw-incr                | Instruction architecturally executed, Condition code check pass, software increment        |                           |
 |                |      | raw-ttbr-write-retired     | Instruction architecturally executed, Condition code check pass, write to TTBR             |                           |
 |                |      | raw-cid-write-retired      | Instruction architecturally executed, Condition code check pass, write to CONTEXTIDR       |                           |
 |                |      | raw-exc-return             | Instruction architecturally executed, Condition code check pass, exception return          |                           |
-|                |      | raw-br-return-retired      | Instruction architecturally executed, Condition code check pass, procedure return          |                           |
 |                |      | raw-sve-inst-retired       | SVE Instructions architecturally executed                                                  |                           |
-|                |      | raw-inst-spec              | Operation Speculatively executed                                                           |                           |
-|                |      | raw-ldst-spec              | Operation speculatively executed, load or store                                            |                           |
-|                |      | raw-ld-spec                | Operation speculatively executed, load                                                     |                           |
-|                |      | raw-st-spec                | Operation speculatively executed, store                                                    |                           |
-|                | 0x6A | raw-unaligned-ldst-spec    | = raw-unaligned-ld-spec + raw-unaligned-st-spec                                            |                           |
+| operation      | 0x1B | raw-inst-spec              | ≈ raw-inst-retired                                                                         |                           |
+|                | 0x12 | raw-br-pred                | ≈ raw-br-retired                                                                           | ⊆ raw-inst-spec           |
+|                | 0x78 | raw-br-immed-spec          | ≈ raw-br-immed-retired                                                                     | ⊆ raw-br-pred             |
+|                | 0x79 | raw-br-return-spec         | ≈ raw-br-return-retired                                                                    | ⊆ raw-br-pred             |
+|                | 0x7A | raw-br-indirect-spec       |                                                                                            | ⊆ raw-br-pred             |
+|                | 0x10 | raw-br-mis-pred            | ≈ raw-br-mis-pred-retired                                                                  | ⊆ raw-br-pred             |
+|                | 0x72 | raw-ldst-spec              | ≈ raw-unaligned-ldst-retired = -ld-spec + -st-spec                                         | ⊆ raw-inst-spec           |
+|                | 0x70 | raw-ld-spec                | ≈ raw-ld-retired                                                                           | ⊆ raw-ldst-spec           |
+|                | 0x71 | raw-st-spec                | ≈ raw-st-retired                                                                           | ⊆ raw-ldst-spec           |
+|                | 0x6A | raw-unaligned-ldst-spec    | = -ld-spec + -st-spec                                                                      | ⊆ raw-inst-spec           |
 |                | 0x68 | raw-unaligned-ld-spec      |                                                                                            | ⊆ raw-unaligned-ldst-spec |
 |                | 0x69 | raw-unaligned-st-spec      |                                                                                            | ⊆ raw-unaligned-ldst-spec |
 |                |      | raw-pc-write-spec          | Operation speculatively executed, software change of the PC                                |                           |
@@ -44,11 +48,6 @@ simpleperf list raw
 |                |      | raw-vfp-spec               | Operation speculatively executed, floating-point instruction                               |                           |
 |                |      | raw-ase-spec               | Operation speculatively executed, Advanced SIMD instruction                                |                           |
 |                |      | raw-crypto-spec            | Operation speculatively executed, Cryptographic instruction                                |                           |
-|                |      | raw-br-pred                | Predictable branch Speculatively executed                                                  |                           |
-|                |      | raw-br-immed-spec          | Branch speculatively executed, immediate branch                                            |                           |
-|                |      | raw-br-indirect-spec       | Branch speculatively executed, indirect branch                                             |                           |
-|                |      | raw-br-return-spec         | Branch speculatively executed, procedure return                                            |                           |
-|                |      | raw-br-mis-pred            | Mispredicted or not predicted branch Speculatively executed                                |                           |
 |                |      | raw-ldrex-spec             | Exclusive operation speculatively executed, LDREX or LDX                                   |                           |
 |                |      | raw-strex-fail-spec        | Exclusive operation speculatively executed, STREX or STX fail                              |                           |
 |                |      | raw-strex-pass-spec        | Exclusive operation speculatively executed, STREX or STX pass                              |                           |
@@ -154,10 +153,11 @@ simpleperf list raw
 |                |      | raw-stall-slot             | = raw-stall-slot-frontend ∪ raw-stall-slot-backend                                         |                           |
 |                |      | raw-stall-slot-frontend    |                                                                                            | ⊆ raw-stall-slot          |
 |                |      | raw-stall-slot-backend     |                                                                                            | ⊆ raw-stall-slot          |
+|                |      | raw-stall-backend-mem      |                                                                                            |                           |
 | memory         | 0x13 | raw-mem-access             | = -rd + -wr                                                                                |                           |
 |                | 0x66 | raw-mem-access-rd          |                                                                                            | ⊆ raw-mem-access          |
 |                | 0x67 | raw-mem-access-wr          |                                                                                            | ⊆ raw-mem-access          |
-|                |      | raw-memory-error           |                                                                                            |                           |
+|                | 0x1A | raw-memory-error           |                                                                                            |                           |
 | remote         | 0x31 | raw-remote-access          |                                                                                            |                           |
 |                |      | raw-remote-access-rd       |                                                                                            | ⊆ raw-remote-access       |
 | sample         |      | raw-sample-feed            |                                                                                            |                           |

@@ -49,7 +49,7 @@ class Estimator(object):
         return pd.concat(result, ignore_index=True)
 
     def _filter(self, dataframe):
-        print(dataframe[["raw-dtlb-walk", "raw-itlb-walk", "raw-l2d-tlb-refill", "raw-l2i-tlb-refill"]], "\n")
+        print(dataframe[["raw-inst-retired", "raw-inst-spec"]], "\n")
 
         return dataframe
 
