@@ -63,10 +63,10 @@ simpleperf list raw
 | bus               | 0x19 | raw-bus-access             | -rd + -wr                                |                        |      |     |      |     |        |
 |                   | 0x60 | raw-bus-access-rd          |                                          | ⊆ -bus-access          |      |     |      |     |        |
 |                   | 0x61 | raw-bus-access-wr          |                                          | ⊆ -bus-access          |      |     |      |     |        |
-|                   |      | raw-bus-access-normal      |                                          | ⊆ -bus-access          | x    |     | x    |     | x      |
-|                   |      | raw-bus-access-shared      |                                          | ⊆ -bus-access          | x    |     | x    |     | x      |
-|                   |      | raw-bus-access-not-shared  |                                          | ⊆ -bus-access          | x    |     | x    |     | x      |
-|                   |      | raw-bus-access-periph      |                                          | ⊆ -bus-access          | x    |     | x    |     | x      |
+|                   |      | raw-bus-access-normal      |                                          | ⊆ -bus-access          | x    |     | x    |     |        |
+|                   |      | raw-bus-access-shared      |                                          | ⊆ -bus-access          | x    |     | x    |     |        |
+|                   |      | raw-bus-access-not-shared  |                                          | ⊆ -bus-access          | x    |     | x    |     |        |
+|                   |      | raw-bus-access-periph      |                                          | ⊆ -bus-access          | x    |     | x    |     |        |
 | exception         | 0x9  | raw-exc-taken              |                                          |                        |      |     |      |     |        |
 |                   | 0x81 | raw-exc-undef              |                                          | ⊆ -exc-taken           |      |     | x    |     |        |
 |                   | 0x82 | raw-exc-svc                |                                          | ⊆ -exc-taken           |      |     | x    |     |        |
@@ -83,18 +83,18 @@ simpleperf list raw
 |                   | 0x8D | raw-exc-trap-other         |                                          | ⊆ -exc-taken           |      |     | x    |     |        |
 | L1 I-Cache        | 0x14 | raw-l1i-cache              |                                          |                        |      |     |      |     |        |
 |                   | 0x1  | raw-l1i-cache-refill       |                                          | ⊆ -l1i-cache           |      |     |      |     |        |
-|                   |      | raw-l1i-cache-lmiss        |                                          | ⊆ -l1i-cache-refill    | x    |     | x    |     | x      |
+|                   |      | raw-l1i-cache-lmiss        |                                          | ⊆ -l1i-cache-refill    | x    |     | x    |     |        |
 | L1 I-Cache TLB    | 0x26 | raw-l1i-tlb                |                                          |                        |      |     |      |     |        |
 |                   | 0x2  | raw-l1i-tlb-refill         |                                          | ⊆ -l1i-tlb             |      |     |      |     |        |
 | L1 D-Cache        | 0x4  | raw-l1d-cache              | = -rd + -wr                              |                        |      |     |      |     |        |
 |                   | 0x40 | raw-l1d-cache-rd           | (CPU <= L1) ⊇ -refill-rd                 | ⊆ -l1d-cache           |      |     |      |     |        |
 |                   | 0x41 | raw-l1d-cache-wr           | write during store include -refill-wr    | ⊆ -l1d-cache           |      |     |      |     |        |
-|                   |      | raw-l1d-cache-allocate     |                                          | ⊆ -l1d-cache-wr        | x    |     | x    |     | x      |
+|                   |      | raw-l1d-cache-allocate     |                                          | ⊆ -l1d-cache-wr        | x    |     | x    |     |        |
 |                   | 0x3  | raw-l1d-cache-refill       | = L1 <= L2 = -rd + -wr = -inner + -outer | ⊆ -l1d-cache-wr        |      |     |      |     |        |
 |                   | 0x44 | raw-l1d-cache-refill-inner | L1 miss, L2 and L3 hit                   | ⊆ -l1d-cache-refill    |      |     |      |     |        |
 |                   | 0x45 | raw-l1d-cache-refill-outer | L1 miss, L2 or L3 miss                   | ⊆ -l1d-cache-refill    |      |     |      |     |        |
 |                   | 0x42 | raw-l1d-cache-refill-rd    | L1 <= L2 during load                     | ⊆ -l1d-cache-refill    |      |     |      |     |        |
-|                   |      | raw-l1d-cache-lmiss-rd     |                                          | ⊆ -l1d-cache-refill-rd | x    |     | x    |     | x      |
+|                   |      | raw-l1d-cache-lmiss-rd     |                                          | ⊆ -l1d-cache-refill-rd | x    |     | x    |     |        |
 |                   | 0x43 | raw-l1d-cache-refill-wr    | write during store L1 <= L2 during store | ⊆ -l1d-cache-refill    |      |     |      |     |        |
 |                   | 0x15 | raw-l1d-cache-wb           | L1 => L2                                 |                        |      |     |      |     |        |
 |                   | 0x46 | raw-l1d-cache-wb-victim    |                                          | ⊆ -l1d-cache-wb        |      |     | x    |     |        |
@@ -150,18 +150,18 @@ simpleperf list raw
 | stall             |      | raw-stall                  | = -frontend ∪ -backend                   |                        | x    |     | x    |     |        |
 |                   | 0x23 | raw-stall-frontend         |                                          | ⊆ -stall-frontend      |      |     |      |     |        |
 |                   | 0x24 | raw-stall-backend          |                                          | ⊆ -backend-frontend    |      |     |      |     |        |
-|                   |      | raw-stall-slot             | = -frontend ∪ -backend                   |                        | x    |     | x    |     | x      |
-|                   |      | raw-stall-slot-frontend    |                                          | ⊆ -stall-slot          | x    |     | x    |     | x      |
-|                   |      | raw-stall-slot-backend     |                                          | ⊆ -stall-slot          | x    |     | x    |     | x      |
+|                   |      | raw-stall-slot             | = -frontend ∪ -backend                   |                        | x    |     | x    |     |        |
+|                   |      | raw-stall-slot-frontend    |                                          | ⊆ -stall-slot          | x    |     | x    |     |        |
+|                   |      | raw-stall-slot-backend     |                                          | ⊆ -stall-slot          | x    |     | x    |     |        |
 |                   |      | raw-stall-backend-mem      |                                          |                        | x    |     | x    |     |        |
 | memory            | 0x13 | raw-mem-access             | = -rd + -wr                              |                        |      |     |      |     |        |
 |                   | 0x66 | raw-mem-access-rd          |                                          | ⊆ -mem-access          |      |     |      |     |        |
 |                   | 0x67 | raw-mem-access-wr          |                                          | ⊆ -mem-access          |      |     |      |     |        |
-|                   | 0x1A | raw-memory-error           |                                          |                        |      |     | x    |     |        |
+|                   | 0x1A | raw-memory-error           |                                          |                        |      |     | x    |     | x      |
 | remote            | 0x31 | raw-remote-access          |                                          |                        |      |     | x    |     |        |
 |                   |      | raw-remote-access-rd       |                                          | ⊆ -remote-access       | x    |     | x    |     |        |
 | sample            |      | raw-sample-feed            |                                          |                        | x    |     | x    |     | x      |
 |                   |      | raw-sample-filtrate        |                                          |                        | x    |     | x    |     | x      |
 |                   |      | raw-sample-pop             |                                          |                        | x    |     | x    |     | x      |
 |                   |      | raw-sample-collision       |                                          |                        | x    |     | x    |     | x      |
-| other             | 0x1E | raw-chain                  |                                          |                        |      | x   |      |     |        |
+| other             | 0x1E | raw-chain                  |                                          |                        |      | x   |      |     | -      |
