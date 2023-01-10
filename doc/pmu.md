@@ -55,14 +55,6 @@ simpleperf list raw
 |              | 0x7D | raw-dsb-spec               |                                |                           | ⊆ -inst-spec           |      |     | x    |     |        |
 |              | 0x7E | raw-dmb-spec               |                                |                           | ⊆ -inst-spec           |      |     | x    |     |        |
 |              |      |                            |                                |                           |                        |      |     |      |     |        |
-| bus          | 0x19 | raw-bus-access             |                                | -rd + -wr                 |                        |      |     |      |     |        |
-|              | 0x60 | raw-bus-access-rd          |                                |                           | ⊆ -bus-access          |      |     |      |     |        |
-|              | 0x61 | raw-bus-access-wr          |                                |                           | ⊆ -bus-access          |      |     |      |     |        |
-|              |      | raw-bus-access-normal      |                                |                           | ⊆ -bus-access          | x    |     | x    |     |        |
-|              |      | raw-bus-access-shared      |                                |                           | ⊆ -bus-access          | x    |     | x    |     |        |
-|              |      | raw-bus-access-not-shared  |                                |                           | ⊆ -bus-access          | x    |     | x    |     |        |
-|              |      | raw-bus-access-periph      |                                |                           | ⊆ -bus-access          | x    |     | x    |     |        |
-|              |      |                            |                                |                           |                        |      |     |      |     |        |
 | exception    | 0x9  | raw-exc-taken              |                                |                           |                        |      |     |      |     |        |
 |              | 0x81 | raw-exc-undef              |                                |                           | ⊆ -exc-taken           |      |     | x    |     |        |
 |              | 0x82 | raw-exc-svc                |                                |                           | ⊆ -exc-taken           |      |     | x    |     |        |
@@ -77,6 +69,14 @@ simpleperf list raw
 |              | 0x88 | raw-exc-smc                |                                |                           | ⊆ -exc-taken           |      |     | x    |     |        |
 |              | 0x8A | raw-exc-hvc                |                                |                           | ⊆ -exc-taken           |      |     | x    |     |        |
 |              | 0x8D | raw-exc-trap-other         |                                |                           | ⊆ -exc-taken           |      |     | x    |     |        |
+|              |      |                            |                                |                           |                        |      |     |      |     |        |
+| bus          | 0x19 | raw-bus-access             |                                | -rd + -wr                 |                        |      |     |      |     |        |
+|              | 0x60 | raw-bus-access-rd          |                                |                           | ⊆ -bus-access          |      |     |      |     |        |
+|              | 0x61 | raw-bus-access-wr          |                                |                           | ⊆ -bus-access          |      |     |      |     |        |
+|              |      | raw-bus-access-normal      |                                |                           | ⊆ -bus-access          | x    |     | x    |     |        |
+|              |      | raw-bus-access-shared      |                                |                           | ⊆ -bus-access          | x    |     | x    |     |        |
+|              |      | raw-bus-access-not-shared  |                                |                           | ⊆ -bus-access          | x    |     | x    |     |        |
+|              |      | raw-bus-access-periph      |                                |                           | ⊆ -bus-access          | x    |     | x    |     |        |
 |              |      |                            |                                |                           |                        |      |     |      |     |        |
 | L1 I AC      | 0x14 | raw-l1i-cache              |                                |                           |                        |      |     |      |     |        |
 |              | 0x1  | raw-l1i-cache-refill       |                                |                           | ⊆ -l1i-cache           |      |     |      |     |        |
