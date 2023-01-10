@@ -83,18 +83,18 @@ simpleperf list raw
 |                   | 0x8D | raw-exc-trap-other         |                                  | ⊆ -exc-taken           |     |
 | L1 I-Cache        | 0x14 | raw-l1i-cache              |                                  |                        |     |
 |                   | 0x1  | raw-l1i-cache-refill       |                                  | ⊆ -l1i-cache           |     |
-|                   |      | raw-l1i-cache-lmiss        |                                  | ⊆ -l1i-cache-refill    |     |
+|                   |      | raw-l1i-cache-lmiss        |                                  | ⊆ -l1i-cache-refill    | x   |
 | L1 I-Cache TLB    | 0x26 | raw-l1i-tlb                |                                  |                        |     |
 |                   | 0x2  | raw-l1i-tlb-refill         |                                  | ⊆ -l1i-tlb             |     |
 | L1 D-Cache        | 0x4  | raw-l1d-cache              | = -rd + -wr                      |                        |     |
 |                   | 0x40 | raw-l1d-cache-rd           | CPU <= L1                        | ⊆ -l1d-cache           |     |
 |                   | 0x41 | raw-l1d-cache-wr           | CPU => L1                        | ⊆ -l1d-cache           |     |
-|                   |      | raw-l1d-cache-allocate     |                                  | ⊆ -l1d-cache-wr        |     |
+|                   |      | raw-l1d-cache-allocate     |                                  | ⊆ -l1d-cache-wr        | x   |
 |                   | 0x3  | raw-l1d-cache-refill       | = -rd + -wr = -inner + -outer    | ⊆ -l1d-cache-wr        |     |
 |                   | 0x44 | raw-l1d-cache-refill-inner | L1 miss, L2 and L3 hit           | ⊆ -l1d-cache-refill    |     |
 |                   | 0x45 | raw-l1d-cache-refill-outer | L1 miss, L2 or L3 miss           | ⊆ -l1d-cache-refill    |     |
 |                   | 0x42 | raw-l1d-cache-refill-rd    |                                  | ⊆ -l1d-cache-refill    |     |
-|                   |      | raw-l1d-cache-lmiss-rd     |                                  | ⊆ -l1d-cache-refill-rd |     |
+|                   |      | raw-l1d-cache-lmiss-rd     |                                  | ⊆ -l1d-cache-refill-rd | x   |
 |                   | 0x43 | raw-l1d-cache-refill-wr    |                                  | ⊆ -l1d-cache-refill    |     |
 |                   | 0x15 | raw-l1d-cache-wb           | L1 => L2                         |                        |     |
 |                   | 0x46 | raw-l1d-cache-wb-victim    |                                  | ⊆ -l1d-cache-wb        |     |
@@ -106,18 +106,18 @@ simpleperf list raw
 |                   | 0x5  | raw-l1d-tlb-refill         | = -rd + -wr                      | ⊆ -l1d-tlb-wr          |     |
 |                   | 0x4C | raw-l1d-tlb-refill-rd      |                                  | ⊆ -l1d-tlb-refill      |     |
 |                   | 0x4D | raw-l1d-tlb-refill-wr      |                                  | ⊆ -l1d-tlb-refill      |     |
-| L2 I-Cache        |      | raw-l2i-cache              |                                  |                        |     |
-|                   |      | raw-l2i-cache-refill       |                                  | ⊆ -l2i-cache           |     |
-|                   |      | raw-l2i-cache-lmiss        |                                  | ⊆ -l2i-cache-refill    |     |
-| L2 I-Cache TLB    |      | raw-l2i-tlb                |                                  |                        |     |
-|                   |      | raw-l2i-tlb-refill         |                                  | ⊆ -l2i-tlb             |     |
+| L2 I-Cache        |      | raw-l2i-cache              |                                  |                        | x   |
+|                   |      | raw-l2i-cache-refill       |                                  | ⊆ -l2i-cache           | x   |
+|                   |      | raw-l2i-cache-lmiss        |                                  | ⊆ -l2i-cache-refill    | x   |
+| L2 I-Cache TLB    |      | raw-l2i-tlb                |                                  |                        | x   |
+|                   |      | raw-l2i-tlb-refill         |                                  | ⊆ -l2i-tlb             | x   |
 | L2 D-Cache        | 0x16 | raw-l2d-cache              | = -rd + -wr                      |                        |     |
 |                   | 0x50 | raw-l2d-cache-rd           | L1 <= L2                         | ⊆ -l2d-cache           |     |
 |                   | 0x51 | raw-l2d-cache-wr           | ≈ -l1d-cache-wb (L1 => L2)       | ⊆ -l2d-cache           |     |
 |                   | 0x20 | raw-l2d-cache-allocate     | ≈ -l2d-cache-wr                  | ⊆ -l2d-cache-wr        |     |
 |                   | 0x17 | raw-l2d-cache-refill       | = -rd + -wr                      | ⊆ -l2d-cache-wr        |     |
 |                   | 0x52 | raw-l2d-cache-refill-rd    |                                  | ⊆ -l2d-cache-refill    |     |
-|                   |      | raw-l2d-cache-lmiss-rd     |                                  | ⊆ -l2d-cache-refill-rd |     |
+|                   |      | raw-l2d-cache-lmiss-rd     |                                  | ⊆ -l2d-cache-refill-rd | x   |
 |                   | 0x53 | raw-l2d-cache-refill-wr    |                                  | ⊆ -l2d-cache-refill    |     |
 |                   | 0x18 | raw-l2d-cache-wb           | L2 => L3                         |                        |     |
 |                   | 0x56 | raw-l2d-cache-wb-victim    |                                  | ⊆ -l2d-cache-wb        |     |
@@ -132,36 +132,36 @@ simpleperf list raw
 |                   | 0x5C | raw-l2d-tlb-refill-rd      |                                  | ⊆ -l2d-tlb-refill      |     |
 |                   | 0x5D | raw-l2d-tlb-refill-wr      |                                  | ⊆ -l2d-tlb-refill      |     |
 | L3 D-Cache        | 0x2B | raw-l3d-cache              | = -rd + -wr                      |                        |     |
-|                   |      | raw-l3d-cache-rd           |                                  | ⊆ -l3d-cache           |     |
-|                   |      | raw-l3d-cache-wr           | ≈ -l2d-cache-wb (L2 => L3)       | ⊆ -l3d-cache           |     |
+|                   |      | raw-l3d-cache-rd           |                                  | ⊆ -l3d-cache           | x   |
+|                   |      | raw-l3d-cache-wr           | ≈ -l2d-cache-wb (L2 => L3)       | ⊆ -l3d-cache           | x   |
 |                   | 0x29 | raw-l3d-cache-allocate     | ≈ -l3d-cache-wr                  | ⊆ -l3d-cache-wr        |     |
 |                   | 0x2A | raw-l3d-cache-refill       | = -rd + -wr                      | ⊆ -l3d-cache-wr        |     |
-|                   |      | raw-l3d-cache-refill-rd    |                                  | ⊆ -l3d-cache-refill    |     |
-|                   |      | raw-l3d-cache-lmiss-rd     |                                  | ⊆ -l3d-cache-refill-rd |     |
-|                   |      | raw-l3d-cache-refill-wr    |                                  | ⊆ -l3d-cache-refill    |     |
-|                   |      | raw-l3d-cache-wb           | L3 => MEM                        |                        |     |
-|                   |      | raw-l3d-cache-wb-clean     |                                  | ⊆ -l3d-cache-wb        |     |
-|                   |      | raw-l3d-cache-wb-victim    |                                  | ⊆ -l3d-cache-wb        |     |
-|                   |      | raw-l3d-cache-inval        |                                  |                        |     |
-| LL Cache          |      | raw-ll-cache               | = -l3d-cache                     |                        |     |
-|                   |      | raw-ll-cache-miss          | = -l3d-cache-refill              | ⊆ -ll-cache            |     |
+|                   |      | raw-l3d-cache-refill-rd    |                                  | ⊆ -l3d-cache-refill    | x   |
+|                   |      | raw-l3d-cache-lmiss-rd     |                                  | ⊆ -l3d-cache-refill-rd | x   |
+|                   |      | raw-l3d-cache-refill-wr    |                                  | ⊆ -l3d-cache-refill    | x   |
+|                   |      | raw-l3d-cache-wb           | L3 => MEM                        |                        | x   |
+|                   |      | raw-l3d-cache-wb-clean     |                                  | ⊆ -l3d-cache-wb        | x   |
+|                   |      | raw-l3d-cache-wb-victim    |                                  | ⊆ -l3d-cache-wb        | x   |
+|                   |      | raw-l3d-cache-inval        |                                  |                        | x   |
+| LL Cache          |      | raw-ll-cache               | = -l3d-cache                     |                        | x   |
+|                   |      | raw-ll-cache-miss          | = -l3d-cache-refill              | ⊆ -ll-cache            | x   |
 |                   | 0x36 | raw-ll-cache-rd            | = -l3d-cache-rd                  | ⊆ -ll-cache            |     |
 |                   | 0x37 | raw-ll-cache-miss-rd       | = -l3d-cache-refill-rd           | ⊆ -ll-cache-rd         |     |
-| stall             |      | raw-stall                  | = -frontend ∪ -backend           |                        |     |
+| stall             |      | raw-stall                  | = -frontend ∪ -backend           |                        | x   |
 |                   | 0x23 | raw-stall-frontend         |                                  | ⊆ -stall-frontend      |     |
 |                   | 0x24 | raw-stall-backend          |                                  | ⊆ -backend-frontend    |     |
-|                   |      | raw-stall-slot             | = -frontend ∪ -backend           |                        |     |
-|                   |      | raw-stall-slot-frontend    |                                  | ⊆ -stall-slot          |     |
-|                   |      | raw-stall-slot-backend     |                                  | ⊆ -stall-slot          |     |
-|                   |      | raw-stall-backend-mem      |                                  |                        |     |
+|                   |      | raw-stall-slot             | = -frontend ∪ -backend           |                        | x   |
+|                   |      | raw-stall-slot-frontend    |                                  | ⊆ -stall-slot          | x   |
+|                   |      | raw-stall-slot-backend     |                                  | ⊆ -stall-slot          | x   |
+|                   |      | raw-stall-backend-mem      |                                  |                        | x   |
 | memory            | 0x13 | raw-mem-access             | = -rd + -wr                      |                        |     |
 |                   | 0x66 | raw-mem-access-rd          |                                  | ⊆ -mem-access          |     |
 |                   | 0x67 | raw-mem-access-wr          |                                  | ⊆ -mem-access          |     |
 |                   | 0x1A | raw-memory-error           |                                  |                        |     |
 | remote            | 0x31 | raw-remote-access          |                                  |                        |     |
-|                   |      | raw-remote-access-rd       |                                  | ⊆ -remote-access       |     |
-| sample            |      | raw-sample-feed            |                                  |                        |     |
-|                   |      | raw-sample-filtrate        |                                  |                        |     |
-|                   |      | raw-sample-pop             |                                  |                        |     |
-|                   |      | raw-sample-collision       |                                  |                        |     |
+|                   |      | raw-remote-access-rd       |                                  | ⊆ -remote-access       | x   |
+| sample            |      | raw-sample-feed            |                                  |                        | x   |
+|                   |      | raw-sample-filtrate        |                                  |                        | x   |
+|                   |      | raw-sample-pop             |                                  |                        | x   |
+|                   |      | raw-sample-collision       |                                  |                        | x   |
 | other             | 0x1E | raw-chain                  |                                  |                        |     |
