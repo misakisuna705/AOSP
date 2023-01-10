@@ -19,38 +19,38 @@ simpleperf list raw
 |                   |      | raw-cnt-cycles             |                                  |                        | x   |
 | instr.            | 0x8  | raw-inst-retired           |                                  |                        |     |
 | instr. branch     | 0x21 | raw-br-retired             |                                  | ⊆ -inst-retired        |     |
+|                   | 0x22 | raw-br-mis-pred-retired    |                                  | ⊆ -br-retired          |     |
 |                   |      | raw-br-immed-retired       |                                  | ⊆ -br-retired          | x   |
 |                   |      | raw-br-return-retired      |                                  | ⊆ -br-retired          | x   |
-|                   | 0x22 | raw-br-mis-pred-retired    |                                  | ⊆ -br-retired          |     |
 | instr. load/store |      | raw-ld-retired             |                                  | ⊆ -inst-retired        | x   |
 |                   |      | raw-st-retired             |                                  | ⊆ -inst-retired        | x   |
 |                   |      | raw-unaligned-ldst-retired |                                  | ⊆ -inst-retired        | x   |
-| instr. other      |      | raw-op-retired             |                                  | ⊆ -inst-retired        |     |
-|                   |      | raw-sve-inst-retired       |                                  | ⊆ -inst-retired        |     |
-|                   |      | raw-pc-write-retired       |                                  | ⊆ -inst-retired        |     |
-|                   | 0x1C | raw-ttbr-write-retired     |                                  | ⊆ -inst-retired        |     |
-|                   | 0x0B | raw-cid-write-retired      |                                  | ⊆ -inst-retired        |     |
-|                   | 0x0A | raw-exc-return             |                                  | ⊆ -inst-retired        |     |
+| instr. other      |      | raw-op-retired             |                                  | ⊆ -inst-retired        | x   |
+|                   |      | raw-sve-inst-retired       |                                  | ⊆ -inst-retired        | x   |
+|                   |      | raw-pc-write-retired       |                                  | ⊆ -inst-retired        | x   |
 |                   | 0x0  | raw-sw-incr                |                                  | ⊆ -inst-retired        |     |
+|                   | 0x0A | raw-exc-return             |                                  | ⊆ -inst-retired        |     |
+|                   | 0x0B | raw-cid-write-retired      |                                  | ⊆ -inst-retired        |     |
+|                   | 0x1C | raw-ttbr-write-retired     |                                  | ⊆ -inst-retired        |     |
 | op.               | 0x1B | raw-inst-spec              | ≈ -retired                       |                        |     |
 | op. branch        | 0x12 | raw-br-pred                | ≈ -retired                       | ⊆ -inst-spec           |     |
+|                   | 0x10 | raw-br-mis-pred            | ≈ -retired                       | ⊆ -br-pred             |     |
 |                   | 0x78 | raw-br-immed-spec          | ≈ -retired                       | ⊆ -br-pred             |     |
 |                   | 0x79 | raw-br-return-spec         | ≈ -retired                       | ⊆ -br-pred             |     |
 |                   | 0x7A | raw-br-indirect-spec       |                                  | ⊆ -br-pred             |     |
-|                   | 0x10 | raw-br-mis-pred            | ≈ -retired                       | ⊆ -br-pred             |     |
 | op. load/store    | 0x72 | raw-ldst-spec              | ≈ -retired = -ld-spec + -st-spec | ⊆ -inst-spec           |     |
 |                   | 0x70 | raw-ld-spec                | ≈ -retired                       | ⊆ -ldst-spec           |     |
 |                   | 0x71 | raw-st-spec                | ≈ -retired                       | ⊆ -ldst-spec           |     |
 |                   | 0x6A | raw-unaligned-ldst-spec    | = -ld-spec + -st-spec            | ⊆ -inst-spec           |     |
 |                   | 0x68 | raw-unaligned-ld-spec      |                                  | ⊆ -unaligned-ldst-spec |     |
 |                   | 0x69 | raw-unaligned-st-spec      |                                  | ⊆ -unaligned-ldst-spec |     |
-| op. other         |      | raw-op-spec                | ≈ -retired                       | ⊆ -inst-spec           |     |
-|                   |      | raw-sve-inst-spec          | ≈ -retired                       | ⊆ -inst-spec           |     |
+| op. other         |      | raw-op-spec                | ≈ -retired                       | ⊆ -inst-spec           | x   |
+|                   |      | raw-sve-inst-spec          | ≈ -retired                       | ⊆ -inst-spec           | x   |
 |                   | 0x76 | raw-pc-write-spec          | ≈ -retired                       | ⊆ -inst-spec           |     |
-|                   | 0x74 | raw-ase-spec               |                                  | ⊆ -inst-spec           |     |
-|                   | 0x77 | raw-crypto-spec            |                                  | ⊆ -inst-spec           |     |
 |                   | 0x73 | raw-dp-spec                |                                  | ⊆ -inst-spec           |     |
+|                   | 0x74 | raw-ase-spec               |                                  | ⊆ -inst-spec           |     |
 |                   | 0x75 | raw-vfp-spec               |                                  | ⊆ -inst-spec           |     |
+|                   | 0x77 | raw-crypto-spec            |                                  | ⊆ -inst-spec           |     |
 |                   | 0x6C | raw-ldrex-spec             |                                  | ⊆ -inst-spec           |     |
 |                   | 0x6F | raw-strex-spec             | = -pass-spec + -fail-spec        | ⊆ -inst-spec           |     |
 |                   | 0x6D | raw-strex-pass-spec        |                                  | ⊆ -strex-spec          |     |
@@ -63,10 +63,10 @@ simpleperf list raw
 | bus               | 0x19 | raw-bus-access             | -rd + -wr                        |                        |     |
 |                   | 0x60 | raw-bus-access-rd          |                                  | ⊆ -bus-access          |     |
 |                   | 0x61 | raw-bus-access-wr          |                                  | ⊆ -bus-access          |     |
-|                   |      | raw-bus-access-normal      |                                  | ⊆ -bus-access          |     |
-|                   |      | raw-bus-access-shared      |                                  | ⊆ -bus-access          |     |
-|                   |      | raw-bus-access-not-shared  |                                  | ⊆ -bus-access          |     |
-|                   |      | raw-bus-access-periph      |                                  | ⊆ -bus-access          |     |
+|                   |      | raw-bus-access-normal      |                                  | ⊆ -bus-access          | x   |
+|                   |      | raw-bus-access-shared      |                                  | ⊆ -bus-access          | x   |
+|                   |      | raw-bus-access-not-shared  |                                  | ⊆ -bus-access          | x   |
+|                   |      | raw-bus-access-periph      |                                  | ⊆ -bus-access          | x   |
 | exception         | 0x9  | raw-exc-taken              |                                  |                        |     |
 |                   | 0x81 | raw-exc-undef              |                                  | ⊆ -exc-taken           |     |
 |                   | 0x82 | raw-exc-svc                |                                  | ⊆ -exc-taken           |     |
