@@ -49,7 +49,13 @@ class Estimator(object):
         return pd.concat(result, ignore_index=True)
 
     def _filter(self, dataframe):
-        print(dataframe[["raw-inst-retired", "raw-inst-spec"]], "\n")
+        print(dataframe[["raw-cpu-cycles", "raw-bus-cycles"]], "\n")
+
+        for col in dataframe.columns:
+            if (dataframe[col] == 0).all():
+                print(col)
+
+        sys.exit(0)
 
         return dataframe
 
