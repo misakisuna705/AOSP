@@ -200,4 +200,4 @@ simpleperf list raw
 |              |      | raw-sample-pop             |                            |                           |                        | x    |     | x    |     | x      |
 |              |      | raw-sample-collision       |                            |                           |                        | x    |     | x    |     | x      |
 |              |      |                            |                            |                           |                        |      |     |      |     |        |
-| OTS          | 0x1E | raw-chain                  |                            |                           |                        | -    |     |      |     | -      |
+| OTS          | 0x1E | raw-chain                  |                            |                           |                        | -    |     |      |     |        |
