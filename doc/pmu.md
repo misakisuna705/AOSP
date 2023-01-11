@@ -108,7 +108,6 @@ simpleperf list raw
 |              |      | raw-l2i-cache-lmiss        |                           |                      | ⊆ -l2i-cache-refill    | x    |     | x    |       |      | x      |
 | L2 I TLB     |      | raw-l2i-tlb                | L1 <=> "L2"               |                      |                        | x    |     | x    |       |      | x      |
 |              |      | raw-l2i-tlb-refill         | L1 <=> "L2" ∋ "L2" <= L3  |                      | ⊆ -l2i-tlb             | x    |     | x    |       |      | x      |
-|              |      |                            |                           |                      |                        |      |     |      |       |      |        |
 | L2 D AC      | 0x16 | raw-l2d-cache              | L1 <=> "L2"               | -rd + -wr            |                        |      |     |      |       |      |        |
 |              | 0x17 | raw-l2d-cache-refill       | L1 <=> "L2" ∋ "L2" <= L3  | -rd + -wr            | ⊆ -l2d-cache           |      |     |      |       |      |        |
 |              |      |                            |                           |                      |                        |      |     |      |       |      |        |
