@@ -125,22 +125,18 @@ simpleperf list raw
 |              | 0x5C | raw-l2d-tlb-refill-rd      | L1 <= "L2" ∋ "L2" <= L3   |                      | ⊆ -l2d-tlb-refill      |      |     | x    |       |      | ?      |
 | L2 D TLB WR  | 0x5F | raw-l2d-tlb-wr             | L1 => "L2"                |                      | ⊆ -l2d-tlb             |      |     | x    |       |      | ?      |
 |              | 0x5D | raw-l2d-tlb-refill-wr      | L1 => "L2" ∋ "L2" <= L3   |                      | ⊆ -l2d-tlb-refill      |      |     | x    |       |      | ?      |
-|              |      |                            |                           |                      |                        |      |     |      |       |      |        |
 | L2 D TLB OTS | 0x34 | raw-dtlb-walk              |                           |                      |                        |      |     |      |       |      |        |
 |              | 0x35 | raw-itlb-walk              |                           |                      |                        |      |     |      |       |      |        |
-|              |      |                            |                           |                      |                        |      |     |      |       |      |        |
-| L2 D OTS     | 0x58 | raw-l2d-cache-inval        |                           |                      |                        |      |     | x    |       |      |        |
-|              |      |                            |                           |                      |                        |      |     |      |       |      |        |
+| L2 D OTS     | 0x58 | raw-l2d-cache-inval        |                           |                      |                        |      |     | x    |       |      | ?      |
 | L3 D         | 0x2B | raw-l3d-cache              | L2 <=> "L3"               | -rd + -wr            |                        |      |     |      |       |      |        |
-|              |      | raw-ll-cache               |                           | -l3d-cache           |                        | x    |     | x    |       |      |        |
+|              |      | raw-ll-cache               |                           | -l3d-cache           |                        | x    | x   | x    |       |      | x      |
 |              | 0x2A | raw-l3d-cache-refill       | L2 <=> "L3" ∋ "L3" <= MEM | -rd + -wr            | ⊆ -l3d-cache           |      |     |      |       |      |        |
-|              |      | raw-ll-cache-miss          |                           | -l3d-cache-refill    | ⊆ -ll-cache            | x    |     | x    |       |      |        |
-|              |      |                            |                           |                      |                        |      |     |      |       |      |        |
+|              |      | raw-ll-cache-miss          |                           | -l3d-cache-refill    | ⊆ -ll-cache            | x    | x   | x    |       |      | x      |
 | L3 D RD      |      | raw-l3d-cache-rd           | L2 <= "L3"                |                      | ⊆ -l3d-cache           | x    |     |      |       |      |        |
-|              | 0x36 | raw-ll-cache-rd            |                           | -l3d-cache-rd        | ⊆ -ll-cache            |      |     |      |       |      |        |
+|              | 0x36 | raw-ll-cache-rd            |                           | -l3d-cache-rd        | ⊆ -ll-cache            |      | x   |      |       |      | x      |
 |              |      | raw-l3d-cache-refill-rd    | L2 <= "L3" ∋ "L3" <= MEM  |                      | ⊆ -l3d-cache-rd        | x    |     |      |       |      |        |
-|              | 0x37 | raw-ll-cache-miss-rd       |                           | -l3d-cache-refill-rd | ⊆ -ll-cache-rd         |      |     |      |       |      |        |
-|              |      | raw-l3d-cache-lmiss-rd     |                           |                      | ⊆ -l3d-cache-refill-rd | x    |     | x    |       |      |        |
+|              | 0x37 | raw-ll-cache-miss-rd       |                           | -l3d-cache-refill-rd | ⊆ -ll-cache-rd         |      | x   |      |       |      | x      |
+|              |      | raw-l3d-cache-lmiss-rd     |                           |                      | ⊆ -l3d-cache-refill-rd | x    |     | x    |       |      | ?      |
 |              |      |                            |                           |                      |                        |      |     |      |       |      |        |
 | L3 D WR      |      | raw-l3d-cache-wr           | L2 => "L3"                |                      | ⊆ -l3d-cache           | x    |     | x    |       |      |        |
 |              |      | raw-l3d-cache-refill-wr    | L2 => "L3" ∋ "L3" <= MEM  |                      | ⊆ -l3d-cache-wr        | x    |     | x    |       |      |        |
