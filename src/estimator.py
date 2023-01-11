@@ -2,6 +2,7 @@
 
 import logging
 import math
+# import sys
 
 # import matplotlib.pyplot
 import numpy
@@ -12,7 +13,7 @@ import sklearn.feature_selection
 import sklearn.linear_model
 import sklearn.metrics
 import sklearn.model_selection
-import statsmodels.stats.outliers_influence
+# import statsmodels.stats.outliers_influence
 
 logging.basicConfig(
     level=logging.INFO,
