@@ -49,9 +49,7 @@ class Estimator(object):
         return pd.concat(result, ignore_index=True)
 
     def _filter(self, dataframe):
-        # print(dataframe[["raw-st-retired", "raw-l1d-cache-wr", "raw-l1d-cache-refill-wr"]], "\n")
-
-        print(dataframe[["raw-ld-retired", "raw-l1d-cache-rd"]], "\n")
+        print(dataframe[["raw-ldst-spec", "raw-unaligned-ldst-retired"]], "\n")
 
         # for col in dataframe.columns:
         # if (dataframe[col] == 0).all():
