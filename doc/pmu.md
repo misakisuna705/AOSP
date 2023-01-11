@@ -78,12 +78,12 @@ simpleperf list raw
 |              |      | raw-bus-access-not-shared  |                            |                           | ⊆ -bus-access          | x    |     | x    |     |        |
 |              |      | raw-bus-access-periph      |                            |                           | ⊆ -bus-access          | x    |     | x    |     |        |
 |              |      |                            |                            |                           |                        |      |     |      |     |        |
-| L1 I AC      | 0x14 | raw-l1i-cache              |                            |                           |                        |      |     |      |     |        |
-|              | 0x1  | raw-l1i-cache-refill       |                            |                           | ⊆ -l1i-cache           |      |     |      |     |        |
+| L1 I AC      | 0x14 | raw-l1i-cache              | CPU <=> "L1"               |                           |                        |      |     |      |     |        |
+|              | 0x1  | raw-l1i-cache-refill       | CPU <=> "L1" ∋ "L1" <= L2  |                           | ⊆ -l1i-cache           |      |     |      |     |        |
 |              |      | raw-l1i-cache-lmiss        |                            |                           | ⊆ -l1i-cache-refill    | x    |     | x    |     |        |
 |              |      |                            |                            |                           |                        |      |     |      |     |        |
-| L1 I TLB     | 0x26 | raw-l1i-tlb                |                            |                           |                        |      |     |      |     |        |
-|              | 0x2  | raw-l1i-tlb-refill         |                            |                           | ⊆ -l1i-tlb             |      |     |      |     |        |
+| L1 I TLB     | 0x26 | raw-l1i-tlb                | CPU <=> "L1"               |                           |                        |      |     |      |     |        |
+|              | 0x2  | raw-l1i-tlb-refill         | CPU <=> "L1" ∋ "L1" <= L2  |                           | ⊆ -l1i-tlb             |      |     |      |     |        |
 |              |      |                            |                            |                           |                        |      |     |      |     |        |
 | L1 D AC      | 0x4  | raw-l1d-cache              | CPU <=> "L1"               | -rd + -wr                 |                        |      |     |      |     |        |
 |              | 0x3  | raw-l1d-cache-refill       | CPU <=> "L1" ∋ "L1" <= L2  | -rd + -wr                 | ⊆ -l1d-cache           |      |     |      |     |        |
@@ -107,23 +107,23 @@ simpleperf list raw
 |              | 0x71 | raw-st-spec                | ≈ -retired                 |                           | ⊆ -ldst-spec           |      |     |      | x   | x      |
 |              | 0x69 | raw-unaligned-st-spec      | "CPU" => L1 ∈ unaligned    |                           | ⊆ -unaligned-ldst-spec |      |     | x    |     |        |
 |              |      |                            |                            |                           |                        |      |     |      |     |        |
-| L1 D TLB AC  | 0x25 | raw-l1d-tlb                |                            | -rd + -wr                 |                        |      |     |      |     |        |
-|              | 0x5  | raw-l1d-tlb-refill         |                            | -rd + -wr                 | ⊆ -l1d-tlb-wr          |      |     |      |     |        |
+| L1 D TLB AC  | 0x25 | raw-l1d-tlb                | CPU <=> "L1"               | -rd + -wr                 |                        |      |     |      |     |        |
+|              | 0x5  | raw-l1d-tlb-refill         | CPU <=> "L1" ∋ "L1" <= L2  | -rd + -wr                 | ⊆ -l1d-tlb-wr          |      |     |      |     |        |
 |              |      |                            |                            |                           |                        |      |     |      |     |        |
-| L1 D TLB RD  | 0x4E | raw-l1d-tlb-rd             |                            |                           | ⊆ -l1d-tlb             |      |     | x    |     |        |
-|              | 0x4C | raw-l1d-tlb-refill-rd      |                            |                           | ⊆ -l1d-tlb-refill      |      |     | x    |     |        |
+| L1 D TLB RD  | 0x4E | raw-l1d-tlb-rd             | CPU <= "L1"                |                           | ⊆ -l1d-tlb             |      |     | x    |     |        |
+|              | 0x4C | raw-l1d-tlb-refill-rd      | CPU <= "L1" ∋ "L1" <= L2   |                           | ⊆ -l1d-tlb-refill      |      |     | x    |     |        |
 |              |      |                            |                            |                           |                        |      |     |      |     |        |
-| L1 D TLB WR  | 0x4F | raw-l1d-tlb-wr             |                            |                           | ⊆ -l1d-tlb             |      |     | x    |     |        |
-|              | 0x4D | raw-l1d-tlb-refill-wr      |                            |                           | ⊆ -l1d-tlb-refill      |      |     | x    |     |        |
+| L1 D TLB WR  | 0x4F | raw-l1d-tlb-wr             | CPU => "L1"                |                           | ⊆ -l1d-tlb             |      |     | x    |     |        |
+|              | 0x4D | raw-l1d-tlb-refill-wr      | CPU => "L1" ∋ "L1" <= L2   |                           | ⊆ -l1d-tlb-refill      |      |     | x    |     |        |
 |              |      |                            |                            |                           |                        |      |     |      |     |        |
 | L1 D OTS     | 0x48 | raw-l1d-cache-inval        |                            |                           |                        |      |     | x    |     |        |
 |              |      |                            |                            |                           |                        |      |     |      |     |        |
-| L2 I AC      |      | raw-l2i-cache              |                            |                           |                        | x    |     | x    |     | x      |
-|              |      | raw-l2i-cache-refill       |                            |                           | ⊆ -l2i-cache           | x    |     | x    |     | x      |
+| L2 I AC      |      | raw-l2i-cache              | L1 <=> "L2"                |                           |                        | x    |     | x    |     | x      |
+|              |      | raw-l2i-cache-refill       | L1 <=> "L2" ∋ "L2" <= L3   |                           | ⊆ -l2i-cache           | x    |     | x    |     | x      |
 |              |      | raw-l2i-cache-lmiss        |                            |                           | ⊆ -l2i-cache-refill    | x    |     | x    |     | x      |
 |              |      |                            |                            |                           |                        |      |     |      |     |        |
-| L2 I TLB     |      | raw-l2i-tlb                |                            |                           |                        | x    |     | x    |     | x      |
-|              |      | raw-l2i-tlb-refill         |                            |                           | ⊆ -l2i-tlb             | x    |     | x    |     | x      |
+| L2 I TLB     |      | raw-l2i-tlb                | L1 <=> "L2"                |                           |                        | x    |     | x    |     | x      |
+|              |      | raw-l2i-tlb-refill         | L1 <=> "L2" ∋ "L2" <= L3   |                           | ⊆ -l2i-tlb             | x    |     | x    |     | x      |
 |              |      |                            |                            |                           |                        |      |     |      |     |        |
 | L2 D AC      | 0x16 | raw-l2d-cache              | L1 <=> "L2"                | -rd + -wr                 |                        |      |     |      |     |        |
 |              | 0x17 | raw-l2d-cache-refill       | L1 <=> "L2" ∋ "L2" <= L3   | -rd + -wr                 | ⊆ -l2d-cache           |      |     |      |     |        |
@@ -139,14 +139,14 @@ simpleperf list raw
 |              | 0x46 | raw-l1d-cache-wb-victim    |                            |                           | ⊆ -l1d-cache-wb        |      |     | x    |     |        |
 |              | 0x47 | raw-l1d-cache-wb-clean     |                            |                           | ⊆ -l1d-cache-wb        |      |     | x    |     |        |
 |              |      |                            |                            |                           |                        |      |     |      |     |        |
-| L2 D TLB     | 0x2F | raw-l2d-tlb                |                            | -rd + -wr                 |                        |      |     |      |     |        |
-|              | 0x2D | raw-l2d-tlb-refill         |                            | -rd + -wr                 | ⊆ -l2d-tlb-wr          |      |     |      |     |        |
+| L2 D TLB     | 0x2F | raw-l2d-tlb                | L1 <=> "L2"                | -rd + -wr                 |                        |      |     |      |     |        |
+|              | 0x2D | raw-l2d-tlb-refill         | L1 <=> "L2" ∋ "L2" <= L3   | -rd + -wr                 | ⊆ -l2d-tlb-wr          |      |     |      |     |        |
 |              |      |                            |                            |                           |                        |      |     |      |     |        |
-| L2 D TLB RD  | 0x5E | raw-l2d-tlb-rd             |                            |                           | ⊆ -l2d-tlb             |      |     | x    |     |        |
-|              | 0x5C | raw-l2d-tlb-refill-rd      |                            |                           | ⊆ -l2d-tlb-refill      |      |     | x    |     |        |
+| L2 D TLB RD  | 0x5E | raw-l2d-tlb-rd             | L1 <= "L2"                 |                           | ⊆ -l2d-tlb             |      |     | x    |     |        |
+|              | 0x5C | raw-l2d-tlb-refill-rd      | L1 <= "L2" ∋ "L2" <= L3    |                           | ⊆ -l2d-tlb-refill      |      |     | x    |     |        |
 |              |      |                            |                            |                           |                        |      |     |      |     |        |
-| L2 D TLB WR  | 0x5F | raw-l2d-tlb-wr             |                            |                           | ⊆ -l2d-tlb             |      |     | x    |     |        |
-|              | 0x5D | raw-l2d-tlb-refill-wr      |                            |                           | ⊆ -l2d-tlb-refill      |      |     | x    |     |        |
+| L2 D TLB WR  | 0x5F | raw-l2d-tlb-wr             | L1 => "L2"                 |                           | ⊆ -l2d-tlb             |      |     | x    |     |        |
+|              | 0x5D | raw-l2d-tlb-refill-wr      | L1 => "L2" ∋ "L2" <= L3    |                           | ⊆ -l2d-tlb-refill      |      |     | x    |     |        |
 |              |      |                            |                            |                           |                        |      |     |      |     |        |
 | L2 D TLB OTS | 0x34 | raw-dtlb-walk              |                            |                           |                        |      |     |      |     |        |
 |              | 0x35 | raw-itlb-walk              |                            |                           |                        |      |     |      |     |        |
