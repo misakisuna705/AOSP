@@ -14,26 +14,26 @@ simpleperf list raw
 
 | type         | num  | event                      | description               | =                    | ⊆                      | spec | dup | zero | small | diff | filter |
 | ------------ | ---- | -------------------------- | ------------------------- | -------------------- | ---------------------- | ---- | --- | ---- | ----- | ---- | ------ |
-| cycle        | 0x11 | raw-cpu-cycles             |                           |                      |                        |      |     |      |       |      |        |
-|              | 0x1D | raw-bus-cycles             |                           | -cpu-cycles          |                        |      | x   |      |       |      | x      |
+| cycle        | 0x11 | raw-cpu-cycles             |                           |                      |                        |      | 0   |      |       |      |        |
+|              | 0x1D | raw-bus-cycles             |                           | -cpu-cycles          |                        |      | 0   |      |       |      | x      |
 |              |      | raw-cnt-cycles             |                           |                      |                        | x    |     | x    |       |      | ?      |
-| instr.       | 0x8  | raw-inst-retired           |                           |                      |                        |      |     |      |       |      |        |
-|              | 0x1B | raw-inst-spec              |                           | -retired             |                        |      | x   |      |       |      | x      |
-| instr. BR    | 0x21 | raw-br-retired             |                           |                      | ⊆ -inst-retired        |      |     |      |       |      |        |
-|              | 0x12 | raw-br-pred                |                           | -retired             | ⊆ -inst-spec           |      | x   |      |       |      | x      |
-|              | 0x22 | raw-br-mis-pred-retired    |                           |                      | ⊆ -br-retired          |      |     |      |       |      |        |
-|              | 0x10 | raw-br-mis-pred            |                           | -retired             | ⊆ -br-pred             |      | x   |      |       |      | x      |
-|              |      | raw-br-immed-retired       |                           |                      | ⊆ -br-retired          | x    |     |      |       |      |        |
-|              | 0x78 | raw-br-immed-spec          |                           | -retired             | ⊆ -br-pred             |      | x   |      |       |      | x      |
-|              |      | raw-br-return-retired      |                           |                      | ⊆ -br-retired          | x    |     |      |       |      |        |
-|              | 0x79 | raw-br-return-spec         |                           | -retired             | ⊆ -br-pred             |      | x   |      |       |      | x      |
+| instr.       | 0x8  | raw-inst-retired           |                           |                      |                        |      | 1   |      |       |      |        |
+|              | 0x1B | raw-inst-spec              |                           | -retired             |                        |      | 1   |      |       |      | x      |
+| instr. BR    | 0x21 | raw-br-retired             |                           |                      | ⊆ -inst-retired        |      | 2   |      |       |      |        |
+|              | 0x12 | raw-br-pred                |                           | -retired             | ⊆ -inst-spec           |      | 2   |      |       |      | x      |
+|              | 0x22 | raw-br-mis-pred-retired    |                           |                      | ⊆ -br-retired          |      | 3   |      |       |      |        |
+|              | 0x10 | raw-br-mis-pred            |                           | -retired             | ⊆ -br-pred             |      | 3   |      |       |      | x      |
+|              |      | raw-br-immed-retired       |                           |                      | ⊆ -br-retired          | x    | 4   |      |       |      |        |
+|              | 0x78 | raw-br-immed-spec          |                           | -retired             | ⊆ -br-pred             |      | 4   |      |       |      | x      |
+|              |      | raw-br-return-retired      |                           |                      | ⊆ -br-retired          | x    | 5   |      |       |      |        |
+|              | 0x79 | raw-br-return-spec         |                           | -retired             | ⊆ -br-pred             |      | 5   |      |       |      | x      |
 |              | 0x7A | raw-br-indirect-spec       |                           |                      | ⊆ -br-pred             |      |     |      |       |      |        |
-| instr. OTS   |      | raw-op-retired             |                           |                      | ⊆ -inst-retired        | x    |     | x    |       |      | ?      |
-|              |      | raw-op-spec                |                           | -retired             | ⊆ -inst-spec           | x    | x   | x    |       |      | x      |
-|              |      | raw-sve-inst-retired       |                           |                      | ⊆ -inst-retired        | x    |     | x    |       |      | ?      |
-|              |      | raw-sve-inst-spec          |                           | -retired             | ⊆ -inst-spec           | x    | x   | x    |       |      | x      |
-|              |      | raw-pc-write-retired       |                           |                      | ⊆ -inst-retired        | x    |     |      |       |      |        |
-|              | 0x76 | raw-pc-write-spec          |                           | -retired             | ⊆ -inst-spec           |      | ?   |      |       |      | ?      |
+| instr. OTS   |      | raw-op-retired             |                           |                      | ⊆ -inst-retired        | x    | 6   | x    |       |      | ?      |
+|              |      | raw-op-spec                |                           | -retired             | ⊆ -inst-spec           | x    | 6   | x    |       |      | x      |
+|              |      | raw-sve-inst-retired       |                           |                      | ⊆ -inst-retired        | x    | 7   | x    |       |      | ?      |
+|              |      | raw-sve-inst-spec          |                           | -retired             | ⊆ -inst-spec           | x    | 7   | x    |       |      | x      |
+|              |      | raw-pc-write-retired       |                           |                      | ⊆ -inst-retired        | x    | 8   |      |       |      |        |
+|              | 0x76 | raw-pc-write-spec          |                           | -retired             | ⊆ -inst-spec           |      | 8   |      |       |      | ?      |
 |              | 0x0  | raw-sw-incr                |                           |                      | ⊆ -inst-retired        |      |     | x    |       |      | ?      |
 |              | 0x0A | raw-exc-return             |                           |                      | ⊆ -inst-retired        |      |     |      |       |      |        |
 |              | 0x0B | raw-cid-write-retired      |                           |                      | ⊆ -inst-retired        |      |     |      |       | x    | ?      |
@@ -82,19 +82,19 @@ simpleperf list raw
 |              | 0x44 | raw-l1d-cache-refill-inner | L1 miss, L2 and L3 hit    |                      | ⊆ -l1d-cache-refill    |      |     |      |       |      |        |
 |              | 0x45 | raw-l1d-cache-refill-outer | L1 miss, L2 or L3 miss    |                      | ⊆ -l1d-cache-refill    |      |     |      |       |      |        |
 | CPU LD/ST    | 0x72 | raw-ldst-spec              | -ld-spec + -st-spec       |                      | ⊆ -inst-spec           |      |     |      |       |      |        |
-|              |      | raw-unaligned-ldst-retired |                           |                      | ⊆ -inst-retired        | x    |     |      |       |      |        |
-|              | 0x6A | raw-unaligned-ldst-spec    | -ld-spec + -st-spec       | -retired             | ⊆ -inst-spec           |      | ?   | x    |       |      | ?      |
-| L1 D RD      | 0x40 | raw-l1d-cache-rd           | CPU <= "L1"               |                      | ⊆ -l1d-cache           |      |     |      |       |      |        |
+|              |      | raw-unaligned-ldst-retired |                           |                      | ⊆ -inst-retired        | x    | 9   |      |       |      |        |
+|              | 0x6A | raw-unaligned-ldst-spec    | -ld-spec + -st-spec       | -retired             | ⊆ -inst-spec           |      | 9   | x    |       |      | ?      |
+| L1 D RD      | 0x40 | raw-l1d-cache-rd           | CPU <= "L1"               |                      | ⊆ -l1d-cache           |      | 10  |      |       |      |        |
 |              | 0x42 | raw-l1d-cache-refill-rd    | CPU <= "L1" ∋ "L1" <= L2  |                      | ⊆ -l1d-cache-rd        |      |     |      |       |      |        |
 |              |      | raw-l1d-cache-lmiss-rd     |                           |                      | ⊆ -l1d-cache-refill-rd | x    |     | x    |       |      | ?      |
-| CPU LD       |      | raw-ld-retired             | "CPU" <= L1               | -l1d-cache-rd        | ⊆ -inst-retired        | x    | ?   |      |       |      | ?      |
-|              | 0x70 | raw-ld-spec                |                           | -retired             | ⊆ -ldst-spec           |      | x   |      |       |      | x      |
+| CPU LD       |      | raw-ld-retired             | "CPU" <= L1               | -l1d-cache-rd        | ⊆ -inst-retired        | x    | 10  |      |       |      | ?      |
+|              | 0x70 | raw-ld-spec                |                           | -retired             | ⊆ -ldst-spec           |      | 10  |      |       |      | x      |
 |              | 0x68 | raw-unaligned-ld-spec      | "CPU" <= L1 ∈ unaligned   |                      | ⊆ -unaligned-ldst-spec |      |     | x    |       |      | ?      |
-| L1 D WR      | 0x41 | raw-l1d-cache-wr           | CPU => "L1"               |                      | ⊆ -l1d-cache           |      |     |      |       |      |        |
+| L1 D WR      | 0x41 | raw-l1d-cache-wr           | CPU => "L1"               |                      | ⊆ -l1d-cache           |      | 11  |      |       |      |        |
 |              | 0x43 | raw-l1d-cache-refill-wr    | CPU => "L1" ∋ "L1" <= L2  |                      | ⊆ -l1d-cache-wr        |      |     |      |       |      |        |
-|              |      | raw-l1d-cache-allocate     | CPU => "L1"               | -l1d-cache-wr        | ⊆ -l1d-cache-wr        | x    | ?   | x    |       |      | ?      |
-| CPU ST       |      | raw-st-retired             | "CPU" => L1               | -l1d-cache-wr        | ⊆ -inst-retired        | x    | ?   |      |       |      | ?      |
-|              | 0x71 | raw-st-spec                |                           | -retired             | ⊆ -ldst-spec           |      | x   |      |       |      | x      |
+|              |      | raw-l1d-cache-allocate     | CPU => "L1"               | -l1d-cache-wr        | ⊆ -l1d-cache-wr        | x    | 11  | x    |       |      | ?      |
+| CPU ST       |      | raw-st-retired             | "CPU" => L1               | -l1d-cache-wr        | ⊆ -inst-retired        | x    | 11  |      |       |      | ?      |
+|              | 0x71 | raw-st-spec                |                           | -retired             | ⊆ -ldst-spec           |      | 11  |      |       |      | x      |
 |              | 0x69 | raw-unaligned-st-spec      | "CPU" => L1 ∈ unaligned   |                      | ⊆ -unaligned-ldst-spec |      |     | x    |       |      | ?      |
 | L1 D TLB AC  | 0x25 | raw-l1d-tlb                | CPU <=> "L1"              | -rd + -wr            |                        |      |     |      |       |      |        |
 |              | 0x5  | raw-l1d-tlb-refill         | CPU <=> "L1" ∋ "L1" <= L2 | -rd + -wr            | ⊆ -l1d-tlb-wr          |      |     |      |       |      |        |
@@ -113,10 +113,10 @@ simpleperf list raw
 | L2 De RD     | 0x50 | raw-l2d-cache-rd           | L1 <= "L2"                |                      | ⊆ -l2d-cache           |      |     |      |       |      |        |
 |              | 0x52 | raw-l2d-cache-refill-rd    | L1 <= "L2" ∋ "L2" <= L3   |                      | ⊆ -l2d-cache-rd        |      |     |      |       |      |        |
 |              |      | raw-l2d-cache-lmiss-rd     |                           |                      | ⊆ -l2d-cache-refill-rd | x    |     | x    |       |      | ?      |
-| L2 D WR      | 0x51 | raw-l2d-cache-wr           | L1 => "L2"                |                      | ⊆ -l2d-cache           |      |     |      |       |      |        |
+| L2 D WR      | 0x51 | raw-l2d-cache-wr           | L1 => "L2"                |                      | ⊆ -l2d-cache           |      | 12  |      |       |      |        |
 |              | 0x53 | raw-l2d-cache-refill-wr    | L1 => "L2" ∋ "L2" <= L3   |                      | ⊆ -l2d-cache-wr        |      |     |      |       |      |        |
-|              | 0x20 | raw-l2d-cache-allocate     | L1 => "L2"                | -l2d-cache-wr        | ⊆ -l2d-cache-wr        |      | x   |      |       |      | x      |
-| L1 D WB      | 0x15 | raw-l1d-cache-wb           | "L1" => L2                | -l2d-cache-wr        | ⊆ -l2d-cache-allocate  |      | x   |      |       |      | x      |
+|              | 0x20 | raw-l2d-cache-allocate     | L1 => "L2"                | -l2d-cache-wr        | ⊆ -l2d-cache-wr        |      | 12  |      |       |      | x      |
+| L1 D WB      | 0x15 | raw-l1d-cache-wb           | "L1" => L2                | -l2d-cache-wr        | ⊆ -l2d-cache-allocate  |      | 12  |      |       |      | x      |
 |              | 0x46 | raw-l1d-cache-wb-victim    |                           |                      | ⊆ -l1d-cache-wb        |      |     | x    |       |      | ?      |
 |              | 0x47 | raw-l1d-cache-wb-clean     |                           |                      | ⊆ -l1d-cache-wb        |      |     | x    |       |      | ?      |
 | L2 D TLB     | 0x2F | raw-l2d-tlb                | L1 <=> "L2"               | -rd + -wr            |                        |      |     |      |       |      |        |
@@ -128,26 +128,26 @@ simpleperf list raw
 | L2 D TLB OTS | 0x34 | raw-dtlb-walk              |                           |                      |                        |      |     |      |       |      |        |
 |              | 0x35 | raw-itlb-walk              |                           |                      |                        |      |     |      |       |      |        |
 | L2 D OTS     | 0x58 | raw-l2d-cache-inval        |                           |                      |                        |      |     | x    |       |      | ?      |
-| L3 D         | 0x2B | raw-l3d-cache              | L2 <=> "L3"               | -rd + -wr            |                        |      |     |      |       |      |        |
-|              |      | raw-ll-cache               |                           | -l3d-cache           |                        | x    | x   | x    |       |      | x      |
-|              | 0x2A | raw-l3d-cache-refill       | L2 <=> "L3" ∋ "L3" <= MEM | -rd + -wr            | ⊆ -l3d-cache           |      |     |      |       |      |        |
-|              |      | raw-ll-cache-miss          |                           | -l3d-cache-refill    | ⊆ -ll-cache            | x    | x   | x    |       |      | x      |
-| L3 D RD      |      | raw-l3d-cache-rd           | L2 <= "L3"                |                      | ⊆ -l3d-cache           | x    |     |      |       |      |        |
-|              | 0x36 | raw-ll-cache-rd            |                           | -l3d-cache-rd        | ⊆ -ll-cache            |      | x   |      |       |      | x      |
-|              |      | raw-l3d-cache-refill-rd    | L2 <= "L3" ∋ "L3" <= MEM  |                      | ⊆ -l3d-cache-rd        | x    |     |      |       |      |        |
-|              | 0x37 | raw-ll-cache-miss-rd       |                           | -l3d-cache-refill-rd | ⊆ -ll-cache-rd         |      | x   |      |       |      | x      |
+| L3 D         | 0x2B | raw-l3d-cache              | L2 <=> "L3"               | -rd + -wr            |                        |      | 13  |      |       |      |        |
+|              |      | raw-ll-cache               |                           | -l3d-cache           |                        | x    | 13  | x    |       |      | x      |
+|              | 0x2A | raw-l3d-cache-refill       | L2 <=> "L3" ∋ "L3" <= MEM | -rd + -wr            | ⊆ -l3d-cache           |      | 14  |      |       |      |        |
+|              |      | raw-ll-cache-miss          |                           | -l3d-cache-refill    | ⊆ -ll-cache            | x    | 14  | x    |       |      | x      |
+| L3 D RD      |      | raw-l3d-cache-rd           | L2 <= "L3"                |                      | ⊆ -l3d-cache           | x    | 15  |      |       |      |        |
+|              | 0x36 | raw-ll-cache-rd            |                           | -l3d-cache-rd        | ⊆ -ll-cache            |      | 15  |      |       |      | x      |
+|              |      | raw-l3d-cache-refill-rd    | L2 <= "L3" ∋ "L3" <= MEM  |                      | ⊆ -l3d-cache-rd        | x    | 16  |      |       |      |        |
+|              | 0x37 | raw-ll-cache-miss-rd       |                           | -l3d-cache-refill-rd | ⊆ -ll-cache-rd         |      | 16  |      |       |      | x      |
 |              |      | raw-l3d-cache-lmiss-rd     |                           |                      | ⊆ -l3d-cache-refill-rd | x    |     | x    |       |      | ?      |
-| L3 D WR      |      | raw-l3d-cache-wr           | L2 => "L3"                |                      | ⊆ -l3d-cache           | x    |     | x    |       |      | ?      |
+| L3 D WR      |      | raw-l3d-cache-wr           | L2 => "L3"                |                      | ⊆ -l3d-cache           | x    | 17  | x    |       |      | ?      |
 |              |      | raw-l3d-cache-refill-wr    | L2 => "L3" ∋ "L3" <= MEM  |                      | ⊆ -l3d-cache-wr        | x    |     | x    |       |      | ?      |
-|              | 0x29 | raw-l3d-cache-allocate     | L2 => "L3"                | -l3d-cache-wr        | ⊆ -l3d-cache-wr        |      | x   |      |       |      | x      |
-| L2 D WB      | 0x18 | raw-l2d-cache-wb           | "L2" => L3                | -l3d-cache-wr        | ⊆ -l3d-cache-allocate  |      | x   |      |       |      | x      |
+|              | 0x29 | raw-l3d-cache-allocate     | L2 => "L3"                | -l3d-cache-wr        | ⊆ -l3d-cache-wr        |      | 17  |      |       |      | x      |
+| L2 D WB      | 0x18 | raw-l2d-cache-wb           | "L2" => L3                | -l3d-cache-wr        | ⊆ -l3d-cache-allocate  |      | 17  |      |       |      | x      |
 |              | 0x56 | raw-l2d-cache-wb-victim    |                           |                      | ⊆ -l2d-cache-wb        |      |     | x    |       |      | ?      |
 |              | 0x57 | raw-l2d-cache-wb-clean     |                           |                      | ⊆ -l2d-cache-wb        |      |     | x    |       |      | ?      |
 | L3 D OTS     |      | raw-l3d-cache-inval        |                           |                      |                        | x    |     | x    |       |      | ?      |
 | MEM          | 0x13 | raw-mem-access             | L3 <=> "MEM"              | = -rd + -wr          |                        |      |     |      |       |      |        |
 | MEM RD       | 0x66 | raw-mem-access-rd          | L3 <= "MEM"               |                      | ⊆ -mem-access          |      |     |      |       |      |        |
-| MEM WR       | 0x67 | raw-mem-access-wr          | L3 => "MEM"               |                      | ⊆ -mem-access          |      |     |      |       |      |        |
-|              |      | raw-l3d-cache-wb           | "L3" => MEM               | -mem-access-wr       | ⊆ -mem-access-wr       | x    | x   | x    |       |      | x      |
+| MEM WR       | 0x67 | raw-mem-access-wr          | L3 => "MEM"               |                      | ⊆ -mem-access          |      | 18  |      |       |      |        |
+|              |      | raw-l3d-cache-wb           | "L3" => MEM               | -mem-access-wr       | ⊆ -mem-access-wr       | x    | 18  | x    |       |      | x      |
 |              |      | raw-l3d-cache-wb-clean     |                           |                      | ⊆ -l3d-cache-wb        | x    |     | x    |       |      | ?      |
 |              |      | raw-l3d-cache-wb-victim    |                           |                      | ⊆ -l3d-cache-wb        | x    |     | x    |       |      | ?      |
 | MEM OTS      | 0x1A | raw-memory-error           |                           |                      |                        |      |     | x    |       |      | ?      |
@@ -158,13 +158,10 @@ simpleperf list raw
 |              |      | raw-stall-slot-frontend    |                           |                      | ⊆ -stall-slot          | x    |     | x    |       |      |        |
 |              |      | raw-stall-slot-backend     |                           |                      | ⊆ -stall-slot          | x    |     | x    |       |      |        |
 |              |      | raw-stall-backend-mem      |                           |                      |                        | x    |     | x    |       |      |        |
-|              |      |                            |                           |                      |                        |      |     |      |       |      |        |
 | remote       | 0x31 | raw-remote-access          |                           |                      |                        |      |     | x    |       |      |        |
 |              |      | raw-remote-access-rd       |                           |                      | ⊆ -remote-access       | x    |     | x    |       |      |        |
-|              |      |                            |                           |                      |                        |      |     |      |       |      |        |
 | sample       |      | raw-sample-feed            |                           |                      |                        | x    |     | x    |       |      | x      |
 |              |      | raw-sample-filtrate        |                           |                      |                        | x    |     | x    |       |      | x      |
 |              |      | raw-sample-pop             |                           |                      |                        | x    |     | x    |       |      | x      |
 |              |      | raw-sample-collision       |                           |                      |                        | x    |     | x    |       |      | x      |
-|              |      |                            |                           |                      |                        |      |     |      |       |      |        |
 | OTS          | 0x1E | raw-chain                  |                           |                      |                        | -    | -   | -    | -     | -    | -      |

@@ -49,7 +49,27 @@ class Estimator(object):
         return pd.concat(result, ignore_index=True)
 
     def _filter(self, dataframe):
-        print(dataframe[["raw-l3d-cache-wr", "raw-l3d-cache-allocate", "raw-l2d-cache-wb"]], "\n")
+        dups = [["raw-cpu-cycles", "raw-bus-cycles"], ["raw-inst-retired", "raw-inst-spec"], ["raw-br-retired", "raw-br-pred"],
+                ["raw-br-mis-pred-retired", "raw-br-mis-pred"], ["raw-br-immed-retired", "raw-br-immed-spec"], ["raw-br-return-retired", "raw-br-return-spec"],
+                ["raw-op-retired", "raw-op-spec"], ["raw-sve-inst-retired", "raw-sve-inst-spec"], ["raw-pc-write-retired", "raw-pc-write-spec"],
+                ["raw-unaligned-ldst-retired", "raw-unaligned-ldst-spec"], ["raw-l1d-cache-rd", "raw-ld-retired", "raw-ld-spec"],
+                ["raw-l1d-cache-wr", "raw-l1d-cache-allocate", "raw-st-retired", "raw-st-spec"], ["raw-l2d-cache-wr", "raw-l2d-cache-allocate", "raw-l1d-cache-wb"],
+                ["raw-l3d-cache", "raw-ll-cache"], ["raw-l3d-cache-refill", "raw-ll-cache-miss"], ["raw-l3d-cache-rd", "raw-ll-cache-rd"],
+                ["raw-l3d-cache-refill-rd", "raw-ll-cache-miss-rd"], ["raw-l3d-cache-wr", "raw-l3d-cache-allocate", "raw-l2d-cache-wb"],
+                ["raw-mem-access-wr", "raw-l3d-cache-wb"]]
+
+        for dup in dups:
+            print(len(dataframe.iloc[:, :-1].columns))
+
+            best = sklearn.feature_selection.SelectKBest(score_func=sklearn.feature_selection.r_regression, k=1).fit(dataframe[dup],
+                                                                                                                     dataframe.iloc[:, -1]).get_support(indices=True)
+            keep = dataframe[dup].iloc[:, best].columns
+
+            # print(keep[0], list(dataframe[dup].columns.difference(keep)))
+
+            dataframe.drop(dataframe[dup].columns.difference(keep), axis=1, inplace=True)
+
+            # print(len(dataframe.iloc[:, :-1].columns), "\n")
 
         # for col in dataframe.columns:
         # if (dataframe[col] == 0).all():
