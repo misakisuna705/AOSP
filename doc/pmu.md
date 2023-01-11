@@ -144,18 +144,13 @@ simpleperf list raw
 |              | 0x56 | raw-l2d-cache-wb-victim    |                           |                      | ⊆ -l2d-cache-wb        |      |     | x    |       |      | ?      |
 |              | 0x57 | raw-l2d-cache-wb-clean     |                           |                      | ⊆ -l2d-cache-wb        |      |     | x    |       |      | ?      |
 | L3 D OTS     |      | raw-l3d-cache-inval        |                           |                      |                        | x    |     | x    |       |      | ?      |
-|              |      |                            |                           |                      |                        |      |     |      |       |      |        |
 | MEM          | 0x13 | raw-mem-access             | L3 <=> "MEM"              | = -rd + -wr          |                        |      |     |      |       |      |        |
-|              |      |                            |                           |                      |                        |      |     |      |       |      |        |
 | MEM RD       | 0x66 | raw-mem-access-rd          | L3 <= "MEM"               |                      | ⊆ -mem-access          |      |     |      |       |      |        |
-|              |      |                            |                           |                      |                        |      |     |      |       |      |        |
 | MEM WR       | 0x67 | raw-mem-access-wr          | L3 => "MEM"               |                      | ⊆ -mem-access          |      |     |      |       |      |        |
-|              |      | raw-l3d-cache-wb           | "L3" => MEM               |                      | ⊆ -mem-access-wr       | x    |     | x    |       |      |        |
-|              |      | raw-l3d-cache-wb-clean     |                           |                      | ⊆ -l3d-cache-wb        | x    |     | x    |       |      |        |
-|              |      | raw-l3d-cache-wb-victim    |                           |                      | ⊆ -l3d-cache-wb        | x    |     | x    |       |      |        |
-|              |      |                            |                           |                      |                        |      |     |      |       |      |        |
-| MEM OTS      | 0x1A | raw-memory-error           |                           |                      |                        |      |     | x    |       |      | x      |
-|              |      |                            |                           |                      |                        |      |     |      |       |      |        |
+|              |      | raw-l3d-cache-wb           | "L3" => MEM               | -mem-access-wr       | ⊆ -mem-access-wr       | x    | x   | x    |       |      | x      |
+|              |      | raw-l3d-cache-wb-clean     |                           |                      | ⊆ -l3d-cache-wb        | x    |     | x    |       |      | ?      |
+|              |      | raw-l3d-cache-wb-victim    |                           |                      | ⊆ -l3d-cache-wb        | x    |     | x    |       |      | ?      |
+| MEM OTS      | 0x1A | raw-memory-error           |                           |                      |                        |      |     | x    |       |      | ?      |
 | stall        |      | raw-stall                  | = -frontend ∪ -backend    |                      |                        | x    |     | x    |       |      |        |
 |              | 0x23 | raw-stall-frontend         |                           |                      | ⊆ -stall-frontend      |      |     |      |       |      |        |
 |              | 0x24 | raw-stall-backend          |                           |                      | ⊆ -backend-frontend    |      |     |      |       |      |        |
@@ -172,4 +167,4 @@ simpleperf list raw
 |              |      | raw-sample-pop             |                           |                      |                        | x    |     | x    |       |      | x      |
 |              |      | raw-sample-collision       |                           |                      |                        | x    |     | x    |       |      | x      |
 |              |      |                            |                           |                      |                        |      |     |      |       |      |        |
-| OTS          | 0x1E | raw-chain                  |                           |                      |                        | -    |     |      |       |      |        |
+| OTS          | 0x1E | raw-chain                  |                           |                      |                        | -    | -   | -    | -     | -    | -      |
