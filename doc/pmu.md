@@ -36,12 +36,12 @@ simpleperf list raw
 |              | 0x76 | raw-pc-write-spec          |                           | -retired             | ⊆ -inst-spec           |      | 8   |      |       |      |        |
 |              | 0x0  | raw-sw-incr                |                           |                      | ⊆ -inst-retired        |      |     | x    |       |      |        |
 |              | 0x0A | raw-exc-return             |                           |                      | ⊆ -inst-retired        |      |     |      |       |      |        |
-|              | 0x0B | raw-cid-write-retired      |                           |                      | ⊆ -inst-retired        |      |     |      |       | x    |        |
-|              | 0x1C | raw-ttbr-write-retired     |                           |                      | ⊆ -inst-retired        |      |     |      |       | x    |        |
+|              | 0x0B | raw-cid-write-retired      |                           |                      | ⊆ -inst-retired        |      |     |      |       |      |        |
+|              | 0x1C | raw-ttbr-write-retired     |                           |                      | ⊆ -inst-retired        |      |     |      |       |      |        |
 |              | 0x73 | raw-dp-spec                |                           |                      | ⊆ -inst-spec           |      |     |      |       |      |        |
-|              | 0x74 | raw-ase-spec               |                           |                      | ⊆ -inst-spec           |      |     |      |       | ?    |        |
-|              | 0x75 | raw-vfp-spec               |                           |                      | ⊆ -inst-spec           |      |     |      |       | ?    |        |
-|              | 0x77 | raw-crypto-spec            |                           |                      | ⊆ -inst-spec           |      |     |      |       | ?    |        |
+|              | 0x74 | raw-ase-spec               |                           |                      | ⊆ -inst-spec           |      |     |      |       |      |        |
+|              | 0x75 | raw-vfp-spec               |                           |                      | ⊆ -inst-spec           |      |     |      |       |      |        |
+|              | 0x77 | raw-crypto-spec            |                           |                      | ⊆ -inst-spec           |      |     |      |       |      |        |
 |              | 0x6C | raw-ldrex-spec             |                           |                      | ⊆ -inst-spec           |      |     | x    |       |      |        |
 |              | 0x6F | raw-strex-spec             | = -pass-spec + -fail-spec |                      | ⊆ -inst-spec           |      |     | x    |       |      |        |
 |              | 0x6D | raw-strex-pass-spec        |                           |                      | ⊆ -strex-spec          |      |     | x    |       |      |        |
@@ -60,7 +60,7 @@ simpleperf list raw
 |              | 0x8C | raw-exc-trap-dabort        |                           |                      | ⊆ -exc-dabort          |      |     | x    |       |      |        |
 |              | 0x86 | raw-exc-irq                |                           |                      | ⊆ -exc-taken           |      |     |      |       |      |        |
 |              | 0x8E | raw-exc-trap-irq           |                           |                      | ⊆ -exc-irq             |      |     | x    |       |      |        |
-|              | 0x87 | raw-exc-fiq                |                           |                      | ⊆ -exc-taken           |      |     |      | ?     |      |        |
+|              | 0x87 | raw-exc-fiq                |                           |                      | ⊆ -exc-taken           |      |     |      |       |      |        |
 |              | 0x8F | raw-exc-trap-fiq           |                           |                      | ⊆ -exc-fiq             |      |     | x    |       |      |        |
 |              | 0x88 | raw-exc-smc                |                           |                      | ⊆ -exc-taken           |      |     | x    |       |      |        |
 |              | 0x8A | raw-exc-hvc                |                           |                      | ⊆ -exc-taken           |      |     | x    |       |      |        |
