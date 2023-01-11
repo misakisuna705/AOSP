@@ -137,15 +137,13 @@ simpleperf list raw
 |              |      | raw-l3d-cache-refill-rd    | L2 <= "L3" ∋ "L3" <= MEM  |                      | ⊆ -l3d-cache-rd        | x    |     |      |       |      |        |
 |              | 0x37 | raw-ll-cache-miss-rd       |                           | -l3d-cache-refill-rd | ⊆ -ll-cache-rd         |      | x   |      |       |      | x      |
 |              |      | raw-l3d-cache-lmiss-rd     |                           |                      | ⊆ -l3d-cache-refill-rd | x    |     | x    |       |      | ?      |
-|              |      |                            |                           |                      |                        |      |     |      |       |      |        |
-| L3 D WR      |      | raw-l3d-cache-wr           | L2 => "L3"                |                      | ⊆ -l3d-cache           | x    |     | x    |       |      |        |
-|              |      | raw-l3d-cache-refill-wr    | L2 => "L3" ∋ "L3" <= MEM  |                      | ⊆ -l3d-cache-wr        | x    |     | x    |       |      |        |
-|              | 0x29 | raw-l3d-cache-allocate     | L2 => "L3"                |                      | ⊆ -l3d-cache-wr        |      |     |      |       |      |        |
-| L2 D WB      | 0x18 | raw-l2d-cache-wb           | "L2" => L3                |                      | ⊆ -l3d-cache-allocate  |      |     |      |       |      |        |
-|              | 0x56 | raw-l2d-cache-wb-victim    |                           |                      | ⊆ -l2d-cache-wb        |      |     | x    |       |      |        |
-|              | 0x57 | raw-l2d-cache-wb-clean     |                           |                      | ⊆ -l2d-cache-wb        |      |     | x    |       |      |        |
-|              |      |                            |                           |                      |                        |      |     |      |       |      |        |
-| L3 D OTS     |      | raw-l3d-cache-inval        |                           |                      |                        | x    |     | x    |       |      |        |
+| L3 D WR      |      | raw-l3d-cache-wr           | L2 => "L3"                |                      | ⊆ -l3d-cache           | x    |     | x    |       |      | ?      |
+|              |      | raw-l3d-cache-refill-wr    | L2 => "L3" ∋ "L3" <= MEM  |                      | ⊆ -l3d-cache-wr        | x    |     | x    |       |      | ?      |
+|              | 0x29 | raw-l3d-cache-allocate     | L2 => "L3"                | -l3d-cache-wr        | ⊆ -l3d-cache-wr        |      | x   |      |       |      | x      |
+| L2 D WB      | 0x18 | raw-l2d-cache-wb           | "L2" => L3                | -l3d-cache-wr        | ⊆ -l3d-cache-allocate  |      | x   |      |       |      | x      |
+|              | 0x56 | raw-l2d-cache-wb-victim    |                           |                      | ⊆ -l2d-cache-wb        |      |     | x    |       |      | ?      |
+|              | 0x57 | raw-l2d-cache-wb-clean     |                           |                      | ⊆ -l2d-cache-wb        |      |     | x    |       |      | ?      |
+| L3 D OTS     |      | raw-l3d-cache-inval        |                           |                      |                        | x    |     | x    |       |      | ?      |
 |              |      |                            |                           |                      |                        |      |     |      |       |      |        |
 | MEM          | 0x13 | raw-mem-access             | L3 <=> "MEM"              | = -rd + -wr          |                        |      |     |      |       |      |        |
 |              |      |                            |                           |                      |                        |      |     |      |       |      |        |
