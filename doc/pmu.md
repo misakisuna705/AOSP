@@ -72,12 +72,12 @@ simpleperf list raw
 |              |      | raw-bus-access-shared      |                           |                      | ⊆ -bus-access          | x    |     | x    |       |      | ?      |
 |              |      | raw-bus-access-not-shared  |                           |                      | ⊆ -bus-access          | x    |     | x    |       |      | ?      |
 |              |      | raw-bus-access-periph      |                           |                      | ⊆ -bus-access          | x    |     | x    |       |      | ?      |
-| L1 I AC      | 0x14 | raw-l1i-cache              | CPU <=> "L1"              |                      |                        |      |     |      |       |      |        |
+| L1 I AC      | 0x14 | raw-l1i-cache              | CPU <=> "L1"              |                      |                        |      | b   |      |       |      |        |
 |              | 0x1  | raw-l1i-cache-refill       | CPU <=> "L1" ∋ "L1" <= L2 |                      | ⊆ -l1i-cache           |      |     |      |       |      |        |
 |              |      | raw-l1i-cache-lmiss        |                           |                      | ⊆ -l1i-cache-refill    | x    |     | x    |       |      | ?      |
-| L1 I TLB     | 0x26 | raw-l1i-tlb                | CPU <=> "L1"              |                      |                        |      |     |      |       |      |        |
+| L1 I TLB     | 0x26 | raw-l1i-tlb                | CPU <=> "L1"              | -l1i-cache           |                        |      | b   |      |       |      |        |
 |              | 0x2  | raw-l1i-tlb-refill         | CPU <=> "L1" ∋ "L1" <= L2 |                      | ⊆ -l1i-tlb             |      |     |      |       |      |        |
-| L1 D AC      | 0x4  | raw-l1d-cache              | CPU <=> "L1"              | -rd + -wr            |                        |      |     |      |       |      |        |
+| L1 D AC      | 0x4  | raw-l1d-cache              | CPU <=> "L1"              | -rd + -wr            |                        |      | a   |      |       |      |        |
 |              | 0x3  | raw-l1d-cache-refill       | CPU <=> "L1" ∋ "L1" <= L2 | -rd + -wr            | ⊆ -l1d-cache           |      |     |      |       |      |        |
 |              | 0x44 | raw-l1d-cache-refill-inner | L1 miss, L2 and L3 hit    |                      | ⊆ -l1d-cache-refill    |      |     |      |       |      |        |
 |              | 0x45 | raw-l1d-cache-refill-outer | L1 miss, L2 or L3 miss    |                      | ⊆ -l1d-cache-refill    |      |     |      |       |      |        |
@@ -96,7 +96,7 @@ simpleperf list raw
 | CPU ST       |      | raw-st-retired             | "CPU" => L1               | -l1d-cache-wr        | ⊆ -inst-retired        | x    | 11  |      |       |      | ?      |
 |              | 0x71 | raw-st-spec                |                           | -retired             | ⊆ -ldst-spec           |      | 11  |      |       |      | x      |
 |              | 0x69 | raw-unaligned-st-spec      | "CPU" => L1 ∈ unaligned   |                      | ⊆ -unaligned-ldst-spec |      |     | x    |       |      | ?      |
-| L1 D TLB AC  | 0x25 | raw-l1d-tlb                | CPU <=> "L1"              | -rd + -wr            |                        |      |     |      |       |      |        |
+| L1 D TLB AC  | 0x25 | raw-l1d-tlb                | CPU <=> "L1" (-rd + -wr)  | -l1d-cache           |                        |      | a   |      |       |      |        |
 |              | 0x5  | raw-l1d-tlb-refill         | CPU <=> "L1" ∋ "L1" <= L2 | -rd + -wr            | ⊆ -l1d-tlb-wr          |      |     |      |       |      |        |
 | L1 D TLB RD  | 0x4E | raw-l1d-tlb-rd             | CPU <= "L1"               |                      | ⊆ -l1d-tlb             |      |     | x    |       |      | ?      |
 |              | 0x4C | raw-l1d-tlb-refill-rd      | CPU <= "L1" ∋ "L1" <= L2  |                      | ⊆ -l1d-tlb-refill      |      |     | x    |       |      | ?      |

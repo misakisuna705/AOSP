@@ -2,12 +2,11 @@
 
 import logging
 import math
-import sys
 
-import matplotlib.pyplot
+# import matplotlib.pyplot
 import numpy
 import pandas as pd
-import scipy.cluster.hierarchy
+# import scipy.cluster.hierarchy
 import sklearn.cluster
 import sklearn.feature_selection
 import sklearn.linear_model
@@ -52,79 +51,36 @@ class Estimator(object):
         dups = [["raw-cpu-cycles", "raw-bus-cycles"], ["raw-inst-retired", "raw-inst-spec"], ["raw-br-retired", "raw-br-pred"],
                 ["raw-br-mis-pred-retired", "raw-br-mis-pred"], ["raw-br-immed-retired", "raw-br-immed-spec"], ["raw-br-return-retired", "raw-br-return-spec"],
                 ["raw-op-retired", "raw-op-spec"], ["raw-sve-inst-retired", "raw-sve-inst-spec"], ["raw-pc-write-retired", "raw-pc-write-spec"],
-                ["raw-unaligned-ldst-retired", "raw-unaligned-ldst-spec"], ["raw-l1d-cache-rd", "raw-ld-retired", "raw-ld-spec"],
-                ["raw-l1d-cache-wr", "raw-l1d-cache-allocate", "raw-st-retired", "raw-st-spec"], ["raw-l2d-cache-wr", "raw-l2d-cache-allocate", "raw-l1d-cache-wb"],
-                ["raw-l3d-cache", "raw-ll-cache"], ["raw-l3d-cache-refill", "raw-ll-cache-miss"], ["raw-l3d-cache-rd", "raw-ll-cache-rd"],
-                ["raw-l3d-cache-refill-rd", "raw-ll-cache-miss-rd"], ["raw-l3d-cache-wr", "raw-l3d-cache-allocate", "raw-l2d-cache-wb"],
-                ["raw-mem-access-wr", "raw-l3d-cache-wb"]]
+                ["raw-l1i-cache", "raw-l1i-tlb"], ["raw-l1d-cache", "raw-l1d-tlb"], ["raw-unaligned-ldst-retired", "raw-unaligned-ldst-spec"],
+                ["raw-l1d-cache-rd", "raw-ld-retired", "raw-ld-spec"], ["raw-l1d-cache-wr", "raw-l1d-cache-allocate", "raw-st-retired", "raw-st-spec"],
+                ["raw-l2d-cache-wr", "raw-l2d-cache-allocate", "raw-l1d-cache-wb"], ["raw-l3d-cache", "raw-ll-cache"],
+                ["raw-l3d-cache-refill", "raw-ll-cache-miss"], ["raw-l3d-cache-rd", "raw-ll-cache-rd"], ["raw-l3d-cache-refill-rd", "raw-ll-cache-miss-rd"],
+                ["raw-l3d-cache-wr", "raw-l3d-cache-allocate", "raw-l2d-cache-wb"], ["raw-mem-access-wr", "raw-l3d-cache-wb"]]
 
         for dup in dups:
-            print(len(dataframe.iloc[:, :-1].columns))
+            best = sklearn.feature_selection.SelectKBest(score_func=sklearn.feature_selection.r_regression,
+                                                         k=1).fit(dataframe[dup], dataframe.iloc[:, -1]).get_support(indices=True)
 
-            best = sklearn.feature_selection.SelectKBest(score_func=sklearn.feature_selection.r_regression, k=1).fit(dataframe[dup],
-                                                                                                                     dataframe.iloc[:, -1]).get_support(indices=True)
             keep = dataframe[dup].iloc[:, best].columns
-
-            # print(keep[0], list(dataframe[dup].columns.difference(keep)))
 
             dataframe.drop(dataframe[dup].columns.difference(keep), axis=1, inplace=True)
 
-            # print(len(dataframe.iloc[:, :-1].columns), "\n")
+        for col in dataframe.columns:
+            dataframe.drop(col, axis=1, inplace=True) if (dataframe[col] == 0).all() else None
 
-        # for col in dataframe.columns:
-        # if (dataframe[col] == 0).all():
-        # print(col)
+        # scipy.cluster.hierarchy.dendrogram(scipy.cluster.hierarchy.linkage(dataframe.iloc[:, :-1].T, method="ward"), labels=dataframe.iloc[:, :-1].columns)
 
-        sys.exit(0)
+        # matplotlib.pyplot.show()
 
         return dataframe
 
     def _select(self, dataframe, num):
-
-        def _evalWithWalker2016(_X, y):
-            X = pd.DataFrame(_X)
-
-            ranks = list(range(len(X.columns)))
-
-            for i in range(len(ranks)):
-                if not i:
-                    initEvent = sklearn.feature_selection.SelectKBest(score_func=sklearn.feature_selection.r_regression, k=1).fit(X, y).get_support(indices=True)[0]
-
-                    ranks[i], ranks[initEvent] = ranks[initEvent], ranks[i]
-                else:
-                    bestEvent, bestR2 = i, -math.inf
-
-                    for pmuEvent in range(i, len(ranks)):
-                        selectedList = X.iloc[:, ranks[0:i] + [ranks[pmuEvent]]]
-
-                        newR2 = sklearn.linear_model.LinearRegression().fit(selectedList, y).score(selectedList, y)
-
-                        if (newR2 > bestR2):
-                            bestEvent, bestR2 = pmuEvent, newR2
-
-                    ranks[i], ranks[bestEvent] = ranks[bestEvent], ranks[i]
-
-            # print(
-            # pd.DataFrame({
-            # "pmu": ["X"] + ranks[0:num],
-            # "VIF": [
-            # statsmodels.stats.outliers_influence.variance_inflation_factor(statsmodels.tools.tools.add_constant(dataframe[ranks[0:num]]).values, _)
-            # for _ in range(len(statsmodels.tools.tools.add_constant(dataframe[ranks[0:num]]).columns))
-            # ]
-            # }))
-
-            weights = [int() for _ in range(len(X.columns))]
-
-            for idx, item in enumerate(list((reversed(ranks)))):
-                weights[item] = idx
-
-            return numpy.array(weights)
-
         # selector = sklearn.feature_selection.RFE(estimator=sklearn.linear_model.LinearRegression(), n_features_to_select=num)
         # selector = sklearn.feature_selection.SelectFromModel(estimator=sklearn.linear_model.LinearRegression(), max_features=num)
         # selector = sklearn.feature_selection.SelectKBest(score_func=sklearn.feature_selection.r_regression, k=num)
         # selector = sklearn.feature_selection.SequentialFeatureSelector(estimator=sklearn.linear_model.LinearRegression(), n_features_to_select=num)
-        selector = sklearn.feature_selection.SelectKBest(score_func=_evalWithWalker2016, k=num)
+        # selector = sklearn.feature_selection.SelectKBest(score_func=self._evalWithClusteringBest, k=num)
+        selector = sklearn.feature_selection.SelectKBest(score_func=self._evalWithWalker2016, k=num)
 
         selector.fit(dataframe.iloc[:, :-1], dataframe.iloc[:, -1])
 
@@ -163,6 +119,63 @@ class Estimator(object):
             "Median absolute error (s)": [sklearn.metrics.median_absolute_error(yTest, y_pred)],
             "Mean squared error (s²)": [sklearn.metrics.mean_squared_error(yTest, y_pred)],
         })
+
+    def _evalWithWalker2016(self, _X, y):
+        X = pd.DataFrame(_X)
+
+        ranks = list(range(len(X.columns)))
+
+        for i in range(len(ranks)):
+            if not i:
+                initEvent = sklearn.feature_selection.SelectKBest(score_func=sklearn.feature_selection.r_regression, k=1).fit(X, y).get_support(indices=True)[0]
+
+                ranks[i], ranks[initEvent] = ranks[initEvent], ranks[i]
+            else:
+                bestEvent, bestR2 = i, -math.inf
+
+                for pmuEvent in range(i, len(ranks)):
+                    selectedList = X.iloc[:, ranks[0:i] + [ranks[pmuEvent]]]
+
+                    newR2 = sklearn.linear_model.LinearRegression().fit(selectedList, y).score(selectedList, y)
+
+                    if (newR2 > bestR2):
+                        bestEvent, bestR2 = pmuEvent, newR2
+
+                ranks[i], ranks[bestEvent] = ranks[bestEvent], ranks[i]
+
+        # print(
+        # pd.DataFrame({
+        # "pmu": ["X"] + ranks[0:num],
+        # "VIF": [
+        # statsmodels.stats.outliers_influence.variance_inflation_factor(statsmodels.tools.tools.add_constant(dataframe[ranks[0:num]]).values, _)
+        # for _ in range(len(statsmodels.tools.tools.add_constant(dataframe[ranks[0:num]]).columns))
+        # ]
+        # }))
+
+        weights = [int() for _ in range(len(X.columns))]
+
+        for idx, item in enumerate(list((reversed(ranks)))):
+            weights[item] = idx
+
+        return numpy.array(weights)
+
+    def _evalWithClusteringBest(self, _X, y):
+        X = pd.DataFrame(_X)
+
+        clusters = [[] for _ in range(6)]
+
+        for idx, item in enumerate(sklearn.cluster.FeatureAgglomeration(n_clusters=6).fit(X).labels_):
+            clusters[item].append(X.columns[idx])
+
+        weights = [int() for _ in range(len(X.columns))]
+
+        for cluster in clusters:
+            best = sklearn.feature_selection.SelectKBest(score_func=sklearn.feature_selection.r_regression, k=1).fit(X[cluster],
+                                                                                                                     X.iloc[:, -1]).get_support(indices=True)
+
+            weights[X.columns.get_loc(X[cluster].iloc[:, best].columns[0])] = 1
+
+        return numpy.array(weights)
 
 
 if __name__ == "__main__":
