@@ -72,31 +72,31 @@ simpleperf list raw
 |              |      | raw-bus-access-shared      |                           |                      | ⊆ -bus-access          | x    |     | x    |       |      | ?      |
 |              |      | raw-bus-access-not-shared  |                           |                      | ⊆ -bus-access          | x    |     | x    |       |      | ?      |
 |              |      | raw-bus-access-periph      |                           |                      | ⊆ -bus-access          | x    |     | x    |       |      | ?      |
-| L1 I AC      | 0x14 | raw-l1i-cache              | CPU <=> "L1"              |                      |                        |      | b   |      |       |      |        |
+| L1 I AC      | 0x14 | raw-l1i-cache              | CPU <=> "L1"              |                      |                        |      | 9   |      |       |      |        |
 |              | 0x1  | raw-l1i-cache-refill       | CPU <=> "L1" ∋ "L1" <= L2 |                      | ⊆ -l1i-cache           |      |     |      |       |      |        |
 |              |      | raw-l1i-cache-lmiss        |                           |                      | ⊆ -l1i-cache-refill    | x    |     | x    |       |      | ?      |
-| L1 I TLB     | 0x26 | raw-l1i-tlb                | CPU <=> "L1"              | -l1i-cache           |                        |      | b   |      |       |      |        |
+| L1 I TLB     | 0x26 | raw-l1i-tlb                | CPU <=> "L1"              | -l1i-cache           |                        |      | 9   |      |       |      |        |
 |              | 0x2  | raw-l1i-tlb-refill         | CPU <=> "L1" ∋ "L1" <= L2 |                      | ⊆ -l1i-tlb             |      |     |      |       |      |        |
-| L1 D AC      | 0x4  | raw-l1d-cache              | CPU <=> "L1"              | -rd + -wr            |                        |      | a   |      |       |      |        |
+| L1 D AC      | 0x4  | raw-l1d-cache              | CPU <=> "L1"              | -rd + -wr            |                        |      | 10  |      |       |      |        |
 |              | 0x3  | raw-l1d-cache-refill       | CPU <=> "L1" ∋ "L1" <= L2 | -rd + -wr            | ⊆ -l1d-cache           |      |     |      |       |      |        |
 |              | 0x44 | raw-l1d-cache-refill-inner | L1 miss, L2 and L3 hit    |                      | ⊆ -l1d-cache-refill    |      |     |      |       |      |        |
 |              | 0x45 | raw-l1d-cache-refill-outer | L1 miss, L2 or L3 miss    |                      | ⊆ -l1d-cache-refill    |      |     |      |       |      |        |
 | CPU LD/ST    | 0x72 | raw-ldst-spec              | -ld-spec + -st-spec       |                      | ⊆ -inst-spec           |      |     |      |       |      |        |
-|              |      | raw-unaligned-ldst-retired |                           |                      | ⊆ -inst-retired        | x    | 9   |      |       |      |        |
-|              | 0x6A | raw-unaligned-ldst-spec    | -ld-spec + -st-spec       | -retired             | ⊆ -inst-spec           |      | 9   | x    |       |      | ?      |
-| L1 D RD      | 0x40 | raw-l1d-cache-rd           | CPU <= "L1"               |                      | ⊆ -l1d-cache           |      | 10  |      |       |      |        |
+|              |      | raw-unaligned-ldst-retired |                           |                      | ⊆ -inst-retired        | x    | 11  |      |       |      |        |
+|              | 0x6A | raw-unaligned-ldst-spec    | -ld-spec + -st-spec       | -retired             | ⊆ -inst-spec           |      | 11  | x    |       |      | ?      |
+| L1 D RD      | 0x40 | raw-l1d-cache-rd           | CPU <= "L1"               |                      | ⊆ -l1d-cache           |      | 12  |      |       |      |        |
 |              | 0x42 | raw-l1d-cache-refill-rd    | CPU <= "L1" ∋ "L1" <= L2  |                      | ⊆ -l1d-cache-rd        |      |     |      |       |      |        |
 |              |      | raw-l1d-cache-lmiss-rd     |                           |                      | ⊆ -l1d-cache-refill-rd | x    |     | x    |       |      | ?      |
-| CPU LD       |      | raw-ld-retired             | "CPU" <= L1               | -l1d-cache-rd        | ⊆ -inst-retired        | x    | 10  |      |       |      | ?      |
-|              | 0x70 | raw-ld-spec                |                           | -retired             | ⊆ -ldst-spec           |      | 10  |      |       |      | x      |
+| CPU LD       |      | raw-ld-retired             | "CPU" <= L1               | -l1d-cache-rd        | ⊆ -inst-retired        | x    | 12  |      |       |      | ?      |
+|              | 0x70 | raw-ld-spec                |                           | -retired             | ⊆ -ldst-spec           |      | 12  |      |       |      | x      |
 |              | 0x68 | raw-unaligned-ld-spec      | "CPU" <= L1 ∈ unaligned   |                      | ⊆ -unaligned-ldst-spec |      |     | x    |       |      | ?      |
-| L1 D WR      | 0x41 | raw-l1d-cache-wr           | CPU => "L1"               |                      | ⊆ -l1d-cache           |      | 11  |      |       |      |        |
+| L1 D WR      | 0x41 | raw-l1d-cache-wr           | CPU => "L1"               |                      | ⊆ -l1d-cache           |      | 13  |      |       |      |        |
 |              | 0x43 | raw-l1d-cache-refill-wr    | CPU => "L1" ∋ "L1" <= L2  |                      | ⊆ -l1d-cache-wr        |      |     |      |       |      |        |
-|              |      | raw-l1d-cache-allocate     | CPU => "L1"               | -l1d-cache-wr        | ⊆ -l1d-cache-wr        | x    | 11  | x    |       |      | ?      |
-| CPU ST       |      | raw-st-retired             | "CPU" => L1               | -l1d-cache-wr        | ⊆ -inst-retired        | x    | 11  |      |       |      | ?      |
-|              | 0x71 | raw-st-spec                |                           | -retired             | ⊆ -ldst-spec           |      | 11  |      |       |      | x      |
+|              |      | raw-l1d-cache-allocate     | CPU => "L1"               | -l1d-cache-wr        | ⊆ -l1d-cache-wr        | x    | 13  | x    |       |      | ?      |
+| CPU ST       |      | raw-st-retired             | "CPU" => L1               | -l1d-cache-wr        | ⊆ -inst-retired        | x    | 13  |      |       |      | ?      |
+|              | 0x71 | raw-st-spec                |                           | -retired             | ⊆ -ldst-spec           |      | 13  |      |       |      | x      |
 |              | 0x69 | raw-unaligned-st-spec      | "CPU" => L1 ∈ unaligned   |                      | ⊆ -unaligned-ldst-spec |      |     | x    |       |      | ?      |
-| L1 D TLB AC  | 0x25 | raw-l1d-tlb                | CPU <=> "L1" (-rd + -wr)  | -l1d-cache           |                        |      | a   |      |       |      |        |
+| L1 D TLB AC  | 0x25 | raw-l1d-tlb                | CPU <=> "L1" (-rd + -wr)  | -l1d-cache           |                        |      | 10  |      |       |      |        |
 |              | 0x5  | raw-l1d-tlb-refill         | CPU <=> "L1" ∋ "L1" <= L2 | -rd + -wr            | ⊆ -l1d-tlb-wr          |      |     |      |       |      |        |
 | L1 D TLB RD  | 0x4E | raw-l1d-tlb-rd             | CPU <= "L1"               |                      | ⊆ -l1d-tlb             |      |     | x    |       |      | ?      |
 |              | 0x4C | raw-l1d-tlb-refill-rd      | CPU <= "L1" ∋ "L1" <= L2  |                      | ⊆ -l1d-tlb-refill      |      |     | x    |       |      | ?      |
@@ -113,10 +113,10 @@ simpleperf list raw
 | L2 De RD     | 0x50 | raw-l2d-cache-rd           | L1 <= "L2"                |                      | ⊆ -l2d-cache           |      |     |      |       |      |        |
 |              | 0x52 | raw-l2d-cache-refill-rd    | L1 <= "L2" ∋ "L2" <= L3   |                      | ⊆ -l2d-cache-rd        |      |     |      |       |      |        |
 |              |      | raw-l2d-cache-lmiss-rd     |                           |                      | ⊆ -l2d-cache-refill-rd | x    |     | x    |       |      | ?      |
-| L2 D WR      | 0x51 | raw-l2d-cache-wr           | L1 => "L2"                |                      | ⊆ -l2d-cache           |      | 12  |      |       |      |        |
+| L2 D WR      | 0x51 | raw-l2d-cache-wr           | L1 => "L2"                |                      | ⊆ -l2d-cache           |      | 14  |      |       |      |        |
 |              | 0x53 | raw-l2d-cache-refill-wr    | L1 => "L2" ∋ "L2" <= L3   |                      | ⊆ -l2d-cache-wr        |      |     |      |       |      |        |
-|              | 0x20 | raw-l2d-cache-allocate     | L1 => "L2"                | -l2d-cache-wr        | ⊆ -l2d-cache-wr        |      | 12  |      |       |      | x      |
-| L1 D WB      | 0x15 | raw-l1d-cache-wb           | "L1" => L2                | -l2d-cache-wr        | ⊆ -l2d-cache-allocate  |      | 12  |      |       |      | x      |
+|              | 0x20 | raw-l2d-cache-allocate     | L1 => "L2"                | -l2d-cache-wr        | ⊆ -l2d-cache-wr        |      | 14  |      |       |      | x      |
+| L1 D WB      | 0x15 | raw-l1d-cache-wb           | "L1" => L2                | -l2d-cache-wr        | ⊆ -l2d-cache-allocate  |      | 14  |      |       |      | x      |
 |              | 0x46 | raw-l1d-cache-wb-victim    |                           |                      | ⊆ -l1d-cache-wb        |      |     | x    |       |      | ?      |
 |              | 0x47 | raw-l1d-cache-wb-clean     |                           |                      | ⊆ -l1d-cache-wb        |      |     | x    |       |      | ?      |
 | L2 D TLB     | 0x2F | raw-l2d-tlb                | L1 <=> "L2"               | -rd + -wr            |                        |      |     |      |       |      |        |
@@ -128,26 +128,26 @@ simpleperf list raw
 | L2 D TLB OTS | 0x34 | raw-dtlb-walk              |                           |                      |                        |      |     |      |       |      |        |
 |              | 0x35 | raw-itlb-walk              |                           |                      |                        |      |     |      |       |      |        |
 | L2 D OTS     | 0x58 | raw-l2d-cache-inval        |                           |                      |                        |      |     | x    |       |      | ?      |
-| L3 D         | 0x2B | raw-l3d-cache              | L2 <=> "L3"               | -rd + -wr            |                        |      | 13  |      |       |      |        |
-|              |      | raw-ll-cache               |                           | -l3d-cache           |                        | x    | 13  | x    |       |      | x      |
-|              | 0x2A | raw-l3d-cache-refill       | L2 <=> "L3" ∋ "L3" <= MEM | -rd + -wr            | ⊆ -l3d-cache           |      | 14  |      |       |      |        |
-|              |      | raw-ll-cache-miss          |                           | -l3d-cache-refill    | ⊆ -ll-cache            | x    | 14  | x    |       |      | x      |
-| L3 D RD      |      | raw-l3d-cache-rd           | L2 <= "L3"                |                      | ⊆ -l3d-cache           | x    | 15  |      |       |      |        |
-|              | 0x36 | raw-ll-cache-rd            |                           | -l3d-cache-rd        | ⊆ -ll-cache            |      | 15  |      |       |      | x      |
-|              |      | raw-l3d-cache-refill-rd    | L2 <= "L3" ∋ "L3" <= MEM  |                      | ⊆ -l3d-cache-rd        | x    | 16  |      |       |      |        |
-|              | 0x37 | raw-ll-cache-miss-rd       |                           | -l3d-cache-refill-rd | ⊆ -ll-cache-rd         |      | 16  |      |       |      | x      |
+| L3 D         | 0x2B | raw-l3d-cache              | L2 <=> "L3"               | -rd + -wr            |                        |      | 15  |      |       |      |        |
+|              |      | raw-ll-cache               |                           | -l3d-cache           |                        | x    | 15  | x    |       |      | x      |
+|              | 0x2A | raw-l3d-cache-refill       | L2 <=> "L3" ∋ "L3" <= MEM | -rd + -wr            | ⊆ -l3d-cache           |      | 16  |      |       |      |        |
+|              |      | raw-ll-cache-miss          |                           | -l3d-cache-refill    | ⊆ -ll-cache            | x    | 16  | x    |       |      | x      |
+| L3 D RD      |      | raw-l3d-cache-rd           | L2 <= "L3"                |                      | ⊆ -l3d-cache           | x    | 17  |      |       |      |        |
+|              | 0x36 | raw-ll-cache-rd            |                           | -l3d-cache-rd        | ⊆ -ll-cache            |      | 17  |      |       |      | x      |
+|              |      | raw-l3d-cache-refill-rd    | L2 <= "L3" ∋ "L3" <= MEM  |                      | ⊆ -l3d-cache-rd        | x    | 18  |      |       |      |        |
+|              | 0x37 | raw-ll-cache-miss-rd       |                           | -l3d-cache-refill-rd | ⊆ -ll-cache-rd         |      | 18  |      |       |      | x      |
 |              |      | raw-l3d-cache-lmiss-rd     |                           |                      | ⊆ -l3d-cache-refill-rd | x    |     | x    |       |      | ?      |
-| L3 D WR      |      | raw-l3d-cache-wr           | L2 => "L3"                |                      | ⊆ -l3d-cache           | x    | 17  | x    |       |      | ?      |
+| L3 D WR      |      | raw-l3d-cache-wr           | L2 => "L3"                |                      | ⊆ -l3d-cache           | x    | 19  | x    |       |      | ?      |
 |              |      | raw-l3d-cache-refill-wr    | L2 => "L3" ∋ "L3" <= MEM  |                      | ⊆ -l3d-cache-wr        | x    |     | x    |       |      | ?      |
-|              | 0x29 | raw-l3d-cache-allocate     | L2 => "L3"                | -l3d-cache-wr        | ⊆ -l3d-cache-wr        |      | 17  |      |       |      | x      |
-| L2 D WB      | 0x18 | raw-l2d-cache-wb           | "L2" => L3                | -l3d-cache-wr        | ⊆ -l3d-cache-allocate  |      | 17  |      |       |      | x      |
+|              | 0x29 | raw-l3d-cache-allocate     | L2 => "L3"                | -l3d-cache-wr        | ⊆ -l3d-cache-wr        |      | 19  |      |       |      | x      |
+| L2 D WB      | 0x18 | raw-l2d-cache-wb           | "L2" => L3                | -l3d-cache-wr        | ⊆ -l3d-cache-allocate  |      | 19  |      |       |      | x      |
 |              | 0x56 | raw-l2d-cache-wb-victim    |                           |                      | ⊆ -l2d-cache-wb        |      |     | x    |       |      | ?      |
 |              | 0x57 | raw-l2d-cache-wb-clean     |                           |                      | ⊆ -l2d-cache-wb        |      |     | x    |       |      | ?      |
 | L3 D OTS     |      | raw-l3d-cache-inval        |                           |                      |                        | x    |     | x    |       |      | ?      |
 | MEM          | 0x13 | raw-mem-access             | L3 <=> "MEM"              | = -rd + -wr          |                        |      |     |      |       |      |        |
 | MEM RD       | 0x66 | raw-mem-access-rd          | L3 <= "MEM"               |                      | ⊆ -mem-access          |      |     |      |       |      |        |
-| MEM WR       | 0x67 | raw-mem-access-wr          | L3 => "MEM"               |                      | ⊆ -mem-access          |      | 18  |      |       |      |        |
-|              |      | raw-l3d-cache-wb           | "L3" => MEM               | -mem-access-wr       | ⊆ -mem-access-wr       | x    | 18  | x    |       |      | x      |
+| MEM WR       | 0x67 | raw-mem-access-wr          | L3 => "MEM"               |                      | ⊆ -mem-access          |      | 20  |      |       |      |        |
+|              |      | raw-l3d-cache-wb           | "L3" => MEM               | -mem-access-wr       | ⊆ -mem-access-wr       | x    | 20  | x    |       |      | x      |
 |              |      | raw-l3d-cache-wb-clean     |                           |                      | ⊆ -l3d-cache-wb        | x    |     | x    |       |      | ?      |
 |              |      | raw-l3d-cache-wb-victim    |                           |                      | ⊆ -l3d-cache-wb        | x    |     | x    |       |      | ?      |
 | MEM OTS      | 0x1A | raw-memory-error           |                           |                      |                        |      |     | x    |       |      | ?      |
