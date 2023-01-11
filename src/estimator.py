@@ -12,6 +12,7 @@ import sklearn.feature_selection
 import sklearn.linear_model
 import sklearn.metrics
 import sklearn.model_selection
+import statsmodels.stats.outliers_influence
 
 logging.basicConfig(
     level=logging.INFO,
@@ -91,8 +92,8 @@ class Estimator(object):
         # "group": [sklearn.cluster.FeatureAgglomeration(n_clusters=num).fit(dataframe.iloc[:, :-1]).labels_[item] for item in selector.get_support(indices=True)]
         # }), "\n")
 
-        return dataframe[["raw-cpu-cycles", "raw-inst-spec", "raw-l2d-cache-rd", "raw-unaligned-ldst-spec", "raw-dp-spec", "raw-l1i-cache",
-                          "raw-bus-access"]], dataframe.iloc[:, -1]
+        # return dataframe[["raw-cpu-cycles", "raw-inst-spec", "raw-l2d-cache-rd", "raw-unaligned-ldst-spec", "raw-dp-spec", "raw-l1i-cache",
+        # "raw-bus-access"]], dataframe.iloc[:, -1]
         return dataframe.iloc[:, selector.get_support(indices=True)], dataframe.iloc[:, -1]
 
     def _train(self, xTrain, yTrain):
@@ -147,10 +148,10 @@ class Estimator(object):
 
         # print(
         # pd.DataFrame({
-        # "pmu": ["X"] + ranks[0:num],
+        # "pmu": ["X"] + ranks[0:9],
         # "VIF": [
-        # statsmodels.stats.outliers_influence.variance_inflation_factor(statsmodels.tools.tools.add_constant(dataframe[ranks[0:num]]).values, _)
-        # for _ in range(len(statsmodels.tools.tools.add_constant(dataframe[ranks[0:num]]).columns))
+        # statsmodels.stats.outliers_influence.variance_inflation_factor(statsmodels.tools.tools.add_constant(X[ranks[0:9]]).values, _)
+        # for _ in range(len(statsmodels.tools.tools.add_constant(X[ranks[0:9]]).columns))
         # ]
         # }))
 
