@@ -170,8 +170,7 @@ class Estimator(object):
         weights = [int() for _ in range(len(X.columns))]
 
         for cluster in clusters:
-            best = sklearn.feature_selection.SelectKBest(score_func=sklearn.feature_selection.r_regression, k=1).fit(X[cluster],
-                                                                                                                     X.iloc[:, -1]).get_support(indices=True)
+            best = sklearn.feature_selection.SelectKBest(score_func=sklearn.feature_selection.r_regression, k=1).fit(X[cluster], y).get_support(indices=True)
 
             weights[X.columns.get_loc(X[cluster].iloc[:, best].columns[0])] = 1
 
