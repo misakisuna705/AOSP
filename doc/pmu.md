@@ -155,19 +155,19 @@ simpleperf list raw
 |              |      |                            |                           |                           |                        |      |     |      |     |        |
 | L3 D         | 0x2B | raw-l3d-cache              | L2 <=> "L3"               | -rd + -wr                 |                        |      |     |      |     |        |
 |              |      | raw-ll-cache               | = -l3d-cache              |                           |                        | x    |     | x    |     |        |
-|              | 0x2A | raw-l3d-cache-refill       | L2 <=> "L3" ∋ "L3" <= MEM | -rd + -wr                 | ⊆ -l3d-cache-wr        |      |     |      |     |        |
+|              | 0x2A | raw-l3d-cache-refill       | L2 <=> "L3" ∋ "L3" <= MEM | -rd + -wr                 | ⊆ -l3d-cache           |      |     |      |     |        |
 |              |      | raw-ll-cache-miss          | = -l3d-cache-refill       |                           | ⊆ -ll-cache            | x    |     | x    |     |        |
 |              |      |                            |                           |                           |                        |      |     |      |     |        |
 | L3 D RD      |      | raw-l3d-cache-rd           | L2 <= "L3"                |                           | ⊆ -l3d-cache           | x    |     |      |     |        |
 |              | 0x36 | raw-ll-cache-rd            | = -l3d-cache-rd           |                           | ⊆ -ll-cache            |      |     |      |     |        |
-|              |      | raw-l3d-cache-refill-rd    | L2 <= "L3" ∋ "L3" <= MEM  |                           | ⊆ -l3d-cache-refill    | x    |     |      |     |        |
+|              |      | raw-l3d-cache-refill-rd    | L2 <= "L3" ∋ "L3" <= MEM  |                           | ⊆ -l3d-cache-rd        | x    |     |      |     |        |
 |              | 0x37 | raw-ll-cache-miss-rd       | = -l3d-cache-refill-rd    |                           | ⊆ -ll-cache-rd         |      |     |      |     |        |
 |              |      | raw-l3d-cache-lmiss-rd     |                           |                           | ⊆ -l3d-cache-refill-rd | x    |     | x    |     |        |
 |              |      |                            |                           |                           |                        |      |     |      |     |        |
 | L3 D WR      |      | raw-l3d-cache-wr           | L2 => "L3"                |                           | ⊆ -l3d-cache           | x    |     | x    |     |        |
-|              |      | raw-l3d-cache-refill-wr    | L2 => "L3" ∋ "L3" <= MEM  |                           | ⊆ -l3d-cache-refill    | x    |     | x    |     |        |
+|              |      | raw-l3d-cache-refill-wr    | L2 => "L3" ∋ "L3" <= MEM  |                           | ⊆ -l3d-cache-wr        | x    |     | x    |     |        |
 |              | 0x29 | raw-l3d-cache-allocate     | L2 => "L3"                |                           | ⊆ -l3d-cache-wr        |      |     |      |     |        |
-| L2 D WB      | 0x18 | raw-l2d-cache-wb           | "L2" => L3                |                           |                        |      |     |      |     |        |
+| L2 D WB      | 0x18 | raw-l2d-cache-wb           | "L2" => L3                |                           | ⊆ -l3d-cache-allocate  |      |     |      |     |        |
 |              | 0x56 | raw-l2d-cache-wb-victim    |                           |                           | ⊆ -l2d-cache-wb        |      |     | x    |     |        |
 |              | 0x57 | raw-l2d-cache-wb-clean     |                           |                           | ⊆ -l2d-cache-wb        |      |     | x    |     |        |
 |              |      |                            |                           |                           |                        |      |     |      |     |        |
@@ -178,7 +178,7 @@ simpleperf list raw
 | MEM RD       | 0x66 | raw-mem-access-rd          | L3 <= "MEM"               |                           | ⊆ -mem-access          |      |     |      |     |        |
 |              |      |                            |                           |                           |                        |      |     |      |     |        |
 | MEM WR       | 0x67 | raw-mem-access-wr          | L3 => "MEM"               |                           | ⊆ -mem-access          |      |     |      |     |        |
-|              |      | raw-l3d-cache-wb           | "L3" => MEM               |                           |                        | x    |     | x    |     |        |
+|              |      | raw-l3d-cache-wb           | "L3" => MEM               |                           | ⊆ -mem-access-wr       | x    |     | x    |     |        |
 |              |      | raw-l3d-cache-wb-clean     |                           |                           | ⊆ -l3d-cache-wb        | x    |     | x    |     |        |
 |              |      | raw-l3d-cache-wb-victim    |                           |                           | ⊆ -l3d-cache-wb        | x    |     | x    |     |        |
 |              |      |                            |                           |                           |                        |      |     |      |     |        |
