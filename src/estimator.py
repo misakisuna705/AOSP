@@ -34,7 +34,7 @@ class Estimator(object):
 
         result = []
 
-        dataframe = self._filter(dataframe)  # filter
+        # dataframe = self._filter(dataframe)  # filter
         X, y = self._select(dataframe, 6)  # selector
 
         for foldID, (trainIdxs, testIdxs) in enumerate(sklearn.model_selection.KFold(n_splits=5, shuffle=True, random_state=42).split(X)):  # spliter
@@ -91,6 +91,8 @@ class Estimator(object):
         # "group": [sklearn.cluster.FeatureAgglomeration(n_clusters=num).fit(dataframe.iloc[:, :-1]).labels_[item] for item in selector.get_support(indices=True)]
         # }), "\n")
 
+        return dataframe[["raw-cpu-cycles", "raw-inst-spec", "raw-l2d-cache-rd", "raw-unaligned-ldst-spec", "raw-dp-spec", "raw-l1i-cache",
+                          "raw-bus-access"]], dataframe.iloc[:, -1]
         return dataframe.iloc[:, selector.get_support(indices=True)], dataframe.iloc[:, -1]
 
     def _train(self, xTrain, yTrain):
