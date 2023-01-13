@@ -102,5 +102,6 @@ pipenv run python3 main.py -d "dat/26/Pixel4a/Doshin"
 
 ### Profiling Tool
 
+-   [PMU](doc/pmu.md)
 -   [CpuFreq](doc/cpufreq.md)
 -   [Simpleperf](https://github.com/misakisuna705/Simpleperf)
