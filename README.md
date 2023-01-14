@@ -61,7 +61,6 @@ adb push res/SpecCpu2017 /data/local/tmp
 #### profile
 
 ```zsh
-
 pipenv run python3 src/profiler.py -b "/data/local/tmp/Dhrystone/dry" -o "dat/Dhrystone/dry.csv"
 ```
 
