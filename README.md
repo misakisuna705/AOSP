@@ -34,7 +34,7 @@
 
 -   adb
 -   python 3.10.8
-    -   pipenv # installed by pip
+    -   pipenv (installed with pip)
 
 ### 執行
 
