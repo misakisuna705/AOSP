@@ -34,12 +34,22 @@
 
 -   adb
 -   python 3.10.8
-    -   pipenv # pipenv graph
-        -   scikit-learn
+
+```zsh
+pip install pipenv # or pip3 install pipenv
+```
 
 ### 執行
 
 -   setup
+
+```zsh
+git clone https://github.com/misakisuna705/AOSP.git
+
+cd AOSP
+
+pipenv install # so as to install all packages in Pipfile
+```
 
 ```zsh
 adb push res/Dhrystone/v2.2/dry /data/local/tmp/Dhrystone/dry
