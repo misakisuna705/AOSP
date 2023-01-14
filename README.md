@@ -10,7 +10,8 @@
     - [執行](#執行)
         + [download](#download)
         + [setup](#setup)
-        + [run](#run)
+        + [profile](#profile)
+        + [estimate](#estimate)
     - [架構](#架構)
 * [Reference](#reference)
     - [AOSP](#aosp)
@@ -57,12 +58,18 @@ adb push res/SpecCpu2006 /data/local/tmp
 adb push res/SpecCpu2017 /data/local/tmp
 ```
 
-#### run
+#### profile
+
+```zsh
+
+pipenv run python3 src/profiler.py -b "/data/local/tmp/Dhrystone/dry" -o "dat/Dhrystone/dry.csv"
+```
+
+#### estimate
 
 ```zsh
 pipenv install
 
-pipenv run python3 src/profiler.py -b "/data/local/tmp/Dhrystone/dry" -o "dat/Dhrystone/dry.csv"
 pipenv run python3 main.py -d "dat/26/Pixel4a/Doshin"
 ```
 
