@@ -38,33 +38,21 @@
 
 ### 執行
 
--   setup
-
 ```zsh
 git clone https://github.com/misakisuna705/AOSP.git
 
 cd AOSP
 
-pipenv install # so as to install all packages in Pipfile
-```
+pipenv install
 
-```zsh
 adb push res/Dhrystone/v2.2/dry /data/local/tmp/Dhrystone/dry
 adb push res/LMbench/bin/aarch64 /data/local/tmp/LMbench
 adb push res/Mibench /data/local/tmp
 adb push res/SpecCpu2006 /data/local/tmp
 adb push res/SpecCpu2017 /data/local/tmp
-```
 
--   profile
+./test.sh # profile all needed workloads
 
-```zsh
-./test.sh
-```
-
--   run
-
-```zsh
 pipenv run python3 main.py -d "dat/26/Pixel4a/Doshin"
 ```
 
