@@ -51,7 +51,7 @@ adb push res/Mibench /data/local/tmp
 adb push res/SpecCpu2006 /data/local/tmp
 adb push res/SpecCpu2017 /data/local/tmp
 
-./test.sh # profile all needed workloads
+./test.sh #
 
 pipenv run python3 main.py -d "dat/26/Pixel4a/Doshin"
 ```
