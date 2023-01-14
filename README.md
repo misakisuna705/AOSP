@@ -8,6 +8,9 @@
         + [目標](#目標)
     - [環境](#環境)
     - [執行](#執行)
+        + [download](#download)
+        + [setup](#setup)
+        + [run](#run)
     - [架構](#架構)
 * [Reference](#reference)
     - [AOSP](#aosp)
@@ -38,21 +41,28 @@
 
 ### 執行
 
+#### download
+
 ```zsh
-git clone https://github.com/misakisuna705/AOSP.git
+git clone https://github.com/misakisuna705/AOSP.git && cd AOSP
+```
 
-cd AOSP
+#### setup
 
-pipenv install
-
+```zsh
 adb push res/Dhrystone/v2.2/dry /data/local/tmp/Dhrystone/dry
 adb push res/LMbench/bin/aarch64 /data/local/tmp/LMbench
 adb push res/Mibench /data/local/tmp
 adb push res/SpecCpu2006 /data/local/tmp
 adb push res/SpecCpu2017 /data/local/tmp
+```
 
-./test.sh #
+#### run
 
+```zsh
+pipenv install
+
+pipenv run python3 src/profiler.py -b "/data/local/tmp/Dhrystone/dry" -o "dat/Dhrystone/dry.csv"
 pipenv run python3 main.py -d "dat/26/Pixel4a/Doshin"
 ```
 
