@@ -34,10 +34,7 @@
 
 -   adb
 -   python 3.10.8
-
-```zsh
-pip install pipenv # or pip3 install pipenv
-```
+    -   pipenv # pip install pipenv
 
 ### 執行
 
