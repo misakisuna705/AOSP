@@ -12,6 +12,11 @@
 simpleperf list raw
 ```
 
+```
+adb shell taskset 01 simpleperf stat --use-devfreq-counters --per-core -e raw-cpu-cycles,raw-bus-cycles /data/local/tmp/Mibench/automotive/bitcount/bitcnts 84600
+```
+
+
 | type         | num  | event                      | description               | =                    | ⊆                      | spec | dup | zero | small | diff | filter |
 | ------------ | ---- | -------------------------- | ------------------------- | -------------------- | ---------------------- | ---- | --- | ---- | ----- | ---- | ------ |
 | cycle        | 0x11 | raw-cpu-cycles             |                           |                      |                        |      | 0   |      |       |      |        |
